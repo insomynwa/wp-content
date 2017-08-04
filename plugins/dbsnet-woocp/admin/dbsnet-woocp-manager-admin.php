@@ -96,7 +96,7 @@ class DBSnet_Woocp_Manager_Admin{
 			'meta_key' => 'meta_product_parent',
 			'meta_value' => $product->ID,
 		);
-		$batches = get_posts($args); var_dump(count($batches));
+		$batches = get_posts($args); //var_dump(count($batches));
 		$index=0;
 		foreach($batches as $batch){
 			$this->prev_batch[$index] = $batch->ID;
@@ -113,16 +113,16 @@ class DBSnet_Woocp_Manager_Admin{
 									<?php _e($index+1); ?>
 									</td>
 									<td>
-									<input type="text" name='batch_start_date[]'  placeholder='Name' class="custom-woocp-datepicker" value="<?php if(!empty($meta_batch_startdate)) _e($meta_batch_startdate); ?>"/>
+									<input type="text" name='batch_start_date[]'  placeholder='Start Date' class="custom-woocp-datepicker" value="<?php if(!empty($meta_batch_startdate)) _e($meta_batch_startdate); ?>"/>
 									</td>
 									<td>
-									<input type="text" name='batch_end_date[]' placeholder='Mail' class="custom-woocp-datepicker" value="<?php if(!empty($meta_batch_endate)) _e($meta_batch_endate); ?>" />
+									<input type="text" name='batch_end_date[]' placeholder='End Date' class="custom-woocp-datepicker" value="<?php if(!empty($meta_batch_endate)) _e($meta_batch_endate); ?>" />
 									</td>
 									<td>
-									<input type="number" name='batch_stock[]' placeholder='Mobile' class="form-control" value="<?php if(!empty($meta_batch_stock)) _e($meta_batch_stock); ?>"/>
+									<input type="number" name='batch_stock[]' placeholder='Stock' class="form-control" value="<?php if(!empty($meta_batch_stock)) _e($meta_batch_stock); ?>"/>
 									</td>
 									<td>
-									<input type="text" name='batch_price[]' placeholder='Mobile' class="form-control" value="<?php if(!empty($meta_batch_price)) _e($meta_batch_price); ?>"/>
+									<input type="text" name='batch_price[]' placeholder='Price' class="form-control" value="<?php if(!empty($meta_batch_price)) _e($meta_batch_price); ?>"/>
 									</td>
 									<td><a id='' class="delete-batch-row pull-right btn btn-default"><span id="<?php _e($batch->ID); ?>"></span>Delete Row</a></td>
 								</tr>
@@ -137,16 +137,16 @@ class DBSnet_Woocp_Manager_Admin{
 								<?php _e($index+1); ?>
 								</td>
 								<td>
-								<input type="text" name='batch_start_date[]'  placeholder='Name' class="custom-woocp-datepicker"/>
+								<input type="text" name='batch_start_date[]'  placeholder='Start Date' class="custom-woocp-datepicker"/>
 								</td>
 								<td>
-								<input type="text" name='batch_end_date[]' placeholder='Mail' class="custom-woocp-datepicker"/>
+								<input type="text" name='batch_end_date[]' placeholder='End Date' class="custom-woocp-datepicker"/>
 								</td>
 								<td>
-								<input type="number" name='batch_stock[]' placeholder='Mobile' class="form-control"/>
+								<input type="number" name='batch_stock[]' placeholder='Stock' class="form-control"/>
 								</td>
 								<td>
-								<input type="text" name='batch_price[]' placeholder='Mobile' class="form-control"/>
+								<input type="text" name='batch_price[]' placeholder='Price' class="form-control"/>
 								</td>
 								<td><a id='' class="delete-batch-row pull-right btn btn-default"><span id=""></span>Delete Row</a></td>
 							</tr>
