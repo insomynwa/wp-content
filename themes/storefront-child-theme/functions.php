@@ -44,7 +44,7 @@ add_action('after_setup_theme','dbsnettheme_wp_setup');
 add_action('storefront_before_site', 'storefront_add_webfunction');
 function storefront_add_webfunction(){
 	?>
-	<button type="button" class="btn btn-warning" id="topBtn" title="Go to top">Top</button>
+    <button type="button" class="btn btn-warning" id="topBtn" title="Go to top">Top</button>
     <script>
     	jQuery(document).ready(function($){
     		$(window).scroll(function(){
@@ -83,13 +83,13 @@ function storefront_add_webfunction(){
             <li><a href="#">Masuk</a></li>
             <?php else: ?>
             <?php $user_info = get_userdata(get_current_user_id()); ?>
-            <li><a href="#"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Keranjang <span class="badge">5</span></a></li>
+            <li><a href="<?php echo get_permalink( wc_get_page_id( 'cart' ) );?>"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Keranjang <span class="badge">5</span></a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-th" aria-hidden="true"></span> <?php _e($user_info->first_name); ?> <span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li><a href="#"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Kotak Surat <span class="badge">5</span></a></li>
                 <li role="separator" class="divider"></li>
-                <li><a href="#"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Profil</a></li>
+                <li><a href="<?php echo get_permalink( wc_get_page_id( 'myaccount' ) );?>"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Profil</a></li>
                 <li><a href="<?php current_user_can('manage_options') ? _e(admin_url()) : _e('#'); ?>"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> Dashboard</a></li>
                 <li role="separator" class="divider"></li>
                 <li><a href="<?php echo wp_logout_url(home_url()); ?>"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Keluar</a></li>
@@ -104,15 +104,15 @@ function storefront_add_webfunction(){
     <div class="container after-navbar bg-warning">
       <div class="row">
         <div class="col-xs-0 col-sm-0 col-md-3"></div>
-        <form class="col-md-6" role="search" method="get" action="<?php echo get_permalink( wc_get_page_id( 'shop' ) ); ?>">
+        <form class="col-md-6" role="search" method="get" action="<?php echo get_permalink( wc_get_page_id( 'search' ) );//esc_url( home_url( '/' ) ); //echo get_permalink( wc_get_page_id( 'shop' ) ); ?>">
           <div class="input-group">
             <span class="input-group-btn">
-              <select name="category" class="form-control">
-                <option value="">Kategori</option>
+              <select name="product_cat" class="form-control">
+                <option value="">Semua Kategori</option>
               <?php
               //$parentid = get_queried_object_id();
               $args = array( 'hide_empty' => 0, 'parent' =>0);
-              $terms = get_terms('product_cat', $args);//var_dump($terms);
+              $terms = get_terms('product_cat', $args);//var_dump($parentid);
               if ( $terms ) {
                 foreach ( $terms as $term ) {
                   echo '<option value="'.$term->slug.'">'.$term->name.'</option>';
@@ -152,7 +152,7 @@ add_filter('show_admin_bar','__return_false');
 
 add_action( 'init', 'jk_remove_storefront_header_search' );
 function jk_remove_storefront_header_search() {
-	//remove_action( 'storefront_header', 'storefront_product_search', 	40 );
+	remove_action( 'storefront_header', 'storefront_product_search', 	40 );
 }
 
 /*function dbsnet_product_subcategories($args = array()){
@@ -189,11 +189,11 @@ function jk_remove_storefront_header_search() {
 add_action('woocommerce_before_shop_loop', 'dbsnet_product_subcategories', 100);
 */
 
-function dbsnet_search_query($query){
+function dbsnet_main_search_query($query){
   if($query->is_search()){
     if(isset($_GET['category']) && !empty($_GET['category'])){
       $query->set('tax_query', array(
-        'taxonomy' => 'product_tax',
+        'taxonomy' => 'product_cat',
         'field' => 'slug',
         'terms' => array($_GET['category'])
         )
@@ -202,4 +202,4 @@ function dbsnet_search_query($query){
   }
   return $query;var_dump($query);die;
 }
-add_action('pre_get_posts', 'dbsnet_search_query', 1000);
+add_action('pre_get_posts', 'dbsnet_main_search_query', 1000);
