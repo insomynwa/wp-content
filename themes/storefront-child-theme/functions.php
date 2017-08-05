@@ -44,92 +44,6 @@ add_action('after_setup_theme','dbsnettheme_wp_setup');
 add_action('storefront_before_site', 'storefront_add_webfunction');
 function storefront_add_webfunction(){
 	?>
-	<button type="button" class="btn btn-warning" id="topBtn" title="Go to top">Top</button>
-    <script>
-    	jQuery(document).ready(function($){
-    		$(window).scroll(function(){
-    			scrollFunction();
-    		});
-    		$("#topBtn").click(function(e){
-    			$(document.body).scrollTop(0);
-    			$(document.documentElement).scrollTop(0);
-    		});
-
-    		function scrollFunction(){
-				if($(document.body).scrollTop() > 60 || $(document.body).scrollTop() > 60) {
-			  		$("#topBtn").css('display',"block");
-				}
-				else{
-			  		$("#topBtn").css('display',"none");
-				}
-			}
-    	});
-    </script>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="<?php _e(home_url());?>">Dibuang Sayang</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <?php if(!is_user_logged_in()): ?>
-            <li><a href="#">Daftar</a></li>
-            <li><a href="#">Masuk</a></li>
-            <?php else: ?>
-            <?php $user_info = get_userdata(get_current_user_id()); ?>
-            <li><a href="#"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Keranjang <span class="badge">5</span></a></li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-th" aria-hidden="true"></span> <?php _e($user_info->first_name); ?> <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="#"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Kotak Surat <span class="badge">5</span></a></li>
-                <li role="separator" class="divider"></li>
-                <li><a href="#"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Profil</a></li>
-                <li><a href="<?php current_user_can('manage_options') ? _e(admin_url()) : _e('#'); ?>"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> Dashboard</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a href="<?php echo wp_logout_url(home_url()); ?>"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Keluar</a></li>
-              </ul>
-            </li>
-            <?php endif; ?>
-          </ul>
-        </div><!--/.navbar-collapse -->
-      </div>
-    </nav>
-
-    <div class="container after-navbar bg-warning">
-      <div class="row">
-        <div class="col-xs-0 col-sm-0 col-md-3"></div>
-        <form class="col-md-6" role="search" method="get" action="<?php echo get_permalink( wc_get_page_id( 'shop' ) ); ?>">
-          <div class="input-group">
-            <span class="input-group-btn">
-              <select name="category" class="form-control">
-                <option value="">Kategori</option>
-              <?php
-              //$parentid = get_queried_object_id();
-              $args = array( 'hide_empty' => 0, 'parent' =>0);
-              $terms = get_terms('product_cat', $args);//var_dump($terms);
-              if ( $terms ) {
-                foreach ( $terms as $term ) {
-                  echo '<option value="'.$term->slug.'">'.$term->name.'</option>';
-                }
-              }
-              ?>
-              </select>
-            </span>
-            <input type="text" class="form-control" aria-label="..." name="s">
-            <input type="hidden" name="post_type" value="product" />
-            <span class="input-group-btn">
-              <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-            </span>
-          </div> <!-- /input-group -->
-        </form>
-      </div>
-    </div>
 	<?php
 }
 
@@ -152,7 +66,7 @@ add_filter('show_admin_bar','__return_false');
 
 add_action( 'init', 'jk_remove_storefront_header_search' );
 function jk_remove_storefront_header_search() {
-	//remove_action( 'storefront_header', 'storefront_product_search', 	40 );
+	remove_action( 'storefront_header', 'storefront_product_search', 	40 );
 }
 
 /*function dbsnet_product_subcategories($args = array()){
@@ -189,11 +103,11 @@ function jk_remove_storefront_header_search() {
 add_action('woocommerce_before_shop_loop', 'dbsnet_product_subcategories', 100);
 */
 
-function dbsnet_search_query($query){
+function dbsnet_main_search_query($query){
   if($query->is_search()){
     if(isset($_GET['category']) && !empty($_GET['category'])){
       $query->set('tax_query', array(
-        'taxonomy' => 'product_tax',
+        'taxonomy' => 'product_cat',
         'field' => 'slug',
         'terms' => array($_GET['category'])
         )
@@ -202,4 +116,117 @@ function dbsnet_search_query($query){
   }
   return $query;var_dump($query);die;
 }
-add_action('pre_get_posts', 'dbsnet_search_query', 1000);
+add_action('pre_get_posts', 'dbsnet_main_search_query', 1000);
+
+function storefront_recent_products( $args ) {
+
+  if ( storefront_is_woocommerce_activated() ) {
+    $args = apply_filters( 'storefront_recent_products_args', array(
+        'limit'       => 3,
+        'columns'       => 3,
+        'title'       => __( 'New In', 'storefront' ),
+      ) );
+    //echo '<section class="storefront-product-section storefront-best-selling-products" aria-label="Best Selling Products">';
+    //do_action( 'storefront_homepage_before_best_selling_products' );
+    //do_action( 'storefront_homepage_after_best_selling_products_title' );
+    echo storefront_do_shortcode( 'recent_products', apply_filters( 'storefront_recent_products_shortcode_args', array(
+        'per_page' => intval( $args['limit'] ),
+        'columns'  => intval( $args['columns'] ),
+      ) ) );
+    //do_action( 'storefront_homepage_after_best_selling_products' );
+    //echo '</section>';
+  }
+}
+add_shortcode( 'resent_products', 'storefront_recent_products' );
+
+function storefront_best_selling_products( $args ) {
+
+  if ( storefront_is_woocommerce_activated() ) {
+    $args = apply_filters( 'storefront_best_selling_products_args', array(
+      'limit'   => 3,
+      'columns' => 3,
+      'title'      => esc_attr__( 'Best Sellers', 'storefront' ),
+    ) );
+    //echo '<section class="storefront-product-section storefront-best-selling-products" aria-label="Best Selling Products">';
+    //do_action( 'storefront_homepage_before_best_selling_products' );
+    //do_action( 'storefront_homepage_after_best_selling_products_title' );
+    echo storefront_do_shortcode( 'best_selling_products', array(
+      'per_page' => intval( $args['limit'] ),
+      'columns'  => intval( $args['columns'] ),
+    ) );
+    //do_action( 'storefront_homepage_after_best_selling_products' );
+    //echo '</section>';
+  }
+}
+add_shortcode( 'best_sellers', 'storefront_best_selling_products' );
+function dbsnet_show_product_loop_sale_flash(){
+  add_filter('woocommerce_sale_flash', 'avia_change_sale_content', 10, 3);
+  
+}
+function avia_change_sale_content($content, $post, $product){
+return "";
+}
+remove_action('woocommerce_before_shop_loop_item', 'woocommerce_template_loop_product_link_open',10);
+remove_action('woocommerce_shop_loop_item_title', 'woocommerce_template_loop_product_title',10);
+remove_action( 'woocommerce_before_shop_loop_item_title', 'woocommerce_show_product_loop_sale_flash', 10 );
+remove_action( 'woocommerce_after_shop_loop_item_title', 'woocommerce_template_loop_price', 10 );
+remove_action( 'woocommerce_after_shop_loop_item', 'woocommerce_template_loop_product_link_close', 5 );
+remove_action( 'woocommerce_after_shop_loop_item', 'woocommerce_template_loop_add_to_cart', 10 );
+add_action('woocommerce_before_shop_loop_item', 'dbsnet_template_loop_product_link_open',10);
+add_action('woocommerce_shop_loop_item_title', 'dbsnet_template_shop_loop_item_title',10);
+add_action( 'woocommerce_before_shop_loop_item_title', 'dbsnet_show_product_loop_sale_flash', 10 );
+add_action('woocommerce_after_shop_loop_item_title', 'dbsnet_template_loop_price',10);
+add_action('woocommerce_after_shop_loop_item', 'dbsnet_template_loop_product_link_close',5);
+add_action( 'woocommerce_after_shop_loop_item', 'dbsnet_template_loop_add_to_cart', 10 );
+
+function dbsnet_template_loop_product_link_open(){
+  global $product;//var_dump($product);
+  echo '<span class="thumbnail thumbnail-mini">';
+  echo '<a href="' . get_the_permalink() . '" class="woocommerce-LoopProduct-link woocommerce-loop-product__link">';
+}
+function dbsnet_template_shop_loop_item_title(){
+  global $product;//var_dump($product);
+  echo '<h4 class="">' . get_the_title() . '</h4>';
+}
+function dbsnet_template_loop_price(){
+  global $product;//var_dump($product);
+  //var_dump($product);
+  if ( $price_html = $product->get_price_html() ){
+    echo '<p class="price">'. $price_html . '</p>';
+  }
+  
+}
+function dbsnet_template_loop_product_link_close(){
+  echo '</a><hr class="line">';
+}
+
+function dbsnet_template_loop_add_to_cart(){
+  global $product;
+
+  if ( $product ) {
+    $defaults = array(
+      'quantity' => 1,
+      'class'    => implode( ' ', array_filter( array(
+          'btn btn-success btn-block',
+          'product_type_' . $product->get_type(),
+          $product->is_purchasable() && $product->is_in_stock() ? 'add_to_cart_button' : '',
+          $product->supports( 'ajax_add_to_cart' ) ? 'ajax_add_to_cart' : '',
+      ) ) ),
+    );
+
+    $args = apply_filters( 'woocommerce_loop_add_to_cart_args', wp_parse_args( $args, $defaults ), $product );
+
+    //wc_get_template( 'loop/add-to-cart.php', $args );
+    echo apply_filters( 'woocommerce_loop_add_to_cart_link',
+      sprintf( '<a rel="nofollow" href="%s" data-quantity="%s" data-product_id="%s" data-product_sku="%s" class="%s">%s</a>',
+        esc_url( $product->add_to_cart_url() ),
+        esc_attr( isset( $defaults['quantity'] ) ? $defaults['quantity'] : 1 ),
+        esc_attr( $product->get_id() ),
+        esc_attr( $product->get_sku() ),
+        esc_attr( isset( $defaults['class'] ) ? $defaults['class'] : 'btn btn-success btn-block' ),
+        esc_html( 'Beli'/*$product->add_to_cart_text()*/ )
+      ),
+    $product );
+  }
+  echo '</span>';
+}

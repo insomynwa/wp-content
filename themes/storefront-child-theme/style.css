@@ -1,15 +1,15 @@
 /*
-Theme Name:   	Storefront Child Theme
-Theme URI:    	https://github.com/stuartduff/storefront-child-theme
-Author:       	Stuart Duff
+Theme Name:     Storefront Child Theme
+Theme URI:      https://github.com/stuartduff/storefront-child-theme
+Author:         Stuart Duff
 Author URI:     http://stuartduff.com
-Template:     	storefront
-Description:  	This is a blank child theme for WooThemes StoreFront theme
-Version:      	1.0.0
-License:      	GNU General Public License v2 or later
-License URI:  	http://www.gnu.org/licenses/gpl-2.0.html
-Text Domain:  	storefront
-Tags:         	black, white, light, two-columns, left-sidebar, right-sidebar, responsive-layout, custom-background, custom-colors, custom-header, custom-menu, featured-images, full-width-template, threaded-comments, accessibility-ready
+Template:       storefront
+Description:    This is a blank child theme for WooThemes StoreFront theme
+Version:        1.0.0
+License:        GNU General Public License v2 or later
+License URI:    http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain:    storefront
+Tags:           black, white, light, two-columns, left-sidebar, right-sidebar, responsive-layout, custom-background, custom-colors, custom-header, custom-menu, featured-images, full-width-template, threaded-comments, accessibility-ready
 This theme, like WordPress, is licensed under the GPL.
 Use it to make something cool, have fun, and share what you've learned with others.
 Storefront is based on Underscores http://underscores.me/, (C) 2012-2014 Automattic, Inc.
@@ -28,6 +28,49 @@ body{}
     margin-top: 50px;
 }
 /*
+sizing select in input-group
+*/
+.input-group-btn select{
+    width:auto !important;
+}
+/*
+Product list styles
+*/
+.thumbnail h4{
+    font-weight: 600;
+}
+.thumbnail p{
+    font-size: 12px;
+    margin-top: 5px;
+}
+.thumbnail .price{
+    font-size: 30px;
+    margin: 0 auto;
+    color: #333;
+}
+.thumbnail .right{
+    float:right;
+    border-bottom: 2px solid #4B8E4B;
+}
+.thumbnail{
+    opacity:0.70;
+    -webkit-transition: all 0.5s; 
+    transition: all 0.5s;
+}
+.thumbnail:hover{
+    opacity:1.00;
+    box-shadow: 0px 0px 10px #4bc6ff;
+}
+.thumbnail .line{
+    margin-bottom: 5px;
+}
+@media screen and (max-width: 770px) {
+    .thumbnail .right{
+        float:left;
+        width: 100%;
+    }
+}
+/*
 Go to top button
 */
 #topBtn {
@@ -39,8 +82,23 @@ Go to top button
     cursor: pointer;
 }
 /*
-sizing select in input-group
+List product
 */
-.input-group-btn select{
-    width:auto !important;
+ul.row{
+    margin:0;
+}
+.row .products {
+    list-style:none;
+}
+.row .products a:hover{
+    text-decoration: none;
+}
+.row .products h4{
+    margin-bottom:5px;
+}
+p.price del, p.price in{
+    font-size:.5em;
+}
+p.price del {
+    color: #f00;
 }
