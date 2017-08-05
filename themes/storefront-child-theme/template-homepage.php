@@ -29,7 +29,7 @@
     </a>
   </div>
 </div> <!-- /container -->
-<?php global $product; ?>
+
 <div class="container bg-info">
   <div class="row">
     <div class="col-sm-12 col-lg-6 col-md-6 bg-warning">
