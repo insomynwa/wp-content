@@ -165,11 +165,11 @@ class DBSnet_Woocp_Manager_Admin{
 
 	}
 
-	public function delete_woocp_batch_on_post_trash($product){
+	public function delete_woocp_batch_on_post_trash($product_id){
 		$args = array(
 			'post_type' => 'batch',
 			'meta_key' => 'meta_product_parent',
-			'meta_value' => $product->ID,
+			'meta_value' => $product_id,
 		);
 		$batches = get_posts($args); //var_dump($batches);die;
 
@@ -179,12 +179,12 @@ class DBSnet_Woocp_Manager_Admin{
 
 	}
 
-	public function unstrashed_woocp_batch_on_post_trash($product){
+	public function unstrashed_woocp_batch_on_post_trash($product_id){
 		$args = array(
 			'post_type' => 'batch',
 			'post_status' => 'trash',
 			'meta_key' => 'meta_product_parent',
-			'meta_value' => $product,
+			'meta_value' => $product_id,
 		);
 		//$get_posts = get_posts(104); var_dump($product);die;
 		$batches = get_posts($args); //var_dump(get_posts($args));die;
