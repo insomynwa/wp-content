@@ -1,6 +1,5 @@
 <?php get_header(); ?>
 <div class="container bg-info">
-      <!-- Example row of columns -->
       <div class="row"> 
 
 			<?php while ( have_posts() ) : the_post();
