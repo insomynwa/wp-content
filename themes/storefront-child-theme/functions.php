@@ -46,19 +46,27 @@ function dbsnettheme_wp_setup() {
 }
 add_action('after_setup_theme','dbsnettheme_wp_setup');
 
+add_action('pre_get_posts', 'dbsnet_main_search_query', 1000);
+
 add_action('dbsnet_theme_header', 'dbsnet_scripts_global',100);
 add_action('dbsnet_theme_header', 'dbsnet_go_top_navigation',100);
 add_action('dbsnet_theme_header', 'dbsnet_header_navigation',100);
-add_action('dbsnet_theme_header', 'dbsnet_header_search',100);
 
 add_action('dbsnet_theme_homepage', 'dbsnet_homepage_slideshow',100);
-add_action('dbsnet_theme_homepage', 'dbsnet_product_info_list',100);
-add_action('dbsnet_theme_homepage', 'dbsnet_products_list',100);
+add_action('dbsnet_theme_homepage', 'dbsnet_homepage_tenant',100);
+add_action('dbsnet_theme_homepage', 'dbsnet_product_categories',100);
+add_action('dbsnet_theme_homepage', 'dbsnet_product_hot',100);
+add_action('dbsnet_theme_homepage', 'dbsnet_product_best_seller',100);
 
 
-/************************************************************/
+// add_shortcode( 'dbsnet_product_categories', 'dbsnet_product_categories_shortcode' );
+// add_shortcode( 'resent_products', 'dbsnet_recent_products_shortcode' );
+// add_shortcode( 'best_sellers', 'dbsnet_best_selling_products_shortcode' );
+
 
 add_filter('show_admin_bar','__return_false');
+/************************************************************/
+
 
 add_action( 'init', 'jk_remove_storefront_header_search' );
 
@@ -66,127 +74,70 @@ function jk_remove_storefront_header_search() {
 	remove_action( 'storefront_header', 'storefront_product_search', 	40 );
 }
 
-function dbsnet_main_search_query($query){
-  if($query->is_search()){
-    if(isset($_GET['category']) && !empty($_GET['category'])){
-      $query->set('tax_query', array(
-        'taxonomy' => 'product_cat',
-        'field' => 'slug',
-        'terms' => array($_GET['category'])
-        )
-      );
-    }
-  }
-  return $query;var_dump($query);die;
-}
 
-add_action('pre_get_posts', 'dbsnet_main_search_query', 1000);
 
-function storefront_recent_products( $args ) {
-  if ( storefront_is_woocommerce_activated() ) {
-    $args = apply_filters( 'storefront_recent_products_args', array(
-        'limit'       => 3,
-        'columns'       => 3,
-        'title'       => __( 'New In', 'storefront' ),
-      ) );
-    echo storefront_do_shortcode( 'recent_products', apply_filters( 'storefront_recent_products_shortcode_args', array(
-        'per_page' => intval( $args['limit'] ),
-        'columns'  => intval( $args['columns'] ),
-      ) ) );
-  }
-}
 
-add_shortcode( 'resent_products', 'storefront_recent_products' );
+// remove_action('woocommerce_before_shop_loop_item', 'woocommerce_template_loop_product_link_open',10);
+// remove_action('woocommerce_shop_loop_item_title', 'woocommerce_template_loop_product_title',10);
+// remove_action( 'woocommerce_before_shop_loop_item_title', 'woocommerce_show_product_loop_sale_flash', 10 );
+// remove_action( 'woocommerce_after_shop_loop_item_title', 'woocommerce_template_loop_price', 10 );
+// remove_action( 'woocommerce_after_shop_loop_item', 'woocommerce_template_loop_product_link_close', 5 );
+// remove_action( 'woocommerce_after_shop_loop_item', 'woocommerce_template_loop_add_to_cart', 10 );
+// add_action('woocommerce_before_shop_loop_item', 'dbsnet_template_loop_product_link_open',10);
+// add_action('woocommerce_shop_loop_item_title', 'dbsnet_template_shop_loop_item_title',10);
+// add_action('woocommerce_after_shop_loop_item_title', 'dbsnet_template_loop_price',10);
+// add_action('woocommerce_after_shop_loop_item', 'dbsnet_template_loop_product_link_close',5);
+// add_action( 'woocommerce_after_shop_loop_item', 'dbsnet_template_loop_add_to_cart', 10 );
 
-function storefront_best_selling_products( $args ) {
+// function dbsnet_template_loop_product_link_open(){
+//   global $product;
+//   echo '<span class="thumbnail thumbnail-mini">';
+//   echo '<a href="' . get_the_permalink() . '" class="woocommerce-LoopProduct-link woocommerce-loop-product__link">';
+// }
 
-  if ( storefront_is_woocommerce_activated() ) {
-    $args = apply_filters( 'storefront_best_selling_products_args', array(
-      'limit'   => 3,
-      'columns' => 3,
-      'title'      => esc_attr__( 'Best Sellers', 'storefront' ),
-    ) );
-    echo storefront_do_shortcode( 'best_selling_products', array(
-      'per_page' => intval( $args['limit'] ),
-      'columns'  => intval( $args['columns'] ),
-    ) );
-  }
-}
+// function dbsnet_template_shop_loop_item_title(){
+//   global $product;
+//   echo '<h4 class="">' . get_the_title() . '</h4>';
+// }
 
-add_shortcode( 'best_sellers', 'storefront_best_selling_products' );
-
-function dbsnet_show_product_loop_sale_flash(){
-
-  add_filter('woocommerce_sale_flash', 'dbsnet_change_sale_content', 10, 3);
-}
-
-function dbsnet_change_sale_content($content, $post, $product){
-
-  return "";
-}
-
-remove_action('woocommerce_before_shop_loop_item', 'woocommerce_template_loop_product_link_open',10);
-remove_action('woocommerce_shop_loop_item_title', 'woocommerce_template_loop_product_title',10);
-remove_action( 'woocommerce_before_shop_loop_item_title', 'woocommerce_show_product_loop_sale_flash', 10 );
-remove_action( 'woocommerce_after_shop_loop_item_title', 'woocommerce_template_loop_price', 10 );
-remove_action( 'woocommerce_after_shop_loop_item', 'woocommerce_template_loop_product_link_close', 5 );
-remove_action( 'woocommerce_after_shop_loop_item', 'woocommerce_template_loop_add_to_cart', 10 );
-add_action('woocommerce_before_shop_loop_item', 'dbsnet_template_loop_product_link_open',10);
-add_action('woocommerce_shop_loop_item_title', 'dbsnet_template_shop_loop_item_title',10);
-add_action( 'woocommerce_before_shop_loop_item_title', 'dbsnet_show_product_loop_sale_flash', 10 );
-add_action('woocommerce_after_shop_loop_item_title', 'dbsnet_template_loop_price',10);
-add_action('woocommerce_after_shop_loop_item', 'dbsnet_template_loop_product_link_close',5);
-add_action( 'woocommerce_after_shop_loop_item', 'dbsnet_template_loop_add_to_cart', 10 );
-
-function dbsnet_template_loop_product_link_open(){
-  global $product;
-  echo '<span class="thumbnail thumbnail-mini">';
-  echo '<a href="' . get_the_permalink() . '" class="woocommerce-LoopProduct-link woocommerce-loop-product__link">';
-}
-
-function dbsnet_template_shop_loop_item_title(){
-  global $product;
-  echo '<h4 class="">' . get_the_title() . '</h4>';
-}
-
-function dbsnet_template_loop_price(){
-  global $product;
-  if ( $price_html = $product->get_price_html() ){
-    echo '<p class="price">'. $price_html . '</p>';
-  }
+// function dbsnet_template_loop_price(){
+//   global $product;
+//   if ( $price_html = $product->get_price_html() ){
+//     echo '<p class="price">'. $price_html . '</p>';
+//   }
   
-}
-function dbsnet_template_loop_product_link_close(){
+// }
+// function dbsnet_template_loop_product_link_close(){
 
-  echo '</a><hr class="line">';
-}
+//   echo '</a><hr class="line">';
+// }
 
-function dbsnet_template_loop_add_to_cart(){
-  global $product;
+// function dbsnet_template_loop_add_to_cart(){
+//   global $product;
 
-  if ( $product ) {
-    $defaults = array(
-      'quantity' => 1,
-      'class'    => implode( ' ', array_filter( array(
-          'btn btn-success btn-block',
-          'product_type_' . $product->get_type(),
-          $product->is_purchasable() && $product->is_in_stock() ? 'add_to_cart_button' : '',
-          $product->supports( 'ajax_add_to_cart' ) ? 'ajax_add_to_cart' : '',
-      ) ) ),
-    );
+//   if ( $product ) {
+//     $defaults = array(
+//       'quantity' => 1,
+//       'class'    => implode( ' ', array_filter( array(
+//           'btn btn-success btn-block',
+//           'product_type_' . $product->get_type(),
+//           $product->is_purchasable() && $product->is_in_stock() ? 'add_to_cart_button' : '',
+//           $product->supports( 'ajax_add_to_cart' ) ? 'ajax_add_to_cart' : '',
+//       ) ) ),
+//     );
 
-    $args = apply_filters( 'woocommerce_loop_add_to_cart_args', wp_parse_args( $args, $defaults ), $product );
+//     $args = apply_filters( 'woocommerce_loop_add_to_cart_args', wp_parse_args( $args, $defaults ), $product );
 
-    echo apply_filters( 'woocommerce_loop_add_to_cart_link',
-      sprintf( '<a rel="nofollow" href="%s" data-quantity="%s" data-product_id="%s" data-product_sku="%s" class="%s">%s</a>',
-        esc_url( $product->add_to_cart_url() ),
-        esc_attr( isset( $defaults['quantity'] ) ? $defaults['quantity'] : 1 ),
-        esc_attr( $product->get_id() ),
-        esc_attr( $product->get_sku() ),
-        esc_attr( isset( $defaults['class'] ) ? $defaults['class'] : 'btn btn-success btn-block' ),
-        esc_html( 'Beli'/*$product->add_to_cart_text()*/ )
-      ),
-    $product );
-  }
-  echo '</span>';
-}
+//     echo apply_filters( 'woocommerce_loop_add_to_cart_link',
+//       sprintf( '<a rel="nofollow" href="%s" data-quantity="%s" data-product_id="%s" data-product_sku="%s" class="%s">%s</a>',
+//         esc_url( $product->add_to_cart_url() ),
+//         esc_attr( isset( $defaults['quantity'] ) ? $defaults['quantity'] : 1 ),
+//         esc_attr( $product->get_id() ),
+//         esc_attr( $product->get_sku() ),
+//         esc_attr( isset( $defaults['class'] ) ? $defaults['class'] : 'btn btn-success btn-block' ),
+//         esc_html( $product->add_to_cart_text() )
+//       ),
+//     $product );
+//   }
+//   echo '</span>';
+// }

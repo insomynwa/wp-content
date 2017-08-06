@@ -1,6 +1,6 @@
 
 
-    <div class="container bg-primary">
+    <div class="container-fluid bg-primary">
       <footer>
         <p>&copy; 2016 Company, Inc.</p>
       </footer>
