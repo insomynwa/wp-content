@@ -33,12 +33,13 @@ class DBSnet_Woocp_Manager_Admin{
 
 	    foreach($batches_id as $key => $batch_id) {
 
-		    if($batch_id == 0) {
+		    if(($batch_id == 0) && (!empty($batch_start_date )) && (!empty($batch_end_date)) && (!empty($batch_stock)) && (!empty($batch_price)))
+		    {
 		   
 		    	// create new post (batch)
 		    	$batch_id = wp_insert_post( 
 		    		array(
-		    			'post_title'=>'batch_'.$post_id, 
+		    			'post_title'=>'batch_'.$post_id."_".$batch_price[$key], 
 		    			'post_type'=>'batch',
 		    			'post_status' => 'publish',
 		    			'post_content'=>'batch_'.$post_id));
@@ -95,6 +96,8 @@ class DBSnet_Woocp_Manager_Admin{
 			'post_type' => 'batch',
 			'meta_key' => 'meta_product_parent',
 			'meta_value' => $product->ID,
+			'orderby' => 'ID',
+			'order' => 'ASC'
 		);
 		$batches = get_posts($args); //var_dump(count($batches));
 		$index=0;
@@ -119,7 +122,7 @@ class DBSnet_Woocp_Manager_Admin{
 									<input type="text" name='batch_end_date[]' placeholder='End Date' class="custom-woocp-datepicker" value="<?php if(!empty($meta_batch_endate)) _e($meta_batch_endate); ?>" />
 									</td>
 									<td>
-									<input type="number" name='batch_stock[]' placeholder='Stock' class="form-control" value="<?php if(!empty($meta_batch_stock)) _e($meta_batch_stock); ?>"/>
+									<input type="number" name='batch_stock[]' placeholder='Stock' class="form-control" value="<?php _e($meta_batch_stock); ?>"/>
 									</td>
 									<td>
 									<input type="text" name='batch_price[]' placeholder='Price' class="form-control" value="<?php if(!empty($meta_batch_price)) _e($meta_batch_price); ?>"/>
