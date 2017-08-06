@@ -15,6 +15,8 @@ class DBSnet_Woocp_Manager {
 	private function load_dependencies() {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/dbsnet-woocp-manager-admin.php';
 		require_once plugin_dir_path( __FILE__ ) . 'dbsnet-woocp-manager-loader.php';
+		require_once plugin_dir_path(__FILE__) . 'dbsnet-woocp-class-batch.php';
+
 		$this->loader = new DBSnet_Woocp_Manager_Loader();
 	}
 
