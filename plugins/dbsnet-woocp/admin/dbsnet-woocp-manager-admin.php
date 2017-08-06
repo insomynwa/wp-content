@@ -134,6 +134,7 @@ class DBSnet_Woocp_Manager_Admin{
 		?>
 							<tr class="batch_row_table" id='addr<?php _e($index); ?>'>
 								<td>
+								<input id="" type="hidden" name="batch_id[]" value=""  />
 								<?php _e($index+1); ?>
 								</td>
 								<td>
@@ -150,8 +151,7 @@ class DBSnet_Woocp_Manager_Admin{
 								</td>
 								<td><a id='' class="delete-batch-row pull-right btn btn-default"><span id=""></span>Delete Row</a></td>
 							</tr>
-							<input id="" type="hidden" name="batch_deleted_id[]" value=""  />
-							<input id="" type="hidden" name="batch_id[]" value=""  />
+							<!-- <input id="" type="hidden" name="batch_deleted_id[]" value=""  /> -->
 							<tr class="batch_row_table" id='addr<?php _e($index+1); ?>'></tr>
 							</tbody>
 						</table>
@@ -166,6 +166,11 @@ class DBSnet_Woocp_Manager_Admin{
 	}
 
 	public function delete_woocp_batch_on_post_trash($product_id){
+		// Test: GetBatchesByProductId($product_id)
+		// $test_batch = new WOOCP_Batch();
+		// $get_batch = $test_batch->GetBatchesByProductId($product_id);
+		// var_dump($get_batch);die;
+
 		$args = array(
 			'post_type' => 'batch',
 			'meta_key' => 'meta_product_parent',
