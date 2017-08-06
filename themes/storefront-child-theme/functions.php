@@ -58,6 +58,8 @@ add_action('dbsnet_theme_homepage', 'dbsnet_product_categories',100);
 add_action('dbsnet_theme_homepage', 'dbsnet_product_hot',100);
 add_action('dbsnet_theme_homepage', 'dbsnet_product_best_seller',100);
 
+add_action('woocommerce_single_product_summary', 'dbsnet_product_batch',6);
+
 
 // add_shortcode( 'dbsnet_product_categories', 'dbsnet_product_categories_shortcode' );
 // add_shortcode( 'resent_products', 'dbsnet_recent_products_shortcode' );
@@ -65,6 +67,7 @@ add_action('dbsnet_theme_homepage', 'dbsnet_product_best_seller',100);
 
 
 add_filter('show_admin_bar','__return_false');
+//add_filter('woocommerce_product_get_price', 'dbsnet_batch_get_price',20,3);
 /************************************************************/
 
 

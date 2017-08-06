@@ -214,7 +214,7 @@ function dbsnet_product_hot(){
 	);
 	$loop = new WP_Query( $args );
 	?>
-	<div id="dbsnet-products-hot" class="container-fluid bg-info">
+	<div id="dbsnet-products-hot" class="container bg-info">
 		<div>
 			<h3>Produk Terbaru</h3>
 		</div>
@@ -271,7 +271,7 @@ function dbsnet_product_best_seller(){
 	);
 	$loop = new WP_Query( $args );
 	?>
-	<div id="dbsnet-products-best-seller" class="container-fluid bg-info">
+	<div id="dbsnet-products-best-seller" class="container bg-info">
 		<div>
 			<h3>Produk Terlaris</h3>
 		</div>
@@ -308,7 +308,7 @@ function dbsnet_homepage_tenant(){
 	$tenants = get_users(array('role__in' => 'tenant_role'));
 	// var_dump($tenant);
 	?>
-	<div id="dbsnet-products-tenant" class="container-fluid bg-success">
+	<div id="dbsnet-products-tenant" class="container bg-success">
 		<div class="row">
 			<div>
 				<h3>Tenant</h3>
@@ -353,7 +353,7 @@ function dbsnet_product_categories(){
 	
 	// var_dump($all_categories[0]);
 	?>
-	<div id="dbsnet-products-categories" class="container-fluid bg-info">
+	<div id="dbsnet-products-categories" class="container bg-info">
 		<div>
 			<h3>Kategori</h3>
 		</div>
@@ -377,6 +377,68 @@ function dbsnet_product_categories(){
 	</div>
 	<?php
 	
+}
+
+function dbsnet_product_batch(){
+	global $product;
+
+	$batches = get_posts( array(
+	    'post_type'	=> 'batch',
+	    'meta_query'	=> array(
+	    	'relation'	=> 'AND',
+	    	'meta_product_parent_clause' => 
+		    	array(
+		    		'key'	=> 'meta_product_parent',
+		    		'value'	=> $product->get_id(),
+		    		'compare'	=> '='
+		    		),
+		    'meta_batch_stock_clause' =>
+		    	array(
+		    		'key'	=> 'meta_batch_stock',
+		    		'value'	=> 0,
+		    		'compare'	=> '>'
+		    		) ,
+		    'meta_batch_price_clause' =>
+		    	array(
+		    		'key'	=> 'meta_batch_price',
+		    		'value'	=> 0,
+		    		'compare'	=> '>'
+		    		) ,
+		    	),
+	    'orderby' => array('meta_batch_price_clause'=>'ASC'),
+	) );//var_dump($batches[0]);
+	if($batches):
+	?>
+	<table>
+		<thead>
+			<tr>
+				<td>Batch</td>
+				<td>Produksi</td>
+				<td>Kadaluarsa</td>
+				<td>Stok</td>
+				<td>Harga</td>
+				<td></td>
+				<td></td>
+			</tr>
+		</thead>
+		<?php $i=1; foreach($batches as $batch): ?>
+			<?php $batch_production = get_post_meta( $batch->ID, 'meta_batch_startdate', true ); ?>
+			<?php $batch_expired = get_post_meta( $batch->ID, 'meta_batch_endate', true ); ?>
+			<?php $batch_stock = get_post_meta( $batch->ID, 'meta_batch_stock', true ); ?>
+			<?php $batch_price = get_post_meta( $batch->ID, 'meta_batch_price', true ); ?>
+		<tr>
+			<td><?php echo $i; ?></td>
+			<td><?php echo $batch_production; ?></td>
+			<td><?php echo $batch_expired; ?></td>
+			<td><?php echo $batch_stock; ?></td>
+			<td><?php echo $batch_price; ?></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<?php $i++; endforeach; ?>
+	</table>
+	<?php
+	endif;
 }
 
 /*function dbsnet_product_categories_shortcode(){
@@ -408,5 +470,15 @@ function dbsnet_main_search_query($query){
       );
     }
   }
-  return $query;var_dump($query);die;
+  return $query;//var_dump($query);die;
+}
+
+function dbsnet_batch_get_price($price, $post){
+	var_dump($price);
+	var_dump($_GET['jumlah']);
+	var_dump($post->post->post_type);die;
+	if($post->post->post_type === 'product'){
+		$price = get_post_meta($post->post_id, "meta_batch_price", true);
+	}
+	return $price;
 }
