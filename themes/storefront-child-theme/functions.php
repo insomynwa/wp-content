@@ -46,9 +46,17 @@ function dbsnettheme_wp_setup() {
 }
 add_action('after_setup_theme','dbsnettheme_wp_setup');
 
-add_action('storefront_before_site', 'dbsnet_scripts_global',100);
-add_action('storefront_before_site', 'dbsnet_go_top_navigation',100);
-add_action('storefront_before_site', 'dbsnet_header_navigation',100);
+add_action('dbsnet_theme_header', 'dbsnet_scripts_global',100);
+add_action('dbsnet_theme_header', 'dbsnet_go_top_navigation',100);
+add_action('dbsnet_theme_header', 'dbsnet_header_navigation',100);
+add_action('dbsnet_theme_header', 'dbsnet_header_search',100);
+
+add_action('dbsnet_theme_homepage', 'dbsnet_homepage_slideshow',100);
+add_action('dbsnet_theme_homepage', 'dbsnet_product_info_list',100);
+add_action('dbsnet_theme_homepage', 'dbsnet_products_list',100);
+
+
+/************************************************************/
 
 add_filter('show_admin_bar','__return_false');
 

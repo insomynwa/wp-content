@@ -24,13 +24,19 @@ Images License: GNU General Public License v2 or later
 give space the block after navbar
 */
 body{}
-.after-navbar {
-    margin-top: 50px;
+/*
+header navbar
+*/
+#dbsnet-header-search {
+    margin-top: 51px;
 }
 /*
-sizing select in input-group
+header search
 */
-.input-group-btn select{
+#dbsnet-header-search > div > form{
+    margin-bottom:0;
+}
+#dbsnet-header-search > div > form > div > span:nth-child(1) > select{
     width:auto !important;
 }
 /*
