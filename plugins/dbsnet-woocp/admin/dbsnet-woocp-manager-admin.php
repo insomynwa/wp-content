@@ -18,41 +18,147 @@ class DBSnet_Woocp_Manager_Admin{
 	}
 
 	public function save_woocp_batch_product_data_fields($post_id){
-		
+		//var_dump($_POST);die;
+		if(!$post_id){
+			return false;
+		}
+		// force product as variable product
+		wp_set_object_terms( $post_id, 'variable', "product_type" );
+
+		$post_temp_id = $post_id;
 		$batch_start_date = $_POST['batch_start_date'];
 		$batch_end_date = $_POST['batch_end_date'];
 		$batch_stock = $_POST['batch_stock'];
 		$batch_price = $_POST['batch_price'];
-
-		$deleted_batches_id = $_POST['batch_deleted_id'];
-		foreach($deleted_batches_id as $deleted_batch_id){
-			wp_delete_post( $deleted_batch_id, true );
+		$product_batch_title = sanitize_text_field( $_POST['product_batch_title']);
+		if($product_batch_title==""){
+			$product_batch_title = sanitize_text_field( $_POST['post_title'] );
 		}
-	    
+
+		if(isset($_POST['batch_deleted_id'])){
+			$deleted_batches_id = $_POST['batch_deleted_id'];
+			foreach($deleted_batches_id as $deleted_batch_id){
+				wp_delete_post( $deleted_batch_id, true );
+			}
+		}
+	    // var_dump($batch_start_date);die;
 		$batches_id = $_POST['batch_id']; //var_dump($batches_id);die;
-
+		$i=0;
 	    foreach($batches_id as $key => $batch_id) {
-
-		    if(($batch_id == 0) && (!empty($batch_start_date )) && (!empty($batch_end_date)) && (!empty($batch_stock)) && (!empty($batch_price)))
+	    	$get_the_batch_id=$batch_id;
+	    	$title = $product_batch_title." - Batch ".$batch_id;
+		    if(($batch_id == "") && (sanitize_text_field( $batch_start_date[$i] )!="") && (sanitize_text_field( $batch_end_date[$i] )!="") && (sanitize_text_field( $batch_stock[$i] )!="") && (sanitize_text_field( $batch_price[$i] )!=""))
 		    {
-		   
-		    	// create new post (batch)
-		    	$batch_id = wp_insert_post( 
-		    		array(
-		    			'post_title'=>'batch_'.$post_id."_".$batch_price[$key], 
-		    			'post_type'=>'batch',
+		    	$batch_args = array(
+		    			'post_title'=> $title, 
+		    			'post_name'	=> 'product-'.$post_id.'-variation-'. $i, 
 		    			'post_status' => 'publish',
-		    			'post_content'=>'batch_'.$post_id));
+		    			'post_type'=>'product_variation',
+		    			'post_parent' => $post_id,
+		    			// 'post_content'=>'batch_'.$post_id
+		    			'menu_order' => $i,
+		    			'guid' => home_url().'/?product_variation=product-'. $post_id. '-variation-' . $i
+		    			);
+		    	$get_the_batch_id = wp_insert_post( $batch_args);
 		    	// create metadata (post_id)
-		    	update_post_meta( $batch_id, 'meta_product_parent', $post_id);
+		    	// update_post_meta( $batch_id, 'meta_product_parent', $post_id);
 		    }
-		    update_post_meta($batch_id,'meta_batch_startdate', $batch_start_date[$key]);
-			update_post_meta($batch_id,'meta_batch_endate', $batch_end_date[$key]);
-			update_post_meta($batch_id,'meta_batch_stock', $batch_stock[$key]);
-			update_post_meta($batch_id,'meta_batch_price', $batch_price[$key]);
+		    if( $get_the_batch_id !="" && $get_the_batch_id>0 ){
+		    	//var_dump("UYE");die;
+			    /*update_post_meta($get_the_batch_id,'meta_batch_startdate', $batch_start_date[$key]);
+				update_post_meta($get_the_batch_id,'meta_batch_endate', $batch_end_date[$key]);
+				update_post_meta($get_the_batch_id,'_stock', $batch_stock[$key]);
+				update_post_meta($get_the_batch_id,'_regular_price', $batch_price[$key]);
+				update_post_meta($get_the_batch_id,'_manage_stock', 'yes');
+				update_post_meta($get_the_batch_id,'attribute_pa_batch', $get_the_batch_id);*/
+
+		    	// save attributes & update variation
+		    	$variations = array(
+		    		array(
+		    			'attributes' => array(
+		    				'batchid'	=> 'batch_'.$get_the_batch_id,
+		    				'startdate' => $batch_start_date[$key],
+		    				'enddate' => $batch_end_date[$key]
+		    				),
+		    			'price' => $batch_price[$key],
+		    			'stock' => $batch_stock[$key],
+		    			'manage_stock' => 'yes'
+		    			)
+		    		);
+		    	$available_attributes = array('batchid','startdate','enddate');
+		    	$this->insertProductAttributes($post_id,$available_attributes,$variations);
+		    	$this->insertProductVariations($post_id,$get_the_batch_id,$variations);
+			}
+			
+			$i++;
 		}
 
+	}
 
+	private function insertProductAttributes($post_id, $available_attributes, $variations){
+		foreach ($available_attributes as $attribute){
+    		$values = array(); // Set up an array to store the current attributes values.
+
+	        foreach ($variations as $variation) // Loop each variation in the file
+	        {
+	            $attribute_keys = array_keys($variation['attributes']); // Get the keys for the current variations attributes
+
+	            foreach ($attribute_keys as $key) // Loop through each key
+	            {
+	                if ($key === $attribute) // If this attributes key is the top level attribute add the value to the $values array
+	                {
+	                    $values[] = $variation['attributes'][$key];
+	                }
+	            }
+	        }//var_dump($values[0]);die;
+    		$values = array_unique($values);//var_dump(taxonomy_exists('pa_'.$attribute));die;//var_dump(get_term_by('name','biru','pa_color'));die;
+    		$terms = get_term_by('name', $values[0], 'pa_'.$attribute);//var_dump($terms);die;
+    		if(!$terms){
+    			//var_dump("CIE");
+    			wp_insert_term( $values[0], 'pa_'.$attribute);
+    		}
+    		wp_set_object_terms($post_id,$values[0],'pa_'.$attribute);
+    	}
+    	$product_attributes_data = array();
+    	foreach($available_attributes as $attribute){
+    		$product_attributes_data['pa_'.$attribute] = array(
+    			'name'		=> 'pa_'.$attribute,
+    			'value'		=> '',
+    			'is_visible'=> '1',
+    			'is_variation'=>'1',
+    			'is_taxonomy'=>'1'
+    			);
+    	}
+    	update_post_meta($post_id,'_product_attributes', $product_attributes_data);
+	}
+
+	private function insertProductVariations($post_id, $variation_post_id, $variations){
+		foreach ($variations as $index => $variation){
+	        // $variation_post = array( // Setup the post data for the variation
+	        // 	'ID'			=> $variation_post_id,
+	        //     'post_title'  => 'Batch #'.$index.' of '.count($variations).' for product#'. $post_id,
+	        //     'post_name'   => 'product-'.$post_id.'-variation-'.$index,
+	        //     'post_status' => 'publish',
+	        //     'post_parent' => $post_id,
+	        //     'post_type'   => 'product_variation',
+	        //     'guid'        => home_url() . '/?product_variation=product-' . $post_id . '-variation-' . $index
+	        // );
+
+	        // $variation_post_id = wp_insert_post($variation_post); // Insert the variation
+
+	        foreach ($variation['attributes'] as $attribute => $value) // Loop through the variations attributes
+	        {   
+	            $attribute_term = get_term_by('name', $value, 'pa_'.$attribute); // We need to insert the slug not the name into the variation post meta
+	            //var_dump($attribute_term);die;
+	            update_post_meta($variation_post_id, 'attribute_pa_'.$attribute, $attribute_term->slug);
+	          // Again without variables: update_post_meta(25, 'attribute_pa_size', 'small')
+	        }
+
+	        //update_post_meta($variation_post_id, '_price', $variation['price']);
+	        update_post_meta($variation_post_id, '_regular_price', $variation['price']);
+	        update_post_meta($variation_post_id,'_stock', $variation['stock']);
+			update_post_meta($variation_post_id,'_manage_stock', $variation['manage_stock']);
+	    }
 	}
 
 	public function add_woocp_product_metabox(){
@@ -65,6 +171,7 @@ class DBSnet_Woocp_Manager_Admin{
 	}
 
 	public function woocp_product_metabox_html($product){
+
 		?>
 		<div class="container">
 		<div class="row clearfix">
@@ -91,11 +198,12 @@ class DBSnet_Woocp_Manager_Admin{
 							</thead>
 							<tbody> 
 		<?php
-
+//var_dump($product);die;
 		$args = array(
-			'post_type' => 'batch',
-			'meta_key' => 'meta_product_parent',
-			'meta_value' => $product->ID,
+			'post_type' => 'product_variation',
+			// 'meta_key' => 'meta_product_parent',
+			'post_parent' => $product->ID,
+			// 'meta_value' => $product->ID,
 			'orderby' => 'ID',
 			'order' => 'ASC'
 		);
@@ -103,10 +211,10 @@ class DBSnet_Woocp_Manager_Admin{
 		$index=0;
 		foreach($batches as $batch){
 			$this->prev_batch[$index] = $batch->ID;
-			$meta_batch_startdate = get_post_meta( $batch->ID, 'meta_batch_startdate', true ); 
-			$meta_batch_endate = get_post_meta( $batch->ID, 'meta_batch_endate', true );
-			$meta_batch_stock = get_post_meta( $batch->ID, 'meta_batch_stock', true );
-			$meta_batch_price = get_post_meta( $batch->ID, 'meta_batch_price', true );
+			$meta_batch_startdate = get_post_meta( $batch->ID, 'attribute_pa_startdate', true ); 
+			$meta_batch_endate = get_post_meta( $batch->ID, 'attribute_pa_enddate', true );
+			$meta_batch_stock = get_post_meta( $batch->ID, '_stock', true );
+			$meta_batch_price = get_post_meta( $batch->ID, '_regular_price', true );
 	    ?>
 
 	     
@@ -158,6 +266,7 @@ class DBSnet_Woocp_Manager_Admin{
 							<tr class="batch_row_table" id='addr<?php _e($index+1); ?>'></tr>
 							</tbody>
 						</table>
+						<input id="" type="hidden" name="product_batch_title" value="<?php _e($product->post_title); ?>"  />
 					</div>
 				</div>
 									
