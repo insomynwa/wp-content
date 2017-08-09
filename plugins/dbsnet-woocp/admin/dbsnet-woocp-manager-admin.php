@@ -10,9 +10,10 @@ class DBSnet_Woocp_Manager_Admin{
 	public function enqueue_scripts_and_styles(){
 		wp_register_script( 'dbsnet-woocp', plugin_dir_url( __FILE__ ) . 'js/dbsnet-woocp.js' );
 		wp_enqueue_script( 'jquery-ui-datepicker' );
+		wp_enqueue_script( 'jquery-ui-progressbar' );
 		wp_enqueue_script('dbsnet-woocp');
 
-		wp_enqueue_style( 'jquery-ui-datepicker', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/themes/smoothness/jquery-ui.css' );
+		// wp_enqueue_style( 'jquery-ui-datepicker', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/themes/smoothness/jquery-ui.css' );
 
 		wp_localize_script(
 			'dbsnet-woocp', 
@@ -45,6 +46,8 @@ class DBSnet_Woocp_Manager_Admin{
 								<th class="text-center">Expired Date</th>
 								<th class="text-center">Stock</th>
 								<th class="text-center">Price</th>
+								<th class="text-center"></th>
+								<th class="text-center"></th>
 							</tr>
 						</thead>
 						<tbody> 
@@ -91,9 +94,11 @@ class DBSnet_Woocp_Manager_Admin{
 			<td>
 				<input id='price<?php _e($batch->ID); ?>' type="text" name='batch_price[]' placeholder='Price' class="form-control" value="<?php if(!empty($meta_batch_price)) _e($meta_batch_price); ?>"/>
 			</td>
-			<td><a id='' class="delete-batch-row pull-right btn btn-default"><span id="<?php _e($batch->ID); ?>"></span>Delete Row</a><a id='' data-product-id='<?php _e($product->ID); ?>' data-batch-id='<?php _e($batch->ID); ?>' class='update-batch-btn btn btn-default'>Update</a></td>
+			<td>
+				<button id='' data-product-id='<?php _e($product->ID); ?>' data-batch-id='<?php _e($batch->ID); ?>' class='update-batch-btn button-primary'>Update</button>
+			</td>
+			<td><a href='#' id='' data-batch-id="<?php _e($batch->ID); ?>" class="delete-batch-row btn btn-default"><span id="<?php _e($batch->ID); ?>"></span>Delete</a></td>
 		</tr>
-		<input id="inpt<?php _e($index); ?>" type="hidden" name="batch_deleted_id[]" value=""  />
 	
 		<?php
 		$index++;
@@ -105,8 +110,8 @@ class DBSnet_Woocp_Manager_Admin{
 				<input id="product-title" type="hidden" name="product_batch_title" value="<?php _e($product->post_title); ?>"  />
 			</div>
 		</div>
-							
-		<a id="add_row" class="btn btn-primary pull-left" data-product-id="<?php _e($product->ID); ?>"><span id="<?php _e($index+1); ?>"></span>Add Batch</a>
+		<div id="batch-add-progress"></div>					
+		<a href="#" id="add_row" class="btn btn-primary pull-left" data-product-id="<?php _e($product->ID); ?>"><span id="<?php _e($index+1); ?>"></span>Add Batch</a>
 		</div>
 		<?php
 
@@ -350,6 +355,23 @@ class DBSnet_Woocp_Manager_Admin{
 
     	update_post_meta($post_id,'_product_attributes', $product_attributes_data);
 	    	
+	}
+
+	public function DeleteBatch(){
+
+		$responses = array('status'=>false, 'message'=>"I hope you don't see this message. Error: function UpdateBatch(). Happy var_dump()!!!",'data' => array());
+		$post_batch_id = sanitize_text_field( $_POST['batch'] );
+		$is_ValidPost = $post_batch_id > 0;
+		if($is_ValidPost) {
+			$batch = wc_get_product( $post_batch_id );
+			$batch->delete( true );
+
+	    	$responses['status'] = true;
+    		$responses['message'] = "SUCCESS delete batch";
+		}
+
+    	echo wp_json_encode( $responses );
+		wp_die();
 	}
 }
 

@@ -43,6 +43,7 @@ class DBSnet_Woocp_Manager {
 		// Add Row Batch
 		$this->loader->add_action('wp_ajax_AjaxAddBatch', $admin, 'AddBatch');
 		$this->loader->add_action('wp_ajax_AjaxUpdateBatch', $admin, 'UpdateBatch');
+		$this->loader->add_action('wp_ajax_AjaxDeleteBatch', $admin, 'DeleteBatch');
 	}
 
 	public function run() {
