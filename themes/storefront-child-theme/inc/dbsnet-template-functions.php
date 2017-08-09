@@ -21,6 +21,18 @@ function dbsnet_scripts_global(){
 			}
 		}
 
+		$(".batch-buy-button").click(function(){
+			var trParent = $(this).closest('tr');
+			var idSib = trParent.children("td").children("input.batch-hidden-id");
+			var priceSib = trParent.children("td").children("input.batch-hidden-price");
+			var quantitySib = trParent.children("td").children("input.batch-hidden-quantity");
+			
+			$("#batch-modal-hidden-id").val(idSib.val());
+			$("#batch-modal-hidden-price").val(priceSib.val());
+			$("#batch-modal-quantity").attr('max', quantitySib.val());
+			$("#batch-modal").modal("show");
+		});
+
 	});
 	</script>
 	<?php
@@ -418,7 +430,6 @@ function dbsnet_product_batch(){
 				<td>Stok</td>
 				<td>Harga</td>
 				<td></td>
-				<td></td>
 			</tr>
 		</thead>
 		<?php $i=1; foreach($batches as $batch): ?>
@@ -427,37 +438,50 @@ function dbsnet_product_batch(){
 			<?php $batch_stock = get_post_meta( $batch->ID, 'meta_batch_stock', true ); ?>
 			<?php $batch_price = get_post_meta( $batch->ID, 'meta_batch_price', true ); ?>
 		<tr>
-			<td><?php echo $i; ?></td>
+			<td><?php echo $i; ?><input class="batch-hidden-id" type="hidden" value="<?php echo $batch->ID; ?>" /></td>
 			<td><?php echo $batch_production; ?></td>
 			<td><?php echo $batch_expired; ?></td>
-			<td><?php echo $batch_stock; ?></td>
-			<td><?php echo $batch_price; ?></td>
-			<td></td>
-			<td></td>
+			<td><?php echo $batch_stock; ?><input class="batch-hidden-quantity" type="hidden" value="<?php echo $batch_stock; ?>" /></td>
+			<td><?php echo $batch_price; ?><input class="batch-hidden-price" type="hidden" value="<?php echo $batch_price; ?>" /></td>
+			<td>
+				<button class="batch-buy-button" class="btn btn-info" type="button">Beli</button>
+			</td>
 		</tr>
 		<?php $i++; endforeach; ?>
 	</table>
+	<!-- Modal -->
+	<div id="batch-modal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+
+		<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 id="batch-modal-header" class="modal-title">Modal Header</h4>
+				</div>
+				<div class="modal-body">
+					<form method="post" action="">
+						<div class="form-group">
+							<label for="batch-quantity">Jumlah</label>
+							<input type="number" min="1" max="100" name="batch-quantity" value="1" id="batch-modal-quantity">
+						</div>
+						<div class="form-group">
+							<input type="hidden" name="batch-price" value="" id="batch-modal-hidden-price">
+							<input type="hidden" name="batch-id" value="" id="batch-modal-hidden-id">
+							<button id="batch-modal-submit" type="submit" name="add-to-cart" value="<?php echo $product->get_id(); ?>">Add to cart</button>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+
+		</div>	
+	</div>
 	<?php
 	endif;
 }
-
-/*function dbsnet_product_categories_shortcode(){
-	if ( storefront_is_woocommerce_activated() ) {
-	    $args = apply_filters( 'storefront_product_categories_args', array(
-			'limit' 			=> 3,
-			'columns' 			=> 3,
-			'child_categories' 	=> 0,
-			'orderby' 			=> 'name',
-			'title'				=> __( 'Shop by Category', 'storefront' ),
-		) );
-    	echo storefront_do_shortcode( 'product_categories', apply_filters( 'storefront_product_categories_shortcode_args', array(
-			'number'  => intval( $args['limit'] ),
-			'columns' => intval( $args['columns'] ),
-			'orderby' => esc_attr( $args['orderby'] ),
-			'parent'  => esc_attr( $args['child_categories'] ),
-		) ) );
-	}
-}*/
 
 function dbsnet_main_search_query($query){
   if($query->is_search()){
@@ -474,11 +498,16 @@ function dbsnet_main_search_query($query){
 }
 
 function dbsnet_batch_get_price($price, $post){
-	var_dump($price);
-	var_dump($_GET['jumlah']);
-	var_dump($post->post->post_type);die;
+	// echo "GET:";
+	//var_dump($_GET);
+	// echo "POST";
+	//var_dump($_POST);die;
+	// var_dump($price);
+	// var_dump($_GET['jumlah']);
+	// var_dump($post->post->post_type);die;
 	if($post->post->post_type === 'product'){
-		$price = get_post_meta($post->post_id, "meta_batch_price", true);
+		$price = get_post_meta($_POST['batch-id'], "meta_batch_price", true);
 	}
+	//var_dump($price);die;
 	return $price;
 }

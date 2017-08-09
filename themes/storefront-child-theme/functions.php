@@ -67,7 +67,7 @@ add_action('woocommerce_single_product_summary', 'dbsnet_product_batch',6);
 
 
 add_filter('show_admin_bar','__return_false');
-//add_filter('woocommerce_product_get_price', 'dbsnet_batch_get_price',20,3);
+add_filter('woocommerce_product_get_price', 'dbsnet_batch_get_price',20,3);
 /************************************************************/
 
 
