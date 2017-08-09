@@ -12,9 +12,6 @@ class DBSnet_Woocp_Manager_Admin{
 		wp_enqueue_script( 'jquery-ui-datepicker' );
 		wp_enqueue_script('dbsnet-woocp');
 
-		/*wp_enqueue_script('admin_js_bootstrap',plugin_dir_url(__FILE__).'bootstrap/js/bootstrap.min.js',false,'3.3.7',false);
-        wp_enqueue_style('admin_css_bootstrap', plugin_dir_url(__FILE__).'bootstrap/css/bootstrap.min.css',true,'3.3.7','all');*/
-
 		wp_enqueue_style( 'jquery-ui-datepicker', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/themes/smoothness/jquery-ui.css' );
 
 		wp_localize_script(
@@ -24,33 +21,6 @@ class DBSnet_Woocp_Manager_Admin{
 				'ajax_url' => admin_url('admin-ajax.php'), 'dbsnet_security' => 'd85n3t'
 				)
 		);
-	}
-
-	public function save_woocp_batch_product_data_fields($post_id){
-		//var_dump($_POST);die;
-		if(!$post_id){
-			return false;
-		}
-		// force product as variable product
-		wp_set_object_terms( $post_id, 'variable', "product_type" );
-
-		$product_batch_title = sanitize_text_field( $_POST['product_batch_title']);
-		if($product_batch_title==""){
-			$product_batch_title = sanitize_text_field( $_POST['post_title'] );
-		}
-		$batches_id = $_POST['batch_id']; //var_dump($batches_id);die;
-		// $i=0;
-		if($batches_id[0] != "" && $batches_id[0] > 0){
-		    foreach($batches_id as $key => $batch_id) {
-		    	// $get_the_batch_id=$batch_id;
-		    	$title = $product_batch_title." - Batch #".$batch_id;
-		    	$batch_data = array(
-					'ID'           => $batch_id,
-					'post_title'   => $title,
-				);
-			}
-		}
-
 	}
 
 	public function add_woocp_product_metabox(){
@@ -210,7 +180,7 @@ class DBSnet_Woocp_Manager_Admin{
 		register_post_type( 'batch', $args );
 	}
 
-	public function AddBatch(){//echo wp_json_encode( $result );
+	public function AddBatch(){
     	
 
     	$responses = array('status'=>false, 'message'=>"I hope you don't see this message. Error: function AddBatch(). Happy var_dump()!!!",'data' => array());
@@ -271,8 +241,6 @@ class DBSnet_Woocp_Manager_Admin{
 
 		if($isValidPost){
 
-			//wp_update_post(array('ID'=>$post_batch_id,'post_title'=>$post_product_title.' - Batch #'.$post_batch_id));
-
 			// Setting attributes
 			$available_attributes = array( 'batchid', 'startdate','enddate');
 			$variations = array(
@@ -301,9 +269,6 @@ class DBSnet_Woocp_Manager_Admin{
 				update_post_meta($post_batch_id,'attribute_pa_'.$attribute, $post_product_id.'-'.$variations[$attribute]);
 					
 			}
-	    	// update_post_meta($post_batch_id,'attribute_pa_batchid', 'Batch #'.$post_batch_id);
-	    	// update_post_meta($post_batch_id,'attribute_pa_startdate', $post_start_date);
-	    	// update_post_meta($post_batch_id,'attribute_pa_enddate', $post_end_date);
 	    	update_post_meta($post_batch_id,'_regular_price', $post_price);
 	    	update_post_meta($post_batch_id,'_stock', $post_stock);
 
@@ -345,9 +310,6 @@ class DBSnet_Woocp_Manager_Admin{
 		$product = get_post($post_id);
 		$variations_slug = array();
 		$variations_name = array();
-		// $attributes_batchid = array();
-		// $attributes_startdate = array();
-		// $attributes_enddate = array();
 		foreach($batches as $batch){
 			$meta_batchid_slug = get_post_meta( $batch->ID, 'attribute_pa_batchid', true );
 			$meta_startdate_slug = get_post_meta( $batch->ID, 'attribute_pa_startdate', true );
@@ -364,10 +326,6 @@ class DBSnet_Woocp_Manager_Admin{
 			$variations_name['batchid'][] = $terms_batchid->name;
 			$variations_name['startdate'][] = $terms_startdate->name;
 			$variations_name['enddate'][] = $terms_enddate->name;
-
-			// $attributes_batchid[] = get_post_meta( $batch->ID, 'attribute_pa_batchid', true );
-			// $attributes_startdate[] = get_post_meta( $batch->ID, 'attribute_pa_startdate', true ); 
-			// $attributes_enddate[] = get_post_meta( $batch->ID, 'attribute_pa_enddate', true );
 		}
 		$variations_slug['batchid'] = array_unique($variations_slug['batchid']);
 		$variations_slug['startdate'] = array_unique($variations_slug['startdate']);
@@ -377,11 +335,6 @@ class DBSnet_Woocp_Manager_Admin{
 		$variations_name['startdate'] = array_unique($variations_name['startdate']);
 		$variations_name['enddate'] = array_unique($variations_name['enddate']);
 
-		// $variations_slug = array(
-		// 	'batchid'	=> $attributes_batchid,
-		// 	'startdate'	=> array_unique($attributes_startdate),
-		// 	'enddate'	=> array_unique($attributes_enddate)
-		// );
 		wp_set_object_terms($post_id, 'variable', 'product_type');
     	$product_attributes_data = array();
 		foreach($available_attributes as $attribute){//batchid, startdate, enddate
@@ -392,47 +345,10 @@ class DBSnet_Woocp_Manager_Admin{
     			'is_variation'=>'1',
     			'is_taxonomy'=>'1'
     		);
-    		if($attribute!="batchid"){
-				// $product_attributes_data['pa_'.$attribute]['is_variation']= '0';
-    		}
-   //  		foreach($variations_slug[$attribute] as $variation){
-			// 	$terms = get_term_by('name', $variation, 'pa_'.$attribute);
-			// 	if(!$terms){
-			// 		wp_insert_term( $variation, 'pa_'.$attribute, array('slug'=>$post_id.'-'.$variation));
-			// 	}
-			// }
 			wp_set_object_terms($post_id,$variations_slug[$attribute],'pa_'.$attribute);
     	}
 
     	update_post_meta($post_id,'_product_attributes', $product_attributes_data);
-
-		
-    	/*$step=0;
-		foreach($batches as $batch){
-
-			$attribute_batchid_term = get_term_by('name', $variations['batchid'][$step], 'pa_batchid');
-			
-			update_post_meta(
-				$batch->ID,
-				'attribute_pa_batchid',
-				$attribute_batchid_term->slug
-			);
-
-			$attribute_startdate_term = get_term_by('name', $variations['startdate'][$step], 'pa_startdate');
-			update_post_meta(
-				$batch->ID,
-				'attribute_pa_startdate',
-				$attribute_startdate_term->slug
-			);
-
-			$attribute_enddate_term = get_term_by('name', $variations['enddate'][$step], 'pa_enddate');
-			update_post_meta(
-				$batch->ID,
-				'attribute_pa_enddate',
-				$attribute_enddate_term->slug
-			);
-			$step++;
-		}*/
 	    	
 	}
 }
