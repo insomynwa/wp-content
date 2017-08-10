@@ -28,7 +28,7 @@ class DBSnet_Woocp_Manager {
 		$this->loader->add_action( 'admin_enqueue_scripts', $admin, 'enqueue_scripts_and_styles' );
 
 		// Save Post data 
-		$this->loader->add_action( 'save_post', $admin, 'SavedProduct' );
+		$this->loader->add_action( 'save_post', $admin, 'save_update_product' );
 
 		$this->loader->add_action( 'add_meta_boxes', $admin, 'add_woocp_product_metabox', 10, 1 );
 
