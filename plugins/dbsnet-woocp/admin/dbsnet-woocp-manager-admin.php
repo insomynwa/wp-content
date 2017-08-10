@@ -13,8 +13,6 @@ class DBSnet_Woocp_Manager_Admin{
 		wp_enqueue_script( 'jquery-ui-progressbar' );
 		wp_enqueue_script('dbsnet-woocp');
 
-		// wp_enqueue_style( 'jquery-ui-datepicker', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/themes/smoothness/jquery-ui.css' );
-
 		wp_localize_script(
 			'dbsnet-woocp', 
 			'dbsnet_ajax', 
@@ -118,7 +116,6 @@ class DBSnet_Woocp_Manager_Admin{
 	}
 
 	public function AddBatch(){
-    	
 
     	$responses = array('status'=>false, 'message'=>"I hope you don't see this message. Error: function AddBatch(). Happy var_dump()!!!",'data' => array());
 		$post_product_id = sanitize_text_field( $_POST['product'] );
