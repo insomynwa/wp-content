@@ -32,14 +32,6 @@ class DBSnet_Woocp_Manager {
 
 		$this->loader->add_action( 'add_meta_boxes', $admin, 'add_woocp_product_metabox', 10, 1 );
 
-		// Custom post-type: batch
-		$this->loader->add_action( 'init', $admin, 'add_woocp_batch_post_type' );
-
-		// Trash batch
-		$this->loader->add_action('trashed_post', $admin, 'delete_woocp_batch_on_post_trash');
-		// Untrashed post
-		$this->loader->add_action('untrash_post', $admin, 'unstrashed_woocp_batch_on_post_trash');
-
 		// Add Row Batch
 		$this->loader->add_action('wp_ajax_AjaxAddBatch', $admin, 'AddBatch');
 		$this->loader->add_action('wp_ajax_AjaxUpdateBatch', $admin, 'UpdateBatch');
