@@ -24,7 +24,7 @@ class DBSnet_Woocp_Manager {
 	private function define_admin_hooks() {
 
 		$admin = new DBSnet_Woocp_Manager_Admin( $this->get_version() );
-		$wc_customizer = new DBSnet_Woocp_WC_Customizer( $this->get_version() );
+		//$wc_customizer = new DBSnet_Woocp_WC_Customizer( $this->get_version() );
 
 		// Load javascript or styles
 		$this->loader->add_action( 'admin_enqueue_scripts', $admin, 'enqueue_scripts_and_styles' );
