@@ -15,6 +15,7 @@ class DBSnet_Woocp_Manager {
 	private function load_dependencies() {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/dbsnet-woocp-manager-admin.php';
 		require_once plugin_dir_path( __FILE__ ) . 'dbsnet-woocp-manager-loader.php';
+		//require_once plugin_dir_path(__FILE__) . 'dbsnet-woocp-wc-customizer.php';
 		require_once plugin_dir_path(__FILE__) . 'dbsnet-woocp-class-batch.php';
 
 		$this->loader = new DBSnet_Woocp_Manager_Loader();
@@ -23,6 +24,7 @@ class DBSnet_Woocp_Manager {
 	private function define_admin_hooks() {
 
 		$admin = new DBSnet_Woocp_Manager_Admin( $this->get_version() );
+		$wc_customizer = new DBSnet_Woocp_WC_Customizer( $this->get_version() );
 
 		// Load javascript or styles
 		$this->loader->add_action( 'admin_enqueue_scripts', $admin, 'enqueue_scripts_and_styles' );
@@ -36,6 +38,10 @@ class DBSnet_Woocp_Manager {
 		$this->loader->add_action('wp_ajax_AjaxAddBatch', $admin, 'AddBatch');
 		$this->loader->add_action('wp_ajax_AjaxUpdateBatch', $admin, 'UpdateBatch');
 		$this->loader->add_action('wp_ajax_AjaxDeleteBatch', $admin, 'DeleteBatch');
+
+		// Customize Woocommerce
+		//$this->loader->add_filter('woocommerce_account_menu_items', $wc_customizer, 'dbsnet_hide_account_menu_items');
+		//$this->loader->add_filter('init', $wc_customizer, 'dbsnet_add_account_menu_items');
 	}
 
 	public function run() {
