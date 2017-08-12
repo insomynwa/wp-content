@@ -1,6 +1,5 @@
 <?php
-
-class Multitenant_Loader {
+class DBSnet_Woocp_Loader {
 
 	protected $actions;
 

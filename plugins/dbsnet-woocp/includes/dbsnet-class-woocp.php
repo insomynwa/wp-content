@@ -1,11 +1,15 @@
 <?php
-class DBSnet_Woocp_Manager {
+if ( !defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+class DBSnet_Woocp{
 	protected $loader;
 	protected $plugin_slug;
 	protected $version;
 
 	public function __construct() {
-		$this->plugin_slug = 'dbsnet-woocp-manager-slug';
+		$this->plugin_slug = 'dbsnet-woocp-slug';
 		$this->version = '0.1.0';
 
 		$this->load_dependencies();
@@ -13,18 +17,31 @@ class DBSnet_Woocp_Manager {
 	}
 
 	private function load_dependencies() {
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/dbsnet-woocp-manager-admin.php';
-		require_once plugin_dir_path( __FILE__ ) . 'dbsnet-woocp-manager-loader.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/dbsnet-class-woocp-admin.php';
+		require_once plugin_dir_path( __FILE__ ) . 'dbsnet-class-woocp-loader.php';
 		//require_once plugin_dir_path(__FILE__) . 'dbsnet-woocp-wc-customizer.php';
+		require_once plugin_dir_path(__FILE__) . 'dbsnet-woocp-shortcode.php';
 		require_once plugin_dir_path(__FILE__) . 'dbsnet-woocp-class-batch.php';
 
-		$this->loader = new DBSnet_Woocp_Manager_Loader();
+		$this->loader = new DBSnet_Woocp_Loader();
 	}
 
 	private function define_admin_hooks() {
 
-		$admin = new DBSnet_Woocp_Manager_Admin( $this->get_version() );
+		$admin = new DBSnet_Woocp_Admin( $this->get_version() );
+		$multitenant = new DBSnet_Woocp_Multitenant_Admin();
+		$shortcode = new DBSnet_Woocp_Shortcode();
+
 		//$wc_customizer = new DBSnet_Woocp_WC_Customizer( $this->get_version() );
+		//$this->loader->add_action( 'init', $multitenant, 'RegisterWPCustomMultitenant');
+		$this->loader->add_action( 'init', $shortcode, 'init' );
+
+		$this->loader->add_action( 'admin_menu', $multitenant, 'dbsnet_woocp_filter_admin_menu',400);
+		$this->loader->add_action( 'admin_notices', $multitenant, 'debug_admin_menus');
+		$this->loader->add_action( 'user_register', $multitenant, 'grouping_new_user');
+		$this->loader->add_action( 'user_new_form', $multitenant, 'adding_field_in_create_user_form');
+		$this->loader->add_action( 'delete_user', $multitenant, 'DeleteUserComponent');
+		$this->loader->add_action( 'pre_get_posts', $multitenant, 'ShowProductByOwner');
 
 		// Load javascript or styles
 		$this->loader->add_action( 'admin_enqueue_scripts', $admin, 'enqueue_scripts_and_styles' );

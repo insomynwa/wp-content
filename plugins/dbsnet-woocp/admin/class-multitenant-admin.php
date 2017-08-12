@@ -1,31 +1,22 @@
 <?php
-class Multitenant_Admin {
-	protected $version;
-
-	/**
-	 * Constructor
-	 * @param version
-	 */
-	public function __construct( $version ) {
-		$this->version = $version;
-	}
+class DBSnet_Woocp_Multitenant_Admin {
 
 	/**
 	 * Registering wordpress custom for this plugin
 	 */
-	public function RegisterWPCustomMultitenant(){
+	public static function dbsnet_woocp_activate(){
 		/*CREATE NEW ROLES*/
-		$this->createCustomUserRoles();
+		self::createCustomUserRoles();
 
 		$groups_name = array( 'Tenant', 'Outlet' );
-		$this->createGroups($groups_name);
+		self::createGroups($groups_name);
 	}
 
 	/**
 	 * Create custom user roles 
 	 * @return null
 	 */
-	private function createCustomUserRoles(){
+	static function createCustomUserRoles(){
 		/*
 		CREATE NEW ROLES
 		*/
@@ -37,6 +28,9 @@ class Multitenant_Admin {
 		if ( ! isset( $wp_roles ) ) {
 			$wp_roles = new WP_Roles();
 		}
+
+		if(get_role('tenant_role') && get_role('outlet_role'))
+			return;
 
 		$tenant_roles_wp = array(
 			'read'						=> true,
@@ -101,24 +95,11 @@ class Multitenant_Admin {
 	}
 
 	/**
-	 * Create a group
-	 * @param  group name
-	 * @return created group id or null
-	 */
-	private function createGroup($group_name){
-		if ( !( $group = Groups_Group::read_by_name( $group_name ) ) ) {
-			$group_id = Groups_Group::create( array( 'name' => $group_name ) );
-			return $group_id;
-		}
-		return false;
-	}
-
-	/**
 	 * Create groups
 	 * @param  group name
 	 * @return null
 	 */
-	private function createGroups($groups_name){
+	static function createGroups($groups_name){
 		foreach($groups_name as $group_name){
 			if ( !( $group = Groups_Group::read_by_name( $group_name ) ) ) {
 				$group_id = Groups_Group::create( array( 'name' => $group_name ) );
@@ -145,13 +126,14 @@ class Multitenant_Admin {
 	 * Collecting new registered user's metadata
 	 * @param user id
 	 */
-	public function GroupingUser($user_id){
+	public function grouping_new_user($user_id){
 		$user_meta=get_userdata($user_id);
 		$user_roles = $user_meta->roles;
 
 		$obligate_group_name = "";
 		$binder_group_name = "";
 		$binder_group_id = 0;
+			
 		if(in_array("tenant_role", $user_roles)) {
 			$obligate_group_name = "Tenant";
 			$binder_group_name = $user_meta->user_login;
@@ -166,6 +148,19 @@ class Multitenant_Admin {
 		}
 		$obligate_group_id = $this->getGroupId($obligate_group_name);
 		$this->assignGroup($user_id, array($obligate_group_id,$binder_group_id));
+	}
+
+	/**
+	 * Create a group
+	 * @param  group name
+	 * @return created group id or null
+	 */
+	private function createGroup($group_name){
+		if ( !( $group = Groups_Group::read_by_name( $group_name ) ) ) {
+			$group_id = Groups_Group::create( array( 'name' => $group_name ) );
+			return $group_id;
+		}
+		return $group->group_id;
 	}
 
 	/**
@@ -188,7 +183,7 @@ class Multitenant_Admin {
 	/**
 	 * Create field in user profile form
 	 */
-	public function CreateCustomUserAddNew(){
+	public function adding_field_in_create_user_form(){
 ?>
 		<h3>Tenant Group</h3>
 		<p>select this option if you want to create an OUTLET</p>
@@ -235,7 +230,7 @@ class Multitenant_Admin {
 		}
 	}
 
-	public function HideWooWPSubmenu(){
+	public function dbsnet_woocp_filter_admin_menu(){
 		$user = wp_get_current_user();
 		if(in_array("tenant_role", $user->roles)){
 			remove_action( 'admin_color_scheme_picker', 'admin_color_scheme_picker' );
@@ -285,8 +280,11 @@ class Multitenant_Admin {
 	}
 
 	public function ShowProductByOwner($query){
-		$current_user = wp_get_current_user();
-		if(in_array("tenant_role", $current_user->roles) || in_array("outlet_role", $current_user->roles)){
+		global $pagenow, $typenow;
+		$current_user=wp_get_current_user();
+		
+
+		if(!current_user_can('administrator') && current_user_can('manage_woocommerce') && ('edit.php' == $pagenow) &&  $typenow == 'product'){
 			$group_id = get_user_meta($current_user->ID, 'binder_group', true);
 			$user_role = '';
 

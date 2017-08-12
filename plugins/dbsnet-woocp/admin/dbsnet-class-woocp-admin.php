@@ -1,6 +1,6 @@
 <?php 
 
-class DBSnet_Woocp_Manager_Admin{
+class DBSnet_Woocp_Admin{
 	protected $version;
 
 	public function __construct( $version ) {
