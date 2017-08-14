@@ -11,7 +11,9 @@ class DBSnet_Woocp_Shortcode{
 
 	public function init(){
 		$shortcodes = array(
-			'dbsnet_woocp_outlet_list_for_tenant'                    => array($this, 'dbsnet_woocp_outlet_list'),
+			'dbsnet_woocp_outlet_list'	=> array($this, 'dbsnet_woocp_outlet_list'),
+			'dbsnet_woocp_outlet_product_list'		=> array($this, 'dbsnet_woocp_outlet_product_list'),
+			
 		);
 
 		foreach ($shortcodes as $shortcode => $function) {
@@ -20,11 +22,17 @@ class DBSnet_Woocp_Shortcode{
 	}
 
 	public function dbsnet_woocp_outlet_list(){
-		$tenant = wp_get_current_user();
-		$outlets = DBSnet_Woocp_Group_Functions::GetGroupMember($tenant->ID,false);
+		$user = wp_get_current_user();
+		$user_meta = get_userdata($user->ID);
+		$user_roles = $user_meta->roles;
 
-		if(!$outlets)
-			return "Nothing to be displayed.";
+		if(!in_array("tenant_role",$user_roles)){
+			return "You aren't tenant.";
+		}
+
+		$outlets = DBSnet_Woocp_Group_Functions::GetOutlets($user->ID);
+
+		if(!$outlets) return "You don't have outlet yet. Create Now!";
 
 		ob_start();
 		require plugin_dir_path( __FILE__ ) . 'views/outlet/list.php';
@@ -33,4 +41,20 @@ class DBSnet_Woocp_Shortcode{
 		
 		return $html;
 	}
+
+	public function dbsnet_woocp_outlet_product_list(){
+		$user = wp_get_current_user();
+		
+		$products = DBSnet_Woocp_Group_Functions::GetProducts($user->ID);
+
+		if(!$products) return "There is no product";
+
+		ob_start();
+		require plugin_dir_path( __FILE__ ) . 'views/product/list.php';
+		$html = ob_get_contents();
+		ob_end_clean();
+		
+		return $html;
+	}
+
 }

@@ -6,28 +6,40 @@ class DBSnet_Woocp_Group_Functions{
 
 	public function __construct(){}
 
-	public static function GetGroupMember($paramMemberId, $paramAllMember = true){
-		//var_dump($paramMemberId);
-		$group_id = get_user_meta($paramMemberId, 'binder_group', true);
+	public static function GetOutlets($paramMemberId){
+		
+		$binder_group = get_user_meta($paramMemberId, 'binder_group', true);
 
-		if(!$group_id)
-			return false;
-		$binder_group = new Groups_Group($group_id);
+		$outlet_args = array(
+			'role'		=> 'outlet_role',
+			'meta_key'	=> 'binder_group',
+			'meta_value'=>	$binder_group,
+			'orderby'	=> 'ID',
+			'order'		=> 'ASC'
+			);
 
-		$group_member = $binder_group->users;
+		$outlets = get_users($outlet_args);
 
-		if(!$group_member) return "";
+		if(count($outlets)==0) return false;
 
-		if($paramAllMember)
-			return $group_member;
+		return $outlets;
+	}
 
-		$other_member = array();
-		foreach($group_member as $member){
-			if($member->ID != $paramMemberId)
-				$other_member[] = $member;
-		}
-		if(count($other_member)==0) return "You don't have any outlet yet. Create Now!";
-		return $other_member;
+	public static function GetProducts($paramVendorId){
+
+		$product_args = array(
+			'author'		=> $paramVendorId,
+			'orderby'		=> 'ID',
+			'order'			=> 'ASC',
+			'post_status'	=> 'publish',
+			'post_type'		=> 'product'
+			);
+
+		$products = get_posts($product_args);
+
+		if(count($products)==0) return false;
+
+		return $products;
 	}
 
 }

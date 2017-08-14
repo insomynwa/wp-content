@@ -14,11 +14,11 @@ class DBSnet_Woocp_Loader {
 		$this->actions = $this->add( $this->actions, $hook, $component, $callback, $priority, $accepted_args );
 	}
 
-	public function add_filter( $hook, $component, $callback, $priority, $accepted_args ) {
-		$this->filters = $this->add( $this->filters, $hook, $component, $callback );
+	public function add_filter( $hook, $component, $callback, $priority=0, $accepted_args=null ) {
+		$this->filters = $this->add( $this->filters, $hook, $component, $callback, $priority, $accepted_args );
 	}
 
-	private function add( $hooks, $hook, $component, $callback, $priority, $accepted_args ) {
+	private function add( $hooks, $hook, $component, $callback, $priority=0, $accepted_args=null ) {
 		$hooks[] = array(
 			'hook'		=> $hook,
 			'component'	=> $component,
