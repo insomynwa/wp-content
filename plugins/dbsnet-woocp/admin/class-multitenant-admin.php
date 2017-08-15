@@ -126,7 +126,7 @@ class DBSnet_Woocp_Multitenant_Admin {
 	 * Collecting new registered user's metadata
 	 * @param user id
 	 */
-	public function grouping_new_user($user_id){
+	public function dbsnet_woocp_grouping_new_user($user_id){
 		$user_meta=get_userdata($user_id);
 		$user_roles = $user_meta->roles;
 
@@ -183,7 +183,7 @@ class DBSnet_Woocp_Multitenant_Admin {
 	/**
 	 * Create field in user profile form
 	 */
-	public function adding_field_in_create_user_form(){
+	public function dbsnet_woocp_new_user_form_custom_field(){
 ?>
 		<h3>Tenant Group</h3>
 		<p>select this option if you want to create an OUTLET</p>
@@ -205,7 +205,7 @@ class DBSnet_Woocp_Multitenant_Admin {
 	 * Invoked after delete user
 	 * @param deleted user id
 	 */
-	public function DeleteUserComponent( $user_id ){
+	public function dbsnet_woocp_remove_deleted_user_component( $user_id ){
 		$user_meta = get_userdata($user_id);
 		$user_roles = $user_meta->roles;
 
@@ -279,7 +279,7 @@ class DBSnet_Woocp_Multitenant_Admin {
 	    }*/
 	}
 
-	public function ShowProductByOwner($query){
+	public function dbsnet_woocp_custom_filter_product_list($query){
 		global $pagenow, $typenow;
 		$current_user=wp_get_current_user();
 		

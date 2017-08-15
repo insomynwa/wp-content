@@ -60,14 +60,6 @@ class DBSnet_Woocp_My_Account {
 	}
 	/*********************************/
 
-	public function dbsnet_hide_account_menu_items($items){
-		unset($items['downloads']);
-		return $items;
-	}
-
-	public function dbsnet_add_account_menu_items(){
-	}
-
 	public function dbsnet_woocp_custom_item_query_vars($vars){
 		$vars[] = 'outlets';
 		return $vars;
