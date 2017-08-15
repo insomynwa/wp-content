@@ -33,6 +33,29 @@ function dbsnet_scripts_global(){
 			$("#batch-modal").modal("show");
 		});
 
+/*<!-- Bootstrap Core JavaScript -->*/
+		$(".dropdown").hover(            
+	        function() {
+	            $('.dropdown-menu', this).stop( true, true ).slideDown("fast");
+	            $(this).toggleClass('open');        
+	        },
+	        function() {
+	            $('.dropdown-menu', this).stop( true, true ).slideUp("fast");
+	            $(this).toggleClass('open');       
+        	}
+    	);
+
+		/*
+			var defaults = {
+			containerID: 'toTop', // fading element id
+			containerHoverID: 'toTopHover', // fading element hover id
+			scrollSpeed: 1200,
+			easingType: 'linear' 
+			};
+		*/
+							
+		$().UItoTop({ easingType: 'easeOutQuart' });
+
 	});
 	</script>
 	<?php
@@ -56,9 +79,11 @@ function dbsnet_header_navigation(){
 							<?php if(!is_user_logged_in()): ?>
 							Daftar
 							<?php else: ?>
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> <?php _e($user_info->first_name); ?> <span class="caret"></span></a>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<span class="glyphicon glyphicon-user" aria-hidden="true"></span> <?php _e($user_info->first_name); ?> <span class="caret"></span></a>
 							<ul class="dropdown-menu">
-								<li><a href="#"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Kotak Surat <span class="badge">5</span></a></li>
+								<li>
+								<a href="#"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Kotak Surat <span class="badge">5</span></a></li>
 								<li role="separator" class="divider"></li>
 								<li><a href="<?php echo get_permalink( wc_get_page_id( 'myaccount' ) );?>"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Profil</a></li>
 								<li><a href="<?php current_user_can('manage_options') ? _e(admin_url()) : _e('#'); ?>"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> Dashboard</a></li>
@@ -167,6 +192,519 @@ function dbsnet_header_navigation(){
 	<?php
 }
 
+// New header navigation
+function dbsnet_header_navigation_v2(){
+	?>
+	<!-- header -->
+	<div class="agileits_header">
+		<div class="w3l_offers">
+			<a href="products.html">Today's special Offers !</a>
+		</div>
+		<div class="w3l_search">
+			<form action="#" method="post">
+				<input type="text" name="Product" value="Search a product..." onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search a product...';}" required="">
+				<input type="submit" value=" ">
+			</form>
+		</div>
+		<div class="product_list_header">  
+			<form action="#" method="post" class="last">
+                <fieldset>
+                    <input type="hidden" name="cmd" value="_cart" />
+                    <input type="hidden" name="display" value="1" />
+                    <input type="submit" name="submit" value="View your cart" class="button" />
+                </fieldset>
+            </form>
+		</div>
+		<div class="w3l_header_right">
+		<?php $user_info = get_userdata(get_current_user_id()); ?>
+			<?php if(!is_user_logged_in()): ?>
+				<ul>
+					<li class="dropdown profile_details_drop">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user" aria-hidden="true"></i><span class="caret"></span></a>
+						<div class="mega-dropdown-menu" style="text-align: left">
+							<div class="w3ls_vegetables">
+								<ul class="dropdown-menu drp-mnu">
+									<li><a href="<?php echo wp_login_url( get_permalink() ); ?>" title="Login">Login</a></li> 
+									<li><a href="<?php echo wp_registration_url(); ?>">Register</a></li>
+								</ul>
+							</div>                  
+						</div>	
+					</li>
+				</ul>
+			<?php else: ?>
+				<ul>
+					<li class="dropdown profile_details_drop">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user" aria-hidden="true"></i><span class="caret"></span></a>
+						<div class="mega-dropdown-menu">
+							<div class="w3ls_vegetables">
+								<ul class="dropdown-menu drp-mnu" style="text-align: left">
+									<li>
+									<a href="#"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Inbox <span class="badge">5</span></a></li>
+									<li role="separator" class="divider"></li>
+									<li><a href="<?php echo get_permalink( wc_get_page_id( 'myaccount' ) );?>"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Profile</a></li>
+									<li><a href="<?php current_user_can('manage_options') ? _e(admin_url()) : _e('#'); ?>"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> Dashboard</a></li>
+									<li role="separator" class="divider"></li>
+									<li><a href="<?php echo esc_url( wc_logout_url( wc_get_page_permalink( 'myaccount' ) ) ); ?>"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Logout</a></li>
+								</ul>
+							</div>                  
+						</div>	
+					</li>
+				</ul>
+			<?php endif; ?>
+			
+		</div>
+		<div class="w3l_header_right1">
+			<h2><a href="mail.html">Contact Us</a></h2>
+		</div>
+		<div class="clearfix"> </div>
+	</div>
+	<!-- script-for sticky-nav -->
+	<script>
+	jQuery(document).ready(function() {
+		 var navoffeset=jQuery(".agileits_header").offset().top;
+		 jQuery(window).scroll(function(){
+			var scrollpos=jQuery(window).scrollTop(); 
+			if(scrollpos >=navoffeset){
+				jQuery(".agileits_header").addClass("fixed");
+			}else{
+				jQuery(".agileits_header").removeClass("fixed");
+			}
+		 });
+		 
+	});
+	</script>
+<!-- //script-for sticky-nav -->
+	<div class="logo_products">
+		<div class="container">
+			<div class="w3ls_logo_products_left">
+				<h1><a href="index.html"><span>Grocery</span> Store</a></h1>
+			</div>
+			<div class="w3ls_logo_products_left1">
+				<ul class="special_items">
+					<li><a href="events.html">Events</a><i>/</i></li>
+					<li><a href="about.html">About Us</a><i>/</i></li>
+					<li><a href="products.html">Best Deals</a><i>/</i></li>
+					<li><a href="services.html">Services</a></li>
+				</ul>
+			</div>
+			<div class="w3ls_logo_products_left1">
+				<ul class="phone_email">
+					<li><i class="fa fa-phone" aria-hidden="true"></i>(+0123) 234 567</li>
+					<li><i class="fa fa-envelope-o" aria-hidden="true"></i><a href="mailto:store@grocery.com">store@grocery.com</a></li>
+				</ul>
+			</div>
+			<div class="clearfix"> </div>
+		</div>
+	</div>
+<!-- //header -->
+
+	<script>
+			paypal.minicart.render();
+
+			paypal.minicart.cart.on('checkout', function (evt) {
+				var items = this.items(),
+					len = items.length,
+					total = 0,
+					i;
+
+				// Count the number of each item in the cart
+				for (i = 0; i < len; i++) {
+					total += items[i].get('quantity');
+				}
+
+				if (total < 3) {
+					alert('The minimum order quantity is 3. Please add more to your shopping cart before checking out');
+					evt.preventDefault();
+				}
+			});
+
+		</script>
+
+	<?php
+
+}
+
+function dbsnet_homepage_banner_top(){
+	?>
+	<!-- banner -->
+	<div class="banner">
+		<div class="w3l_banner_nav_left">
+			<nav class="navbar nav_bottom">
+			 <!-- Brand and toggle get grouped for better mobile display -->
+			  <div class="navbar-header nav_2">
+				  <button type="button" class="navbar-toggle collapsed navbar-toggle1" data-toggle="collapse" data-target="#bs-megadropdown-tabs">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				  </button>
+			   </div> 
+			   <!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
+					<ul class="nav navbar-nav nav_1">
+						<li><a href="products.html">Branded Foods</a></li>
+						<li><a href="household.html">Households</a></li>
+						<li class="dropdown mega-dropdown active">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Veggies & Fruits<span class="caret"></span></a>				
+							<div class="dropdown-menu mega-dropdown-menu w3ls_vegetables_menu">
+								<div class="w3ls_vegetables">
+									<ul>	
+										<li><a href="vegetables.html">Vegetables</a></li>
+										<li><a href="vegetables.html">Fruits</a></li>
+									</ul>
+								</div>                  
+							</div>				
+						</li>
+						<li><a href="kitchen.html">Kitchen</a></li>
+						<li><a href="short-codes.html">Short Codes</a></li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Beverages<span class="caret"></span></a>
+							<div class="dropdown-menu mega-dropdown-menu w3ls_vegetables_menu">
+								<div class="w3ls_vegetables">
+									<ul>
+										<li><a href="drinks.html">Soft Drinks</a></li>
+										<li><a href="drinks.html">Juices</a></li>
+									</ul>
+								</div>                  
+							</div>	
+						</li>
+						<li><a href="pet.html">Pet Food</a></li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Frozen Foods<span class="caret"></span></a>
+							<div class="dropdown-menu mega-dropdown-menu w3ls_vegetables_menu">
+								<div class="w3ls_vegetables">
+									<ul>
+										<li><a href="frozen.html">Frozen Snacks</a></li>
+										<li><a href="frozen.html">Frozen Nonveg</a></li>
+									</ul>
+								</div>                  
+							</div>	
+						</li>
+						<li><a href="bread.html">Bread & Bakery</a></li>
+					</ul>
+				 </div><!-- /.navbar-collapse -->
+			</nav>
+		</div>
+		<div class="w3l_banner_nav_right">
+			<section class="slider">
+				<div class="flexslider">
+					<ul class="slides">
+						<li>
+							<div class="w3l_banner_nav_right_banner">
+								<h3>Make your <span>food</span> with Spicy.</h3>
+								<div class="more">
+									<a href="products.html" class="button--saqui button--round-l button--text-thick" data-text="Shop now">Shop now</a>
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="w3l_banner_nav_right_banner1">
+								<h3>Make your <span>food</span> with Spicy.</h3>
+								<div class="more">
+									<a href="products.html" class="button--saqui button--round-l button--text-thick" data-text="Shop now">Shop now</a>
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="w3l_banner_nav_right_banner2">
+								<h3>upto <i>50%</i> off.</h3>
+								<div class="more">
+									<a href="products.html" class="button--saqui button--round-l button--text-thick" data-text="Shop now">Shop now</a>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</section>
+			<!-- flexSlider -->
+				<!-- <link rel="stylesheet" href="css/flexslider.css" type="text/css" media="screen" property="" />
+				<script defer src="js/jquery.flexslider.js"></script> -->
+				<script type="text/javascript">
+				jQuery(window).load(function(){
+				  jQuery('.flexslider').flexslider({
+					animation: "slide",
+					start: function(slider){
+					  jQuery('body').removeClass('loading');
+					}
+				  });
+				});
+			  </script>
+			<!-- //flexSlider -->
+		</div>
+		<div class="clearfix"></div>
+	</div>
+<!-- banner -->
+
+ <?php
+}
+
+function dbsnet_homepage_banner_bottom(){
+	?>
+	<div class="banner_bottom">
+		<div class="wthree_banner_bottom_left_grid_sub">
+		</div>
+		<div class="wthree_banner_bottom_left_grid_sub1">
+			<div class="col-md-4 wthree_banner_bottom_left">
+				<div class="wthree_banner_bottom_left_grid">
+					<img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/4.jpg', null )); ?> alt=" " class="img-responsive" />
+					<div class="wthree_banner_bottom_left_grid_pos">
+						<h4>Discount Offer <span>25%</span></h4>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4 wthree_banner_bottom_left">
+				<div class="wthree_banner_bottom_left_grid">
+					<img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/5.jpg', null )); ?> alt=" " class="img-responsive" />
+					<div class="wthree_banner_btm_pos">
+						<h3>introducing <span>best store</span> for <i>groceries</i></h3>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4 wthree_banner_bottom_left">
+				<div class="wthree_banner_bottom_left_grid">
+					<img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/6.jpg', null )); ?> alt=" " class="img-responsive" />
+					<div class="wthree_banner_btm_pos1">
+						<h3>Save <span>Upto</span> $10</h3>
+					</div>
+				</div>
+			</div>
+			<div class="clearfix"> </div>
+		</div>
+		<div class="clearfix"> </div>
+	</div>
+	<?php
+}
+
+ function dbsnet_product_hot_v2(){
+ 	?>
+<!-- top-brands -->
+	<div class="top-brands">
+		<div class="container">
+			<h3>Hot Product</h3>
+			<div class="agile_top_brands_grids">
+				<div class="col-md-3 top_brand_left">
+					<div class="hover14 column">
+						<div class="agile_top_brand_left_grid">
+							<div class="tag"><img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/tag.png', null )); ?> alt=" " class="img-responsive" /></div>
+							<div class="agile_top_brand_left_grid1">
+								<figure>
+									<div class="snipcart-item block" >
+										<div class="snipcart-thumb">
+											<a href="single.html"><img title=" " alt=" " src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/1.png', null )); ?> /></a>		
+											<p>fortune sunflower oil</p>
+											<h4>$7.99 <span>$10.00</span></h4>
+										</div>
+										<div class="snipcart-details top_brand_home_details">
+											<form action="checkout.html" method="post">
+												<fieldset>
+													<input type="hidden" name="cmd" value="_cart" />
+													<input type="hidden" name="add" value="1" />
+													<input type="hidden" name="business" value=" " />
+													<input type="hidden" name="item_name" value="Fortune Sunflower Oil" />
+													<input type="hidden" name="amount" value="7.99" />
+													<input type="hidden" name="discount_amount" value="1.00" />
+													<input type="hidden" name="currency_code" value="USD" />
+													<input type="hidden" name="return" value=" " />
+													<input type="hidden" name="cancel_return" value=" " />
+													<input type="submit" name="submit" value="Add to cart" class="button" />
+												</fieldset>
+													
+											</form>
+									
+										</div>
+									</div>
+								</figure>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3 top_brand_left">
+					<div class="hover14 column">
+						<div class="agile_top_brand_left_grid">
+							<div class="agile_top_brand_left_grid1">
+								<figure>
+									<div class="snipcart-item block" >
+										<div class="snipcart-thumb">
+											<a href="single.html"><img title=" " alt=" " src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/3.png', null )); ?> /></a>		
+											<p>basmati rise (5 Kg)</p>
+											<h4>$11.99 <span>$15.00</span></h4>
+										</div>
+										<div class="snipcart-details top_brand_home_details">
+											<form action="#" method="post">
+												<fieldset>
+													<input type="hidden" name="cmd" value="_cart" />
+													<input type="hidden" name="add" value="1" />
+													<input type="hidden" name="business" value=" " />
+													<input type="hidden" name="item_name" value="basmati rise" />
+													<input type="hidden" name="amount" value="11.99" />
+													<input type="hidden" name="discount_amount" value="1.00" />
+													<input type="hidden" name="currency_code" value="USD" />
+													<input type="hidden" name="return" value=" " />
+													<input type="hidden" name="cancel_return" value=" " />
+													<input type="submit" name="submit" value="Add to cart" class="button" />
+												</fieldset>
+											</form>
+										</div>
+									</div>
+								</figure>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3 top_brand_left">
+					<div class="hover14 column">
+						<div class="agile_top_brand_left_grid">
+							<div class="agile_top_brand_left_grid_pos">
+								<img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/offer.png', null )); ?> alt=" " class="img-responsive" />
+							</div>
+							<div class="agile_top_brand_left_grid1">
+								<figure>
+									<div class="snipcart-item block">
+										<div class="snipcart-thumb">
+											<a href="single.html"><img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/2.png', null )); ?> alt=" " class="img-responsive" /></a>
+											<p>Pepsi soft drink (2 Ltr)</p>
+											<h4>$8.00 <span>$10.00</span></h4>
+										</div>
+										<div class="snipcart-details top_brand_home_details">
+											<form action="#" method="post">
+												<fieldset>
+													<input type="hidden" name="cmd" value="_cart" />
+													<input type="hidden" name="add" value="1" />
+													<input type="hidden" name="business" value=" " />
+													<input type="hidden" name="item_name" value="Pepsi soft drink" />
+													<input type="hidden" name="amount" value="8.00" />
+													<input type="hidden" name="discount_amount" value="1.00" />
+													<input type="hidden" name="currency_code" value="USD" />
+													<input type="hidden" name="return" value=" " />
+													<input type="hidden" name="cancel_return" value=" " />
+													<input type="submit" name="submit" value="Add to cart" class="button" />
+												</fieldset>
+											</form>
+										</div>
+									</div>
+								</figure>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3 top_brand_left">
+					<div class="hover14 column">
+						<div class="agile_top_brand_left_grid">
+							<div class="agile_top_brand_left_grid_pos">
+								<img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/offer.png', null )); ?> alt=" " class="img-responsive" />
+							</div>
+							<div class="agile_top_brand_left_grid1">
+								<figure>
+									<div class="snipcart-item block">
+										<div class="snipcart-thumb">
+											<a href="single.html"><img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/4.png', null )); ?>  alt=" " class="img-responsive" /></a>
+											<p>dogs food (4 Kg)</p>
+											<h4>$9.00 <span>$11.00</span></h4>
+										</div>
+										<div class="snipcart-details top_brand_home_details">
+											<form action="#" method="post">
+												<fieldset>
+													<input type="hidden" name="cmd" value="_cart" />
+													<input type="hidden" name="add" value="1" />
+													<input type="hidden" name="business" value=" " />
+													<input type="hidden" name="item_name" value="dogs food" />
+													<input type="hidden" name="amount" value="9.00" />
+													<input type="hidden" name="discount_amount" value="1.00" />
+													<input type="hidden" name="currency_code" value="USD" />
+													<input type="hidden" name="return" value=" " />
+													<input type="hidden" name="cancel_return" value=" " />
+													<input type="submit" name="submit" value="Add to cart" class="button" />
+												</fieldset>
+											</form>
+										</div>
+									</div>
+								</figure>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+		</div>
+	</div>
+<!-- //top-brands -->
+ 	<?php
+ }
+
+ function dbsnet_product_best_seller_v2(){
+ 	?>
+ 	<!-- fresh-vegetables -->
+	<div class="fresh-vegetables">
+		<div class="container">
+			<h3>Best Seller Products</h3>
+			<div class="w3l_fresh_vegetables_grids">
+				<div class="col-md-3 w3l_fresh_vegetables_grid w3l_fresh_vegetables_grid_left">
+					<div class="w3l_fresh_vegetables_grid2">
+						<ul>
+							<li><i class="fa fa-check" aria-hidden="true"></i><a href="products.html">All Brands</a></li>
+							<li><i class="fa fa-check" aria-hidden="true"></i><a href="vegetables.html">Vegetables</a></li>
+							<li><i class="fa fa-check" aria-hidden="true"></i><a href="vegetables.html">Fruits</a></li>
+							<li><i class="fa fa-check" aria-hidden="true"></i><a href="drinks.html">Juices</a></li>
+							<li><i class="fa fa-check" aria-hidden="true"></i><a href="pet.html">Pet Food</a></li>
+							<li><i class="fa fa-check" aria-hidden="true"></i><a href="bread.html">Bread & Bakery</a></li>
+							<li><i class="fa fa-check" aria-hidden="true"></i><a href="household.html">Cleaning</a></li>
+							<li><i class="fa fa-check" aria-hidden="true"></i><a href="products.html">Spices</a></li>
+							<li><i class="fa fa-check" aria-hidden="true"></i><a href="products.html">Dry Fruits</a></li>
+							<li><i class="fa fa-check" aria-hidden="true"></i><a href="products.html">Dairy Products</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-md-9 w3l_fresh_vegetables_grid_right">
+					<div class="col-md-4 w3l_fresh_vegetables_grid">
+						<div class="w3l_fresh_vegetables_grid1">
+							<img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/8.jpg', null )); ?>  alt=" " class="img-responsive" />
+						</div>
+					</div>
+					<div class="col-md-4 w3l_fresh_vegetables_grid">
+						<div class="w3l_fresh_vegetables_grid1">
+							<div class="w3l_fresh_vegetables_grid1_rel">
+								<img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/7.jpg', null )); ?>  alt=" " class="img-responsive" />
+								<div class="w3l_fresh_vegetables_grid1_rel_pos">
+									<div class="more m1">
+										<a href="products.html" class="button--saqui button--round-l button--text-thick" data-text="Shop now">Shop now</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="w3l_fresh_vegetables_grid1_bottom">
+							<img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/10.jpg', null )); ?>  alt=" " class="img-responsive" />
+							<div class="w3l_fresh_vegetables_grid1_bottom_pos">
+								<h5>Special Offers</h5>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4 w3l_fresh_vegetables_grid">
+						<div class="w3l_fresh_vegetables_grid1">
+							<img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/9.jpg', null )); ?>  alt=" " class="img-responsive" />
+						</div>
+						<div class="w3l_fresh_vegetables_grid1_bottom">
+							<img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/8.jpg', null )); ?>  alt=" " class="img-responsive" />
+						</div>
+					</div>
+					<div class="clearfix"> </div>
+					<div class="agileinfo_move_text">
+						<div class="agileinfo_marquee">
+							<h4>get <span class="blink_me">25% off</span> on first order and also get gift voucher</h4>
+						</div>
+						<div class="agileinfo_breaking_news">
+							<span> </span>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+		</div>
+	</div>
+	<!-- //fresh-vegetables -->
+	<?php
+ }
+
 function dbsnet_homepage_slideshow(){
 	?>
 	<div id="dbsnet-slideshow" class="container-fluid bg-danger">
@@ -179,13 +717,13 @@ function dbsnet_homepage_slideshow(){
 
 			<div class="carousel-inner">
 				<div class="item active">
-					<img alt="nature" src="https://images-na.ssl-images-amazon.com/images/G/01/kindle/merch/2017/SMP/ftvs/popcorngws/1500x300_Lifestyle_v1._CB503869808_.jpg" style="width: 100%">
+					<img alt="cake" src=<?php _e(home_url( '/wp-content/uploads/2017/08/placeholder-o2.png', null )); ?> style="width: 100%">
 				</div>
 				<div class="item">
-					<img alt="fjords" src="https://images-na.ssl-images-amazon.com/images/G/01/AMAZON_FASHION/2017/EDITORIAL/SUMMER_3/GATEWAY/DESKTOP/1x/HERO_W_xCat_ShoppingList2_1x._CB504779749_.jpg" style="width: 100%">
+					<img alt="fjords" src=<?php _e(home_url( '/wp-content/uploads/2017/08/l2-slide3-bg.jpeg', null )); ?> style="width: 100%">
 				</div>
 				<div class="item">
-					<img alt="mountains" src="https://images-na.ssl-images-amazon.com/images/G/01/digital/video/merch/gateway/superhero/Amazon_GW_DesktopHero_AVD-6545_SpongebobSwap_GWAcquisitionTopStreamGrid_V1_1500x300._CB506302663_.jpg" style="width: 100%">
+					<img alt="mountains" src=<?php _e(home_url( '/wp-content/uploads/2017/08/cake.jpg', null )); ?> style="width: 100%">
 				</div>
 			</div>
 
@@ -200,6 +738,63 @@ function dbsnet_homepage_slideshow(){
 		</div>
 	</div> <!-- /container -->
 	<?php
+}
+
+function dbsnet_homepage_advertisement(){
+	?>
+	<div class="kdz--emotion-leiste-wrapper">
+        <div class="container-advertisement">
+            <div class="box-bundle">
+                <img src="https://laguna-onlineshop.de/media/image/24/1a/0e/icon-leistungen_langlebige_produkte.png">
+                <div class="box-inhalt">
+                    <h1>Langlebige Produkte</h1>
+                    <p>Wir achten bei unseren Produkten auf besonders lange Haltbarkeit.</p>
+                </div>
+            </div>
+            <div class="box-bundle">
+                <img src="https://laguna-onlineshop.de/media/image/e3/a6/60/icon-leistungen_ohne_giftstoffe.png">
+                <div class="box-inhalt">
+                    <h1>Ohne Gift- und Schadstoffe</h1>
+                    <p>Frei von Schad- und Giftstoffen, BPA-frei und umweltfreundlich.</p>
+                </div>
+            </div>
+            <div class="box-bundle">
+                <img src="https://laguna-onlineshop.de/media/image/ba/f0/92/icon-leistungen_gewissenhafte_produktherstellung.png">
+                <div class="box-inhalt">
+                    <h1>Gewissenhafte Produktherstellung</h1>
+                    <p>Bei der Auswahl unserer Produkte achten wir auf faire Arbeitsbedingungen der Hersteller.</p>
+                </div>
+            </div>
+            <div class="box-bundle">
+                <img src="https://laguna-onlineshop.de/media/image/05/02/10/icon-leistungen_umweltfreundliche_materialien.png">
+                <div class="box-inhalt">
+                    <h1>Umweltfreundliche Materialien</h1>
+                    <p>Produkte ohne Plastik die helfen Mutter Erde ein Stück nachhaltiger zu gestalten.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+	<?php
+}
+
+function dbsnet_homepage_promotion(){
+	?>
+	<div class="kdz--emotion-promotion-wrapper" style="background: url(https://laguna-onlineshop.de/media/image/99/32/d9/abeego_bienwachsfolie_startbanner.png); background-repeat: no-repeat; background-size: cover !important; background-position: center center; ">
+        <div class="kdz--emotion-promotion-extended-content">
+                <p style="position: absolute; bottom: 10px; left: 10px;"><span style="color: #ffffff;">In verschiedenen Größen erhältlich!</span></p>
+        </div>
+        <div class="kdz--emotion-promotion-inner">
+            <div class="kdz--emotion-promotion-headline" style="position: absolute; top: 0; left: 0;background: #535353; margin: 20px 0 0 0; padding: 10px 10px 10px 10px; color: #ffffff">Frisch verpackt ohne Alufolie und Plastik</div>
+            <a href="#" target="_self">
+	            <div class="kdz--emotion-promotion-action" style="position: absolute; right: 0; bottom: 0; background: #9abf00; margin: 0 20px 20px 20px; padding: 10px 10px 10px 10px; color: #ffffff;">Jetzt kaufen</div>
+	        </a>
+            <div class="kdz--emotion-promotion-kreis" style="position: absolute; top: 0; right: 0; background: #ffffff; margin: 20px 20px 20px 20px; text-align: center; border-radius: 200px; min-width: 80px; min-height: 80px;">
+	            <div class="kdz--emotion-promotion-kreis-oben" style="color: #535254">ab</div>
+	            <div class="kdz--emotion-promotion-kreis-unten" style="color: #9abf00">18,95 €</div>
+	        </div>
+         </div>
+    </div>
+    <?php
 }
 
 /*function dbsnet_recent_products_shortcode( $args ) {

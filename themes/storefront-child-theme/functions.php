@@ -31,15 +31,37 @@ function dbsnettheme_enqueue_styles(){
 	wp_register_style('bootstrap', '/wp-content/themes/' . get_stylesheet() . '/assets/bootstrap/css/bootstrap.min.css');
 	$dependencies = array('bootstrap');
 	wp_enqueue_style('dbsnettheme-style', get_stylesheet_uri(), $dependencies );
+
+	wp_register_style( 'dbsnet-style-css', '/wp-content/themes/' . get_stylesheet() . '/assets/css/style.css');
+	wp_enqueue_style( 'dbsnet-style-css' );
+
+	wp_register_style( 'dbsnet-flexslider-css', '/wp-content/themes/' . get_stylesheet() . '/assets/css/flexslider.css');
+	wp_enqueue_style( 'dbsnet-flexslider-css' );
 }
 
 function dbsnettheme_enqueue_scripts(){
 	$dependencies = array( 'jquery' );
 	wp_enqueue_script('boot', '/wp-content/themes/' . get_stylesheet() . '/assets/bootstrap/js/bootstrap.min.js', $dependencies, '3.3.7', false );
+
+	wp_register_script( 'dbsnet-easing-js','/wp-content/themes/' . get_stylesheet() . '/assets/js/easing.js' );
+	wp_enqueue_script( 'dbsnet-easing-js' );
+
+	wp_register_script( 'dbsnet-movetop-js','/wp-content/themes/' . get_stylesheet() . '/assets/js/move-top.js' );
+	wp_enqueue_script( 'dbsnet-movetop-js' );
+
+	wp_register_script( 'dbsnet-waypoints-js','/wp-content/themes/' . get_stylesheet() . '/assets/js/waypoints.min.js' );
+	wp_enqueue_script( 'dbsnet-waypoints-js' );
+
+	wp_register_script( 'dbsnet-flexslider-js','/wp-content/themes/' . get_stylesheet() . '/assets/js/jquery.flexslider.js' );
+	wp_enqueue_script( 'dbsnet-flexslider-js' );
+
+	wp_register_script( 'dbsnet-minicart-js','/wp-content/themes/' . get_stylesheet() . '/assets/js/minicart.js' );
+	wp_enqueue_script( 'dbsnet-minicart-js' );
 }
 
 add_action('wp_enqueue_scripts', 'dbsnettheme_enqueue_styles');
 add_action('wp_enqueue_scripts', 'dbsnettheme_enqueue_scripts');
+add_action( 'wp_enqueue_scripts', 'sf_child_theme_dequeue_style', 999 );
 
 function dbsnettheme_wp_setup() {
 	add_theme_support('title-tag');
@@ -49,14 +71,21 @@ add_action('after_setup_theme','dbsnettheme_wp_setup');
 add_action('pre_get_posts', 'dbsnet_main_search_query', 1000);
 
 add_action('dbsnet_theme_header', 'dbsnet_scripts_global',100);
-add_action('dbsnet_theme_header', 'dbsnet_go_top_navigation',100);
-add_action('dbsnet_theme_header', 'dbsnet_header_navigation',100);
+////add_action('dbsnet_theme_header', 'dbsnet_header_navigation',100);
+add_action('dbsnet_theme_header','dbsnet_header_navigation_v2',100);
 
-add_action('dbsnet_theme_homepage', 'dbsnet_homepage_slideshow',100);
-add_action('dbsnet_theme_homepage', 'dbsnet_homepage_tenant',100);
-add_action('dbsnet_theme_homepage', 'dbsnet_product_categories',100);
-add_action('dbsnet_theme_homepage', 'dbsnet_product_hot',100);
-add_action('dbsnet_theme_homepage', 'dbsnet_product_best_seller',100);
+add_action('dbsnet_theme_homepage', 'dbsnet_homepage_banner_top',100);
+add_action('dbsnet_theme_homepage', 'dbsnet_homepage_banner_bottom',100);
+add_action('dbsnet_theme_homepage', 'dbsnet_product_hot_v2',100);
+add_action('dbsnet_theme_homepage', 'dbsnet_product_best_seller_v2',100);
+
+//add_action('dbsnet_theme_homepage', 'dbsnet_homepage_slideshow',100);
+//add_action('dbsnet_theme_homepage', 'dbsnet_homepage_advertisement',100);
+//add_action('dbsnet_theme_homepage', 'dbsnet_homepage_promotion',100);
+//add_action('dbsnet_theme_homepage', 'dbsnet_homepage_tenant',100);
+// add_action('dbsnet_theme_homepage', 'dbsnet_product_categories',100);
+// add_action('dbsnet_theme_homepage', 'dbsnet_product_hot',100);
+// add_action('dbsnet_theme_homepage', 'dbsnet_product_best_seller',100);
 
 add_action('woocommerce_single_product_summary', 'dbsnet_product_batch',6);
 
