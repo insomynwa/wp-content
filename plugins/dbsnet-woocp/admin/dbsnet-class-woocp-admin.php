@@ -508,7 +508,7 @@ class DBSnet_Woocp_Admin{
 	}
 
 	public function dbsnet_woocp_remove_link($actions, $post){
-
+		//var_dump(wp_get_current_user());
 		if(!current_user_can('manage_options')){
 			if($post->post_type != 'product'){
 				return $actions;
@@ -517,6 +517,15 @@ class DBSnet_Woocp_Admin{
 			unset($actions['duplicate']);
 			unset($actions['inline hide-if-no-js']);
 		}
+
+		// $user = wp_get_current_user();
+		// $user_role = get_userdata($user->ID);
+
+		// if(in_array('tenant_role', $user_role->roles)){
+		// 	unset($actions['trash']);
+		// 	unset($actions['edit']);
+		// }
+
 		return $actions;
 	}
 
@@ -542,12 +551,26 @@ class DBSnet_Woocp_Admin{
 				'parent'=> 'top-secondary',
 				'meta'  => array(
 				'class' => "force-mdi tooltiped tooltip-ajust",
-				'title' => __('Logout', 'material-wp')
+				'title' => __('Keluar', 'material-wp')
 				)
 			);
 			$wp_admin_bar->add_node($logout);
 			//$wp_admin_bar->remove_node($logout);
 
+		}
+	}
+
+	public function dbsnet_woocp_remove_customer_password_strength(){
+		if(wp_script_is('wc-password-strength-meter', 'enqueued')){
+			wp_dequeue_script('wc-password-strength-meter');
+		}
+	}
+
+	public function dbsnet_woocp_remove_order_metabox(){
+		if(!current_user_can('manage_options')){
+			remove_meta_box('postcustom', 'shop_order', 'normal');
+			remove_meta_box('woocommerce-order-downloads', 'shop_order', 'normal');
+			
 		}
 	}
 

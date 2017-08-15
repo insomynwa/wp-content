@@ -70,8 +70,12 @@ class DBSnet_Woocp{
 		$this->loader->add_filter('post_row_actions',$admin,'dbsnet_woocp_remove_link', 15, 2);
 
 		$this->loader->add_action('wp_before_admin_bar_render', $admin,'dbsnet_woocp_customize_admin_bar',100);
+
+		$this->loader->add_action('wp_print_scripts', $admin, 'dbsnet_woocp_remove_customer_password_strength',100);
 		// $this->loader->add_filter('wp_insert_post_data', $admin, 'dbsnet_woocp_force_post_status_published',0,1);
 
+
+		$this->loader->add_action( 'add_meta_boxes_shop_order', $admin, 'dbsnet_woocp_remove_order_metabox');
 		// Customize Woocommerce
 		//$this->loader->add_filter('woocommerce_account_menu_items', $wc_customizer, 'dbsnet_hide_account_menu_items');
 		//$this->loader->add_filter('init', $wc_customizer, 'dbsnet_add_account_menu_items');
