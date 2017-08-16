@@ -1,5 +1,7 @@
-<?php 
-
+<?php
+if ( !defined( 'ABSPATH' ) ) {
+	exit;
+}
 class DBSnet_Woocp_Admin{
 	protected $version;
 
@@ -20,16 +22,6 @@ class DBSnet_Woocp_Admin{
 				'ajax_url' => admin_url('admin-ajax.php'), 'dbsnet_security' => 'd85n3t'
 				)
 		);
-	}
-
-	public function dbsnet_woocp_remove_woocommerce_product_data(){
-		if(current_user_can( 'manage_options' )) return;
-		remove_meta_box('woocommerce-product-data', 'product', 'normal');
-	}
-
-	public function dbsnet_woocp_add_batch_meta_box_product(){
-
-		add_meta_box( 'dbsnet_woocp_batch_metabox', __('Batch Produk'), array($this,'dbsnet_woocp_batch_metabox'), 'product', 'normal', 'high');
 	}
 
 	public function dbsnet_woocp_batch_metabox($product){
@@ -319,10 +311,6 @@ class DBSnet_Woocp_Admin{
 		}
 	}
 
-	public function dbsnet_woocp_render_outlet_page(){
-
-	}
-
 	public function dbsnet_woocp_outlet_custom_column($columns){
 		$screen = get_current_screen();
 		$new_columns = array();
@@ -341,6 +329,13 @@ class DBSnet_Woocp_Admin{
 		}
 		
 		return $new_columns;
+	}
+
+	public function dbsnet_woocp_add_outlet_ajax(){
+		$responses = array('status'=>false, 'message'=>"I hope you don't see this message. Error: function UpdateBatch(). Happy var_dump()!!!",'data' => array());
+		
+		echo wp_json_encode( $responses );
+		wp_die();
 	}
 
 	// public function dbsnet_woocp_force_post_status_published($post){

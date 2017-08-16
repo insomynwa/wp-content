@@ -1,4 +1,7 @@
 <?php
+if ( !defined( 'ABSPATH' ) ) {
+	exit;
+}
 class DBSnet_Woocp_Multitenant_Admin {
 
 	/**
@@ -142,7 +145,9 @@ class DBSnet_Woocp_Multitenant_Admin {
 		}
 		else if(in_array("outlet_role", $user_roles)) {
 			$obligate_group_name = "Outlet";
-			update_user_meta($user_id, 'binder_group', $_POST['group-id']);
+			if(isset($_POST['group-id'])){
+				update_user_meta($user_id, 'binder_group', $_POST['group-id']);
+			}
 			$user_meta=get_userdata($user_id);
 			$binder_group_id = $user_meta->binder_group;
 		}
@@ -181,26 +186,6 @@ class DBSnet_Woocp_Multitenant_Admin {
 	}
 
 	/**
-	 * Create field in user profile form
-	 */
-	public function dbsnet_woocp_new_user_form_custom_field(){
-?>
-		<h3>Tenant Group</h3>
-		<p>select this option if you want to create an OUTLET</p>
-		<i>if there is no option to be selected, create a TENANT first.</i><br>
-        <select name="group-id">
-    	<?php foreach(Groups_Group::get_group_ids() as $group_id): ?>
-        	<?php $group_name = Groups_Group::read($group_id)->name;
-        	if( $group_name != "Tenant" && $group_name != "Outlet" && $group_name != "Registered" ):
-    	 	?>
-        	<option value="<?php _e($group_id); ?>"><?php _e($group_name); ?></option>
-        	<?php endif; ?>
-    	<?php endforeach; ?>
-        </select>
-<?php
-	}
-
-	/**
 	 * Delete created group by deleted user
 	 * Invoked after delete user
 	 * @param deleted user id
@@ -230,39 +215,8 @@ class DBSnet_Woocp_Multitenant_Admin {
 		}
 	}
 
-	public function dbsnet_woocp_filter_admin_menu(){
-		$user = wp_get_current_user();
-		if(in_array("tenant_role", $user->roles)){
-			remove_action( 'admin_color_scheme_picker', 'admin_color_scheme_picker' );
-		}
-		if(in_array("outlet_role", $user->roles)){
-			remove_action( 'admin_color_scheme_picker', 'admin_color_scheme_picker' );
-		}
+	
 
-		$menu_name = 'woocommerce';
-		$removed_submenu = array('wc-addons','wc-status','wc-settings');
-		$this->removeSubmenu('tenant_role', $menu_name, $removed_submenu);
-		$this->removeSubmenu('outlet_role', $menu_name, $removed_submenu);
-		
-		$menu_name = 'edit.php?post_type=product';
-		$removed_submenu_product = array(
-			'edit-tags.php?taxonomy=product_cat&amp;post_type=product',
-			'edit-tags.php?taxonomy=product_tag&amp;post_type=product',
-			'product_attributes'
-			);
-		$this->removeSubmenu('tenant_role', $menu_name, $removed_submenu_product);
-		$this->removeSubmenu('outlet_role', $menu_name, $removed_submenu_product);
-	}
-
-
-	private function removeSubmenu($role, $menu, $submenus){
-		$user = wp_get_current_user();
-		foreach ($submenus as $submenu) {
-			if(in_array($role, $user->roles)){
-				remove_submenu_page( $menu, $submenu );
-			}
-		}
-	}
 
 	function debug_admin_menus() {
 		if ( !is_admin())
@@ -277,47 +231,6 @@ class DBSnet_Woocp_Multitenant_Admin {
 	            echo '<pre>'; print_r( $submenu ); echo '</pre>'; // SUBMENUS
 	        }
 	    }*/
-	}
-
-	public function dbsnet_woocp_custom_filter_product_list($query){
-		global $pagenow, $typenow;
-		$current_user=wp_get_current_user();
-		
-
-		if(!current_user_can('administrator') && current_user_can('manage_woocommerce') && ('edit.php' == $pagenow) &&  $typenow == 'product'){
-			$group_id = get_user_meta($current_user->ID, 'binder_group', true);
-			$user_role = '';
-
-			if(in_array("tenant_role", $current_user->roles)){
-				//$group_id = $user->ID;//var_dump($group_id);
-				$user_role = "tenant_role";
-				//$query->set('author', $user->ID);
-			}
-			if(in_array("outlet_role", $current_user->roles)){
-				$user_role = "outlet_role";
-				//var_dump($group_id);
-				//$query->set('author', $user->ID);
-			}
-			$group = new Groups_Group($group_id);
-			$group_member = $group->users;//var_dump(count($group_member));
-
-			
-			$accepted_user = array();
-			foreach($group_member as $member){
-				//var_dump($member->ID);
-				$member_meta = get_userdata($member->ID);
-				if($user_role=="tenant_role"){
-					if($member->ID == $current_user->ID || (!in_array($user_role, $member_meta->roles))){
-						$accepted_user[] = $member->ID;
-					}
-				}else if($user_role=="outlet_role"){
-					if( $member->ID == $current_user->ID) {
-						$accepted_user[] = $member->ID;
-					}
-				}
-			}
-			$query->set('author__in', $accepted_user );
-		}
 	}
 
 }
