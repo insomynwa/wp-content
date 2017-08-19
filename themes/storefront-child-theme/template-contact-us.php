@@ -7,7 +7,7 @@
  * use the Homepage Control plugin.
  * https://wordpress.org/plugins/homepage-control/
  *
- * Template name: About Us
+ * Template name: Contact Us
  *
  * @package storefront
  */
@@ -27,7 +27,7 @@ get_header(); ?>
 			 * @hooked storefront_best_selling_products - 70
 			 */
 			do_action('dbsnet_theme_breadcrumb');
-			do_action( 'dbsnet_about_us' ); ?>
+			do_action( 'dbsnet_contact_us' ); ?>
 
 		
 <?php

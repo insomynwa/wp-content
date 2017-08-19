@@ -94,6 +94,9 @@ add_action('dbsnet_theme_shop', 'dbsnet_homepage_banner_top_end',40);
 // ABOUT US
 add_action('dbsnet_about_us', 'dbsnet_about_us', 100);
 
+// CONTACT US
+add_action('dbsnet_contact_us', 'dbsnet_contact_us', 100);
+
 //add_action('dbsnet_theme_homepage', 'dbsnet_homepage_slideshow',100);
 
 //add_action('dbsnet_theme_homepage', 'dbsnet_homepage_tenant',100);
