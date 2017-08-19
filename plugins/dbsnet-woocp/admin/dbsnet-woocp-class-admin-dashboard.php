@@ -19,8 +19,11 @@ class DBSnet_Woocp_Admin_Dashboard{
 	public function dbsnet_woocp_add_custom_admin_menu(){
 		$user = wp_get_current_user();
 		$user_role = get_userdata($user->ID);
+		$is_admin = current_user_can('manage_options');
+		$is_tenant = in_array('tenant_role', $user_role->roles);
+		$is_outlet = in_array('outlet_role', $user_role->roles);
 
-		if(in_array('tenant_role', $user_role->roles) || current_user_can('manage_options')){
+		if($is_admin || $is_tenant){
 			add_menu_page(
 				__('Outlet', 'dbsnet-woocp'),
 				__('Outlet', 'dbsnet-woocp'),

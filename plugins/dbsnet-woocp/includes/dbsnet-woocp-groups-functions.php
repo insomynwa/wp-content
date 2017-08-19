@@ -65,4 +65,21 @@ class DBSnet_Woocp_Group_Functions{
 		return $products;
 	}
 
+	public static function GetTenant($paramBinderGroupId){
+		$tenant_args = array(
+			'role'		=> 'tenant_role',
+			'meta_key'	=> 'binder_group',
+			'meta_value'=>	$paramBinderGroupId
+			);
+
+		$tenants = get_users($tenant_args);
+		$tenant = null;
+
+		foreach ($tenants as $t) {
+			$tenant = $t;
+		}
+
+		return $tenant;
+	}
+
 }

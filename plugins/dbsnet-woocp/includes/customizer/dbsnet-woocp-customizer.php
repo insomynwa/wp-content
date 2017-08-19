@@ -4,6 +4,14 @@ if ( !defined( 'ABSPATH' ) ) {
 }
 class DBSnet_Woocp_Customizer{
 
+	public function __construct(){
+		$this->load_dependencies();
+	}
+
+	private function load_dependencies() {
+		require_once plugin_dir_path( __DIR__ ) . 'dbsnet-woocp-groups-functions.php';
+	}
+
 	public function dbsnet_woocp_customize_admin_menu(){
 		$user = wp_get_current_user();
 		if(in_array("tenant_role", $user->roles)){
@@ -106,6 +114,74 @@ class DBSnet_Woocp_Customizer{
 	public function dbsnet_woocp_add_batch_meta_box_product(){
 
 		add_meta_box( 'dbsnet_woocp_batch_metabox', __('Batch Produk'), array($this,'dbsnet_woocp_batch_metabox'), 'product', 'normal', 'high');
+	}
+
+	public function dbsnet_woocp_batch_metabox($product){
+		?>
+		<?php wp_nonce_field( 'woocommerce_save_data', 'woocommerce_meta_nonce' ); ?>
+		<input id="product-type" type="hidden" name="product-type" value="variable">
+		<table id="tab_logic">
+			<thead>
+				<tr >
+					<th class="text-center">#</th>
+					<th class="text-center">Produksi</th>
+					<th class="text-center">Kadaluarsa</th>
+					<th class="text-center">Stok</th>
+					<th class="text-center">Harga</th>
+					<th class="text-center"></th>
+					<th class="text-center"></th>
+				</tr>
+			</thead>
+			<tbody>
+		<?php
+		$args = array(
+			'post_type' => 'product_variation',
+			'post_parent' => $product->ID,
+			'orderby' => 'ID',
+			'order' => 'ASC'
+		);
+		$batches = get_posts($args);
+		$index = 0;
+		foreach($batches as $batch){
+			$meta_batch_startdate = get_post_meta( $batch->ID, 'attribute_produksi', true ); 
+			$meta_batch_endate = get_post_meta( $batch->ID, 'attribute_kadaluarsa', true );
+			$meta_batch_stock = get_post_meta( $batch->ID, '_stock', true );
+			$meta_batch_price = get_post_meta( $batch->ID, '_regular_price', true );
+	    ?>
+	    <tr class="batch_row_table" id='addr<?php _e($index); ?>'>
+			<td>
+				<input type="hidden" name="batch_id[]" value="<?php _e($batch->ID); ?>"  />
+				<?php _e($index+1); ?>
+			</td>
+			<td>
+				<input id='start-date<?php _e($batch->ID); ?>' type="text" name='batch_start_date[]'  placeholder='Tanggal Produksi' class="custom-woocp-datepicker" value="<?php if(!empty($meta_batch_startdate)) _e($meta_batch_startdate); ?>"/>
+			</td>
+			<td>
+				<input id='end-date<?php _e($batch->ID); ?>' type="text" name='batch_end_date[]' placeholder='Tanggal kadaluarsa' class="custom-woocp-datepicker" value="<?php if(!empty($meta_batch_endate)) _e($meta_batch_endate); ?>" />
+			</td>
+			<td>
+				<input id='stock<?php _e($batch->ID); ?>' type="number" name='batch_stock[]' placeholder='Stok' class="form-control" value="<?php _e($meta_batch_stock); ?>"/>
+			</td>
+			<td>
+				<input id='price<?php _e($batch->ID); ?>' type="text" name='batch_price[]' placeholder='Harga' class="form-control" value="<?php if(!empty($meta_batch_price)) _e($meta_batch_price); ?>"/>
+			</td>
+			<td>
+				<button id='' data-product-id='<?php _e($product->ID); ?>' data-batch-id='<?php _e($batch->ID); ?>' class='update-batch-btn button-primary'>Update</button>
+			</td>
+			<td><a href='#' id='' data-batch-id="<?php _e($batch->ID); ?>" class="delete-batch-row btn btn-default"><span id="<?php _e($batch->ID); ?>"></span>Hapus</a></td>
+		</tr>
+	
+		<?php
+		$index++;
+		} // END FOREACH
+		?>
+			<tr class="batch_row_table" id='addr<?php _e($index+1); ?>'></tr>
+			</tbody>
+		</table>
+		<input id="product-title" type="hidden" name="product_batch_title" value="<?php _e($product->post_title); ?>"  />
+		<div id="batch-add-progress"></div>					
+		<a href="#" id="add_row" class="btn btn-primary pull-left" data-product-id="<?php _e($product->ID); ?>"><span id="<?php _e($index+1); ?>"></span>Tambah Batch</a>
+		<?php
 	}
 
 	public function dbsnet_woocp_remove_permalink_under_title(){
@@ -231,6 +307,7 @@ class DBSnet_Woocp_Customizer{
 			//var_dump($wp_admin_bar);
 			$wp_admin_bar->remove_menu('new-post');
 			$wp_admin_bar->remove_menu('new-shop_order');
+			$wp_admin_bar->remove_menu('new-shop_coupon');
 			$wp_admin_bar->remove_menu('new-media');
 			$wp_admin_bar->remove_menu('comments');
 			$wp_admin_bar->remove_menu('archive');
@@ -291,53 +368,97 @@ class DBSnet_Woocp_Customizer{
 		}
 	}
 
-	public function dbsnet_woocp_order_custom_column($columns){
-		//$user = wp_get_current_user();
-		//$user_role = get_userdata($user->ID);
-
-		//if(in_array('tenant_role', $user_role->roles)){
+	public function dbsnet_woocp_order_custom_column($paramColumns){
 		$new_columns = array();
 		$user = wp_get_current_user();
 		$user_role = get_userdata($user->ID);
+		$is_tenant = in_array('tenant_role', $user_role->roles);
+		$is_outlet = in_array('outlet_role', $user_role->roles);
+		$is_admin = current_user_can('manage_options');
 
-		if(current_user_can('manage_options') || in_array('tenant_role', $user_role->roles)){
-			//var_dump($columns);
-			foreach($columns as $column_name => $column_info){
-				if('order_notes'!== $column_name && 'customer_message'!== $column_name && 'shipping_address'!== $column_name && 'order_actions'!== $column_name){
-					$new_columns[$column_name] = $column_info;
-				}
-			
-				if('order_status'=== $column_name){
-					$new_columns['dbsnet_woocp_order_outlet'] = __('Outlet', 'woocommerce');
-				}
-			}
-		}
+		$new_columns['dbsnet_woocp_order_status_column'] = __('Status', 'dbsnet-woocp');
+		$new_columns['dbsnet_woocp_order_id_column'] = __('#', 'dbsnet-woocp');
+		$new_columns['dbsnet_woocp_order_date_column'] = __('Tanggal', 'dbsnet-woocp');
+		$new_columns['dbsnet_woocp_order_customer_column'] = __('Pembeli', 'dbsnet-woocp');
+		$new_columns['dbsnet_woocp_order_total_column'] = __('Total', 'dbsnet-woocp');
+		if($is_admin||$is_tenant) $new_columns['dbsnet_woocp_order_outlet_column'] = __('Outlet', 'dbsnet-woocp');
+		if($is_admin) $new_columns['dbsnet_woocp_order_tenant_column'] = __('Tenant', 'dbsnet-woocp');
+		if($is_outlet) $new_columns['dbsnet_woocp_order_action_column'] = __('', 'dbsnet-woocp');
 		
 		return $new_columns;
 	}
 
-	public function dbsnet_woocp_order_custom_column_value($column){
+	public function dbsnet_woocp_order_custom_column_value($paramColumn, $paramOrderId){
 		$user = wp_get_current_user();
 		$user_role = get_userdata($user->ID);
-		if(current_user_can('manage_options') || in_array('tenant_role', $user_role->roles)){
-			if('dbsnet_woocp_order_outlet'===$column){
-				global $post;
-				$order = wc_get_order($post->ID);
-				$items = $order->get_items();
-				$num_items = count($items);
-				$step = 0;
-				foreach($items as $item){
-					$outlet_id = get_post($item['product_id'])->post_author;
-					$outlet_name = get_userdata($outlet_id)->display_name;
+		$is_tenant = in_array('tenant_role', $user_role->roles);
+		$is_outlet = in_array('outlet_role', $user_role->roles);
+		$is_admin = current_user_can('manage_options');
 
-					echo $outlet_name;
-					if($step < ($num_items-1)){
-						echo ', ';
-					}
-					
-				}
-			}
+		$order = wc_get_order($paramOrderId);
+		$order_data = $order->get_data();//var_dump($order_data);
+		//$items = $order->get_items();
+
+
+		if('dbsnet_woocp_order_status_column'===$paramColumn){
+			echo $order_data['status'];
 		}
+		else if('dbsnet_woocp_order_id_column'===$paramColumn){
+			echo $paramOrderId;
+		}
+		else if('dbsnet_woocp_order_date_column'===$paramColumn){
+			echo $order->order_date;
+		}
+		else if('dbsnet_woocp_order_customer_column'===$paramColumn){
+			$customer_id = get_post_meta($paramOrderId,'_customer_user',true);
+			$customer_obj = get_userdata($customer_id);
+			$customer_name = $customer_obj->first_name;
+			echo $customer_name;
+		}
+		else if('dbsnet_woocp_order_total_column'===$paramColumn){
+			echo get_woocommerce_currency_symbol("IDR").$order_data['total'];
+		}
+		else if(($is_admin||$is_tenant)&&'dbsnet_woocp_order_outlet_column'===$paramColumn){
+			$outlet_id = get_post($item['product_id'])->post_author;
+			$outlet_obj = get_userdata($outlet_id);
+			$outlet_name = $outlet_obj->display_name;
+			echo $outlet_name;
+		}
+		else if(($is_admin)&&'dbsnet_woocp_order_tenant_column'===$paramColumn){
+			$binder_group = $outlet_obj->binder_group;
+			$tenant = DBSnet_Woocp_Group_Functions::GetTenant($binder_group);
+			echo $tenant->display_name;
+			echo $customer_name;
+		}
+		else if(($is_outlet)&&'dbsnet_woocp_order_action_column'===$paramColumn){
+			echo $customer_name;
+		}
+
+		// foreach($items as $item){
+			
+
+
+		// 	$outlet_id = get_post($item['product_id'])->post_author;
+		// 	$outlet_obj = get_userdata($outlet_id);
+		// 	$outlet_name = $outlet_obj->display_name;
+
+		// 	$customer_id = get_post_meta($paramOrderId,'_customer_user',true);
+		// 	$customer_obj = get_userdata($customer_id);
+		// 	$customer_name = $customer_obj->first_name;
+		// 	//var_dump($item['customer']['id']);
+
+		// 	if($is_admin && 'dbsnet_woocp_order_tenant_column'===$paramColumn){
+		// 		$binder_group = $outlet_obj->binder_group;
+		// 		$tenant = DBSnet_Woocp_Group_Functions::GetTenant($binder_group);
+		// 		echo $tenant->display_name;
+		// 	}
+		// 	if( ($is_admin || $is_tenant) && 'dbsnet_woocp_order_outlet_column'===$paramColumn){
+		// 		echo $outlet_name;
+		// 	}
+		// 	if('dbsnet_woocp_order_customer_column'===$paramColumn){
+		// 		echo $customer_name;
+		// 	}
+		// }
 	}
 
 	public function dbsnet_woocp_remove_order_bulk($actions){
@@ -359,5 +480,12 @@ class DBSnet_Woocp_Customizer{
 			unset($actions['trash']);
 		}
 		return $actions;
+	}
+
+	public function dbsnet_woocp_customize_currency_symbol($paramCurrencySymbol, $paramCurrency){
+		switch($paramCurrency){
+			case 'IDR': $paramCurrencySymbol = 'Rp'; break;
+		}
+		return $paramCurrencySymbol;
 	}
 }

@@ -41,7 +41,7 @@
 				$status = false;
 			}
 			if($status){
-				$password = wp_hash_password( $password );
+				//$password = wp_hash_password( $password );
 
 				$outlet_data = array(
 					'user_login'	=> $username,

@@ -24,73 +24,6 @@ class DBSnet_Woocp_Admin{
 		);
 	}
 
-	public function dbsnet_woocp_batch_metabox($product){
-		?>
-		<input id="product-type" type="hidden" name="product-type" value="variable">
-		<table id="tab_logic">
-			<thead>
-				<tr >
-					<th class="text-center">#</th>
-					<th class="text-center">Produksi</th>
-					<th class="text-center">Kadaluarsa</th>
-					<th class="text-center">Stok</th>
-					<th class="text-center">Harga</th>
-					<th class="text-center"></th>
-					<th class="text-center"></th>
-				</tr>
-			</thead>
-			<tbody>
-		<?php
-		$args = array(
-			'post_type' => 'product_variation',
-			'post_parent' => $product->ID,
-			'orderby' => 'ID',
-			'order' => 'ASC'
-		);
-		$batches = get_posts($args);
-		$index = 0;
-		foreach($batches as $batch){
-			$meta_batch_startdate = get_post_meta( $batch->ID, 'attribute_produksi', true ); 
-			$meta_batch_endate = get_post_meta( $batch->ID, 'attribute_kadaluarsa', true );
-			$meta_batch_stock = get_post_meta( $batch->ID, '_stock', true );
-			$meta_batch_price = get_post_meta( $batch->ID, '_regular_price', true );
-	    ?>
-	    <tr class="batch_row_table" id='addr<?php _e($index); ?>'>
-			<td>
-				<input type="hidden" name="batch_id[]" value="<?php _e($batch->ID); ?>"  />
-				<?php _e($index+1); ?>
-			</td>
-			<td>
-				<input id='start-date<?php _e($batch->ID); ?>' type="text" name='batch_start_date[]'  placeholder='Tanggal Produksi' class="custom-woocp-datepicker" value="<?php if(!empty($meta_batch_startdate)) _e($meta_batch_startdate); ?>"/>
-			</td>
-			<td>
-				<input id='end-date<?php _e($batch->ID); ?>' type="text" name='batch_end_date[]' placeholder='Tanggal kadaluarsa' class="custom-woocp-datepicker" value="<?php if(!empty($meta_batch_endate)) _e($meta_batch_endate); ?>" />
-			</td>
-			<td>
-				<input id='stock<?php _e($batch->ID); ?>' type="number" name='batch_stock[]' placeholder='Stok' class="form-control" value="<?php _e($meta_batch_stock); ?>"/>
-			</td>
-			<td>
-				<input id='price<?php _e($batch->ID); ?>' type="text" name='batch_price[]' placeholder='Harga' class="form-control" value="<?php if(!empty($meta_batch_price)) _e($meta_batch_price); ?>"/>
-			</td>
-			<td>
-				<button id='' data-product-id='<?php _e($product->ID); ?>' data-batch-id='<?php _e($batch->ID); ?>' class='update-batch-btn button-primary'>Update</button>
-			</td>
-			<td><a href='#' id='' data-batch-id="<?php _e($batch->ID); ?>" class="delete-batch-row btn btn-default"><span id="<?php _e($batch->ID); ?>"></span>Hapus</a></td>
-		</tr>
-	
-		<?php
-		$index++;
-		} // END FOREACH
-		?>
-			<tr class="batch_row_table" id='addr<?php _e($index+1); ?>'></tr>
-			</tbody>
-		</table>
-		<input id="product-title" type="hidden" name="product_batch_title" value="<?php _e($product->post_title); ?>"  />
-		<div id="batch-add-progress"></div>					
-		<a href="#" id="add_row" class="btn btn-primary pull-left" data-product-id="<?php _e($product->ID); ?>"><span id="<?php _e($index+1); ?>"></span>Tambah Batch</a>
-		<?php
-	}
-
 	public function dbsnet_woocp_add_new_batch_ajax(){
 
     	$responses = array('status'=>false, 'message'=>"I hope you don't see this message. Error: function AddBatch(). Happy var_dump()!!!",'data' => array());
@@ -263,7 +196,7 @@ class DBSnet_Woocp_Admin{
 
     	update_post_meta($post_id,'_product_attributes', $product_attributes_data);
     	update_post_meta($post_id,'_manage_stock', 'no');
-    	update_post_meta($post_id,'backorders', 'no');
+    	update_post_meta($post_id,'_backorders', 'no');
     	update_post_meta($post_id,'_sold_individually', 'no');
     	update_post_meta($post_id,'_weight', '');
     	update_post_meta($post_id,'_length', '');
@@ -286,6 +219,10 @@ class DBSnet_Woocp_Admin{
     	update_post_meta($post_id,'_sku', '');
     	update_post_meta($post_id,'_regular_price','');
     	update_post_meta($post_id,'total_sales',0);
+    	update_post_meta($post_id,'_sale_price','');
+    	update_post_meta($post_id,'_sale_price_dates_from','');
+    	update_post_meta($post_id,'_sale_price_dates_to','');
+    	update_post_meta($post_id,'_tax_class','');
 	}
 
 	public function dbsnet_woocp_delete_batch_ajax(){
@@ -329,13 +266,6 @@ class DBSnet_Woocp_Admin{
 		}
 		
 		return $new_columns;
-	}
-
-	public function dbsnet_woocp_add_outlet_ajax(){
-		$responses = array('status'=>false, 'message'=>"I hope you don't see this message. Error: function UpdateBatch(). Happy var_dump()!!!",'data' => array());
-		
-		echo wp_json_encode( $responses );
-		wp_die();
 	}
 
 	// public function dbsnet_woocp_force_post_status_published($post){
