@@ -21,6 +21,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 get_header(); ?>
+
+<?php
+	// dbsnet_homepage_banner_top_left();
+	do_action('dbsnet_theme_breadcrumb');
+
+	do_action('dbsnet_theme_shop');
+?>
+
 <div class="container bg-info">
 	<!-- Example row of columns -->
 	<div class="row">
@@ -29,7 +37,7 @@ get_header(); ?>
 
 		<?php if ( apply_filters( 'woocommerce_show_page_title', true ) ) : ?>
 
-			<h1 class="woocommerce-products-header__title page-title"><?php woocommerce_page_title(); ?></h1>
+			<h1 class="woocommerce-products-header__title page-title"><?php woocommerce_page_title(); ?>TEST</h1>
 
 		<?php endif; ?>
 

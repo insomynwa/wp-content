@@ -21,6 +21,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 get_header(); ?>
+ 
+<?php 
+
+	do_action('dbsnet_theme_breadcrumb');
+	do_action( 'dbsnet_single_product'); 
+
+?>
+
 <div class="container bg-info">
 	<div class="row">
 

@@ -74,18 +74,34 @@ add_action('dbsnet_theme_header', 'dbsnet_scripts_global',100);
 ////add_action('dbsnet_theme_header', 'dbsnet_header_navigation',100);
 add_action('dbsnet_theme_header','dbsnet_header_navigation_v2',100);
 
-add_action('dbsnet_theme_homepage', 'dbsnet_homepage_banner_top',100);
+// Action for banner TOP 
+add_action('dbsnet_theme_homepage', 'dbsnet_homepage_banner_top_start',100);
+add_action('dbsnet_theme_homepage', 'dbsnet_homepage_banner_top_left',100);
+add_action('dbsnet_theme_homepage', 'dbsnet_homepage_banner_top_right',100);
+add_action('dbsnet_theme_homepage', 'dbsnet_homepage_banner_top_end',100);
+
 add_action('dbsnet_theme_homepage', 'dbsnet_homepage_banner_bottom',100);
 add_action('dbsnet_theme_homepage', 'dbsnet_product_hot_v2',100);
 add_action('dbsnet_theme_homepage', 'dbsnet_product_best_seller_v2',100);
 
+add_action('dbsnet_theme_breadcrumb', 'dbsnet_theme_breadcrumb_shop');
+
+add_action('dbsnet_theme_shop', 'dbsnet_homepage_banner_top_start',10);
+add_action('dbsnet_theme_shop', 'dbsnet_homepage_banner_top_left',20);
+add_action('dbsnet_theme_shop', 'dbsnet_theme_banner_shop', 30);
+add_action('dbsnet_theme_shop', 'dbsnet_homepage_banner_top_end',40);
+
+// ABOUT US
+add_action('dbsnet_about_us', 'dbsnet_about_us', 100);
+
 //add_action('dbsnet_theme_homepage', 'dbsnet_homepage_slideshow',100);
-//add_action('dbsnet_theme_homepage', 'dbsnet_homepage_advertisement',100);
-//add_action('dbsnet_theme_homepage', 'dbsnet_homepage_promotion',100);
+
 //add_action('dbsnet_theme_homepage', 'dbsnet_homepage_tenant',100);
 // add_action('dbsnet_theme_homepage', 'dbsnet_product_categories',100);
 // add_action('dbsnet_theme_homepage', 'dbsnet_product_hot',100);
 // add_action('dbsnet_theme_homepage', 'dbsnet_product_best_seller',100);
+
+add_action('dbsnet_single_product', 'dbsnet_single_product', 100);
 
 add_action('woocommerce_single_product_summary', 'dbsnet_product_batch',6);
 
@@ -105,7 +121,6 @@ add_action( 'init', 'jk_remove_storefront_header_search' );
 function jk_remove_storefront_header_search() {
 	remove_action( 'storefront_header', 'storefront_product_search', 	40 );
 }
-
 
 
 

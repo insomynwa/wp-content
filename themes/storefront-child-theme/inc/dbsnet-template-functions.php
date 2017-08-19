@@ -198,7 +198,7 @@ function dbsnet_header_navigation_v2(){
 	<!-- header -->
 	<div class="agileits_header">
 		<div class="w3l_offers">
-			<a href="products.html">Today's special Offers !</a>
+			<a href="<?php echo home_url( '/shop/' ) ?>">Today's special Offers !</a>
 		</div>
 		<div class="w3l_search">
 			<form action="#" method="post">
@@ -277,20 +277,20 @@ function dbsnet_header_navigation_v2(){
 	<div class="logo_products">
 		<div class="container">
 			<div class="w3ls_logo_products_left">
-				<h1><a href="index.html"><span>Grocery</span> Store</a></h1>
+				<h1><a href="<?php echo home_url();?>"><span>DBS</span> Store</a></h1>
 			</div>
 			<div class="w3ls_logo_products_left1">
 				<ul class="special_items">
-					<li><a href="events.html">Events</a><i>/</i></li>
+					<!-- <li><a href="events.html">Events</a><i>/</i></li> -->
 					<li><a href="about.html">About Us</a><i>/</i></li>
-					<li><a href="products.html">Best Deals</a><i>/</i></li>
-					<li><a href="services.html">Services</a></li>
+					<li><a href="<?php echo home_url( '/shop/' ) ?>">Shop</a><i>/</i></li>
+					<!-- <li><a href="services.html">Services</a></li> -->
 				</ul>
 			</div>
 			<div class="w3ls_logo_products_left1">
 				<ul class="phone_email">
-					<li><i class="fa fa-phone" aria-hidden="true"></i>(+0123) 234 567</li>
-					<li><i class="fa fa-envelope-o" aria-hidden="true"></i><a href="mailto:store@grocery.com">store@grocery.com</a></li>
+					<li><i class="fa fa-phone" aria-hidden="true"></i>(+62) 234 567</li>
+					<li><i class="fa fa-envelope-o" aria-hidden="true"></i><a href="mailto:store@dbs.com">store@dbs.com</a></li>
 				</ul>
 			</div>
 			<div class="clearfix"> </div>
@@ -299,24 +299,24 @@ function dbsnet_header_navigation_v2(){
 <!-- //header -->
 
 	<script>
-			paypal.minicart.render();
+			// paypal.minicart.render();
 
-			paypal.minicart.cart.on('checkout', function (evt) {
-				var items = this.items(),
-					len = items.length,
-					total = 0,
-					i;
+			// paypal.minicart.cart.on('checkout', function (evt) {
+			// 	var items = this.items(),
+			// 		len = items.length,
+			// 		total = 0,
+			// 		i;
 
-				// Count the number of each item in the cart
-				for (i = 0; i < len; i++) {
-					total += items[i].get('quantity');
-				}
+			// 	// Count the number of each item in the cart
+			// 	for (i = 0; i < len; i++) {
+			// 		total += items[i].get('quantity');
+			// 	}
 
-				if (total < 3) {
-					alert('The minimum order quantity is 3. Please add more to your shopping cart before checking out');
-					evt.preventDefault();
-				}
-			});
+			// 	if (total < 3) {
+			// 		alert('The minimum order quantity is 3. Please add more to your shopping cart before checking out');
+			// 		evt.preventDefault();
+			// 	}
+			// });
 
 		</script>
 
@@ -324,150 +324,674 @@ function dbsnet_header_navigation_v2(){
 
 }
 
-function dbsnet_homepage_banner_top(){
+function dbsnet_theme_breadcrumb_shop(){
 	?>
-	<!-- banner -->
-	<div class="banner">
-		<div class="w3l_banner_nav_left">
-			<nav class="navbar nav_bottom">
-			 <!-- Brand and toggle get grouped for better mobile display -->
-			  <div class="navbar-header nav_2">
-				  <button type="button" class="navbar-toggle collapsed navbar-toggle1" data-toggle="collapse" data-target="#bs-megadropdown-tabs">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				  </button>
-			   </div> 
-			   <!-- Collect the nav links, forms, and other content for toggling -->
-				<div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
-					<ul class="nav navbar-nav nav_1">
-						<li><a href="products.html">Branded Foods</a></li>
-						<li><a href="household.html">Households</a></li>
-						<li class="dropdown mega-dropdown active">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Veggies & Fruits<span class="caret"></span></a>				
-							<div class="dropdown-menu mega-dropdown-menu w3ls_vegetables_menu">
-								<div class="w3ls_vegetables">
-									<ul>	
-										<li><a href="vegetables.html">Vegetables</a></li>
-										<li><a href="vegetables.html">Fruits</a></li>
-									</ul>
-								</div>                  
-							</div>				
-						</li>
-						<li><a href="kitchen.html">Kitchen</a></li>
-						<li><a href="short-codes.html">Short Codes</a></li>
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Beverages<span class="caret"></span></a>
-							<div class="dropdown-menu mega-dropdown-menu w3ls_vegetables_menu">
-								<div class="w3ls_vegetables">
-									<ul>
-										<li><a href="drinks.html">Soft Drinks</a></li>
-										<li><a href="drinks.html">Juices</a></li>
-									</ul>
-								</div>                  
-							</div>	
-						</li>
-						<li><a href="pet.html">Pet Food</a></li>
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Frozen Foods<span class="caret"></span></a>
-							<div class="dropdown-menu mega-dropdown-menu w3ls_vegetables_menu">
-								<div class="w3ls_vegetables">
-									<ul>
-										<li><a href="frozen.html">Frozen Snacks</a></li>
-										<li><a href="frozen.html">Frozen Nonveg</a></li>
-									</ul>
-								</div>                  
-							</div>	
-						</li>
-						<li><a href="bread.html">Bread & Bakery</a></li>
-					</ul>
-				 </div><!-- /.navbar-collapse -->
-			</nav>
-		</div>
-		<div class="w3l_banner_nav_right">
-			<section class="slider">
-				<div class="flexslider">
-					<ul class="slides">
-						<li>
-							<div class="w3l_banner_nav_right_banner">
-								<h3>Make your <span>food</span> with Spicy.</h3>
-								<div class="more">
-									<a href="products.html" class="button--saqui button--round-l button--text-thick" data-text="Shop now">Shop now</a>
-								</div>
-							</div>
-						</li>
-						<li>
-							<div class="w3l_banner_nav_right_banner1">
-								<h3>Make your <span>food</span> with Spicy.</h3>
-								<div class="more">
-									<a href="products.html" class="button--saqui button--round-l button--text-thick" data-text="Shop now">Shop now</a>
-								</div>
-							</div>
-						</li>
-						<li>
-							<div class="w3l_banner_nav_right_banner2">
-								<h3>upto <i>50%</i> off.</h3>
-								<div class="more">
-									<a href="products.html" class="button--saqui button--round-l button--text-thick" data-text="Shop now">Shop now</a>
-								</div>
-							</div>
-						</li>
+		<div class="products-breadcrumb">
+				<div class="container">
+					<ul>
+						<li><i class="fa fa-home" aria-hidden="true"></i><a href="index.html">Home</a><span>|</span></li>
+						<li>Branded Foods</li>
 					</ul>
 				</div>
-			</section>
-			<!-- flexSlider -->
-				<!-- <link rel="stylesheet" href="css/flexslider.css" type="text/css" media="screen" property="" />
-				<script defer src="js/jquery.flexslider.js"></script> -->
-				<script type="text/javascript">
-				jQuery(window).load(function(){
-				  jQuery('.flexslider').flexslider({
-					animation: "slide",
-					start: function(slider){
-					  jQuery('body').removeClass('loading');
-					}
-				  });
-				});
-			  </script>
-			<!-- //flexSlider -->
 		</div>
-		<div class="clearfix"></div>
-	</div>
-<!-- banner -->
+	<?php
+}
 
- <?php
+function dbsnet_theme_banner_shop(){
+	?>
+	<div class="w3l_banner_nav_right">
+			<div class="w3l_banner_nav_right_banner3">
+				<h3>Best Deals For New Products<span class="blink_me"></span></h3>
+			</div>
+			<div class="w3l_banner_nav_right_banner3_btm">
+				<div class="col-md-4 w3l_banner_nav_right_banner3_btml">
+					<div class="view view-tenth">
+						<img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/13.jpg', null )); ?> alt=" " class="img-responsive" />
+						<div class="mask">
+							<h4>Grocery Store</h4>
+							<p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt.</p>
+						</div>
+					</div>
+					<h4>Utensils</h4>
+					<ol>
+						<li>sunt in culpa qui officia</li>
+						<li>commodo consequat</li>
+						<li>sed do eiusmod tempor incididunt</li>
+					</ol>
+				</div>
+				<div class="col-md-4 w3l_banner_nav_right_banner3_btml">
+					<div class="view view-tenth">
+						<img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/14.jpg', null )); ?> alt=" " class="img-responsive" />
+						<div class="mask">
+							<h4>Grocery Store</h4>
+							<p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt.</p>
+						</div>
+					</div>
+					<h4>Hair Care</h4>
+					<ol>
+						<li>enim ipsam voluptatem officia</li>
+						<li>tempora incidunt ut labore et</li>
+						<li>vel eum iure reprehenderit</li>
+					</ol>
+				</div>
+				<div class="col-md-4 w3l_banner_nav_right_banner3_btml">
+					<div class="view view-tenth">
+						<img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/15.jpg', null )); ?> alt=" " class="img-responsive" />
+						<div class="mask">
+							<h4>Grocery Store</h4>
+							<p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt.</p>
+						</div>
+					</div>
+					<h4>Cookies</h4>
+					<ol>
+						<li>dolorem eum fugiat voluptas</li>
+						<li>ut aliquid ex ea commodi</li>
+						<li>magnam aliquam quaerat</li>
+					</ol>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+			<div class="w3ls_w3l_banner_nav_right_grid">
+				<h3>Popular Brands</h3>
+				<div class="w3ls_w3l_banner_nav_right_grid1">
+					<h6>food</h6>
+					<div class="col-md-3 w3ls_w3l_banner_left">
+						<div class="hover14 column">
+						<div class="agile_top_brand_left_grid w3l_agile_top_brand_left_grid">
+							<div class="agile_top_brand_left_grid_pos">
+								<img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/offer.png', null )); ?> alt=" " class="img-responsive" />
+							</div>
+							<div class="agile_top_brand_left_grid1">
+								<figure>
+									<div class="snipcart-item block">
+										<div class="snipcart-thumb">
+											<a href="single.html"><img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/5.png', null )); ?> alt=" " class="img-responsive" /></a>
+											<p>knorr instant soup (100 gm)</p>
+											<h4>$3.00 <span>$5.00</span></h4>
+										</div>
+										<div class="snipcart-details">
+											<form action="#" method="post">
+												<fieldset>
+													<input type="hidden" name="cmd" value="_cart" />
+													<input type="hidden" name="add" value="1" />
+													<input type="hidden" name="business" value=" " />
+													<input type="hidden" name="item_name" value="knorr instant soup" />
+													<input type="hidden" name="amount" value="3.00" />
+													<input type="hidden" name="discount_amount" value="1.00" />
+													<input type="hidden" name="currency_code" value="USD" />
+													<input type="hidden" name="return" value=" " />
+													<input type="hidden" name="cancel_return" value=" " />
+													<input type="submit" name="submit" value="Add to cart" class="button" />
+												</fieldset>
+											</form>
+										</div>
+									</div>
+								</figure>
+							</div>
+						</div>
+						</div>
+					</div>
+					<div class="col-md-3 w3ls_w3l_banner_left">
+						<div class="hover14 column">
+						<div class="agile_top_brand_left_grid w3l_agile_top_brand_left_grid">
+							<div class="agile_top_brand_left_grid_pos">
+								<img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/offer.png', null )); ?> alt=" " class="img-responsive" />
+							</div>
+							<div class="agile_top_brand_left_grid1">
+								<figure>
+									<div class="snipcart-item block">
+										<div class="snipcart-thumb">
+											<a href="single.html"><img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/6.png', null )); ?> alt=" " class="img-responsive" /></a>
+											<p>chings noodles (75 gm)</p>
+											<h4>$5.00 <span>$8.00</span></h4>
+										</div>
+										<div class="snipcart-details">
+											<form action="#" method="post">
+												<fieldset>
+													<input type="hidden" name="cmd" value="_cart" />
+													<input type="hidden" name="add" value="1" />
+													<input type="hidden" name="business" value=" " />
+													<input type="hidden" name="item_name" value="chings noodles" />
+													<input type="hidden" name="amount" value="5.00" />
+													<input type="hidden" name="discount_amount" value="1.00" />
+													<input type="hidden" name="currency_code" value="USD" />
+													<input type="hidden" name="return" value=" " />
+													<input type="hidden" name="cancel_return" value=" " />
+													<input type="submit" name="submit" value="Add to cart" class="button" />
+												</fieldset>
+											</form>
+										</div>
+									</div>
+								</figure>
+							</div>
+						</div>
+						</div>
+					</div>
+					<div class="col-md-3 w3ls_w3l_banner_left">
+						<div class="hover14 column">
+						<div class="agile_top_brand_left_grid w3l_agile_top_brand_left_grid">
+							<div class="agile_top_brand_left_grid_pos">
+								<img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/offer.png', null )); ?> alt=" " class="img-responsive" />
+							</div>
+							<div class="agile_top_brand_left_grid1">
+								<figure>
+									<div class="snipcart-item block">
+										<div class="snipcart-thumb">
+											<a href="single.html"><img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/7.png', null )); ?> alt=" " class="img-responsive" /></a>
+											<p>lahsun sev (150 gm)</p>
+											<h4>$3.00 <span>$5.00</span></h4>
+										</div>
+										<div class="snipcart-details">
+											<form action="#" method="post">
+												<fieldset>
+													<input type="hidden" name="cmd" value="_cart" />
+													<input type="hidden" name="add" value="1" />
+													<input type="hidden" name="business" value=" " />
+													<input type="hidden" name="item_name" value="lahsun sev" />
+													<input type="hidden" name="amount" value="3.00" />
+													<input type="hidden" name="discount_amount" value="1.00" />
+													<input type="hidden" name="currency_code" value="USD" />
+													<input type="hidden" name="return" value=" " />
+													<input type="hidden" name="cancel_return" value=" " />
+													<input type="submit" name="submit" value="Add to cart" class="button" />
+												</fieldset>
+											</form>
+										</div>
+									</div>
+								</figure>
+							</div>
+						</div>
+						</div>
+					</div>
+					<div class="col-md-3 w3ls_w3l_banner_left">
+						<div class="hover14 column">
+						<div class="agile_top_brand_left_grid w3l_agile_top_brand_left_grid">
+							<div class="agile_top_brand_left_grid_pos">
+								<img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/offer.png', null )); ?> alt=" " class="img-responsive" />
+							</div>
+							<div class="agile_top_brand_left_grid1">
+								<figure>
+									<div class="snipcart-item block">
+										<div class="snipcart-thumb">
+											<a href="single.html"><img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/8.png', null )); ?> alt=" " class="img-responsive" /></a>
+											<p>premium bake rusk (300 gm)</p>
+											<h4>$5.00 <span>$7.00</span></h4>
+										</div>
+										<div class="snipcart-details">
+											<form action="#" method="post">
+												<fieldset>
+													<input type="hidden" name="cmd" value="_cart" />
+													<input type="hidden" name="add" value="1" />
+													<input type="hidden" name="business" value=" " />
+													<input type="hidden" name="item_name" value="premium bake rusk" />
+													<input type="hidden" name="amount" value="5.00" />
+													<input type="hidden" name="discount_amount" value="1.00" />
+													<input type="hidden" name="currency_code" value="USD" />
+													<input type="hidden" name="return" value=" " />
+													<input type="hidden" name="cancel_return" value=" " />
+													<input type="submit" name="submit" value="Add to cart" class="button" />
+												</fieldset>
+											</form>
+										</div>
+									</div>
+								</figure>
+							</div>
+						</div>
+						</div>
+					</div>
+					<div class="clearfix"> </div>
+				</div>
+				<div class="w3ls_w3l_banner_nav_right_grid1">
+					<h6>vegetables & fruits</h6>
+					<div class="col-md-3 w3ls_w3l_banner_left">
+						<div class="hover14 column">
+						<div class="agile_top_brand_left_grid w3l_agile_top_brand_left_grid">
+							<div class="agile_top_brand_left_grid_pos">
+								<img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/offer.png', null )); ?> alt=" " class="img-responsive" />
+							</div>
+							<div class="agile_top_brand_left_grid1">
+								<figure>
+									<div class="snipcart-item block">
+										<div class="snipcart-thumb">
+											<a href="single.html"><img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/9.png', null )); ?> alt=" " class="img-responsive" /></a>
+											<p>fresh spinach (palak)</p>
+											<h4>$2.00 <span>$3.00</span></h4>
+										</div>
+										<div class="snipcart-details">
+											<form action="#" method="post">
+												<fieldset>
+													<input type="hidden" name="cmd" value="_cart" />
+													<input type="hidden" name="add" value="1" />
+													<input type="hidden" name="business" value=" " />
+													<input type="hidden" name="item_name" value="fresh spinach" />
+													<input type="hidden" name="amount" value="2.00" />
+													<input type="hidden" name="discount_amount" value="1.00" />
+													<input type="hidden" name="currency_code" value="USD" />
+													<input type="hidden" name="return" value=" " />
+													<input type="hidden" name="cancel_return" value=" " />
+													<input type="submit" name="submit" value="Add to cart" class="button" />
+												</fieldset>
+											</form>
+										</div>
+									</div>
+								</figure>
+							</div>
+						</div>
+						</div>
+					</div>
+					<div class="col-md-3 w3ls_w3l_banner_left">
+						<div class="hover14 column">
+						<div class="agile_top_brand_left_grid w3l_agile_top_brand_left_grid">
+							<div class="agile_top_brand_left_grid_pos">
+								<img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/offer.png', null )); ?> alt=" " class="img-responsive" />
+							</div>
+							<div class="agile_top_brand_left_grid1">
+								<figure>
+									<div class="snipcart-item block">
+										<div class="snipcart-thumb">
+											<a href="single.html"><img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/10.png', null )); ?> alt=" " class="img-responsive" /></a>
+											<p>fresh mango dasheri (1 kg)</p>
+											<h4>$5.00 <span>$8.00</span></h4>
+										</div>
+										<div class="snipcart-details">
+											<form action="#" method="post">
+												<fieldset>
+													<input type="hidden" name="cmd" value="_cart" />
+													<input type="hidden" name="add" value="1" />
+													<input type="hidden" name="business" value=" " />
+													<input type="hidden" name="item_name" value="fresh mango dasheri" />
+													<input type="hidden" name="amount" value="5.00" />
+													<input type="hidden" name="discount_amount" value="1.00" />
+													<input type="hidden" name="currency_code" value="USD" />
+													<input type="hidden" name="return" value=" " />
+													<input type="hidden" name="cancel_return" value=" " />
+													<input type="submit" name="submit" value="Add to cart" class="button" />
+												</fieldset>
+											</form>
+										</div>
+									</div>
+								</figure>
+							</div>
+						</div>
+						</div>
+					</div>
+					<div class="col-md-3 w3ls_w3l_banner_left">
+						<div class="hover14 column">
+						<div class="agile_top_brand_left_grid w3l_agile_top_brand_left_grid">
+							<div class="tag"><img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/tag.png', null )); ?> alt=" " class="img-responsive" /></div>
+							<div class="agile_top_brand_left_grid1">
+								<figure>
+									<div class="snipcart-item block">
+										<div class="snipcart-thumb">
+											<a href="single.html"><img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/11.png', null )); ?> alt=" " class="img-responsive" /></a>
+											<p>fresh apple red (1 kg)</p>
+											<h4>$6.00 <span>$8.00</span></h4>
+										</div>
+										<div class="snipcart-details">
+											<form action="#" method="post">
+												<fieldset>
+													<input type="hidden" name="cmd" value="_cart" />
+													<input type="hidden" name="add" value="1" />
+													<input type="hidden" name="business" value=" " />
+													<input type="hidden" name="item_name" value="fresh apple red" />
+													<input type="hidden" name="amount" value="6.00" />
+													<input type="hidden" name="discount_amount" value="1.00" />
+													<input type="hidden" name="currency_code" value="USD" />
+													<input type="hidden" name="return" value=" " />
+													<input type="hidden" name="cancel_return" value=" " />
+													<input type="submit" name="submit" value="Add to cart" class="button" />
+												</fieldset>
+											</form>
+										</div>
+									</div>
+								</figure>
+							</div>
+						</div>
+						</div>
+					</div>
+					<div class="col-md-3 w3ls_w3l_banner_left">
+						<div class="hover14 column">
+						<div class="agile_top_brand_left_grid w3l_agile_top_brand_left_grid">
+							<div class="agile_top_brand_left_grid_pos">
+								<img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/offer.png', null )); ?> alt=" " class="img-responsive" />
+							</div>
+							<div class="agile_top_brand_left_grid1">
+								<figure>
+									<div class="snipcart-item block">
+										<div class="snipcart-thumb">
+											<a href="single.html"><img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/12.png', null )); ?> alt=" " class="img-responsive" /></a>
+											<p>fresh broccoli (500 gm)</p>
+											<h4>$4.00 <span>$6.00</span></h4>
+										</div>
+										<div class="snipcart-details">
+											<form action="#" method="post">
+												<fieldset>
+													<input type="hidden" name="cmd" value="_cart" />
+													<input type="hidden" name="add" value="1" />
+													<input type="hidden" name="business" value=" " />
+													<input type="hidden" name="item_name" value="fresh broccoli" />
+													<input type="hidden" name="amount" value="4.00" />
+													<input type="hidden" name="discount_amount" value="1.00" />
+													<input type="hidden" name="currency_code" value="USD" />
+													<input type="hidden" name="return" value=" " />
+													<input type="hidden" name="cancel_return" value=" " />
+													<input type="submit" name="submit" value="Add to cart" class="button" />
+												</fieldset>
+											</form>
+										</div>
+									</div>
+								</figure>
+							</div>
+						</div>
+						</div>
+					</div>
+					<div class="clearfix"> </div>
+				</div>
+				<div class="w3ls_w3l_banner_nav_right_grid1">
+					<h6>beverages</h6>
+					<div class="col-md-3 w3ls_w3l_banner_left">
+						<div class="hover14 column">
+						<div class="agile_top_brand_left_grid w3l_agile_top_brand_left_grid">
+							<div class="agile_top_brand_left_grid_pos">
+								<img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/offer.png', null )); ?> alt=" " class="img-responsive" />
+							</div>
+							<div class="agile_top_brand_left_grid1">
+								<figure>
+									<div class="snipcart-item block">
+										<div class="snipcart-thumb">
+											<a href="single.html"><img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/13.png', null )); ?> alt=" " class="img-responsive" /></a>
+											<p>mixed fruit juice (1 ltr)</p>
+											<h4>$3.00 <span>$4.00</span></h4>
+										</div>
+										<div class="snipcart-details">
+											<form action="#" method="post">
+												<fieldset>
+													<input type="hidden" name="cmd" value="_cart" />
+													<input type="hidden" name="add" value="1" />
+													<input type="hidden" name="business" value=" " />
+													<input type="hidden" name="item_name" value="mixed fruit juice" />
+													<input type="hidden" name="amount" value="3.00" />
+													<input type="hidden" name="discount_amount" value="1.00" />
+													<input type="hidden" name="currency_code" value="USD" />
+													<input type="hidden" name="return" value=" " />
+													<input type="hidden" name="cancel_return" value=" " />
+													<input type="submit" name="submit" value="Add to cart" class="button" />
+												</fieldset>
+											</form>
+										</div>
+									</div>
+								</figure>
+							</div>
+						</div>
+						</div>
+					</div>
+					<div class="col-md-3 w3ls_w3l_banner_left">
+						<div class="hover14 column">
+						<div class="agile_top_brand_left_grid w3l_agile_top_brand_left_grid">
+							<div class="agile_top_brand_left_grid_pos">
+								<img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/offer.png', null )); ?> alt=" " class="img-responsive" />
+							</div>
+							<div class="agile_top_brand_left_grid1">
+								<figure>
+									<div class="snipcart-item block">
+										<div class="snipcart-thumb">
+											<a href="single.html"><img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/14.png', null )); ?> alt=" " class="img-responsive" /></a>
+											<p>prune juice - sunsweet (1 ltr)</p>
+											<h4>$4.00 <span>$5.00</span></h4>
+										</div>
+										<div class="snipcart-details">
+											<form action="#" method="post">
+												<fieldset>
+													<input type="hidden" name="cmd" value="_cart" />
+													<input type="hidden" name="add" value="1" />
+													<input type="hidden" name="business" value=" " />
+													<input type="hidden" name="item_name" value="prune juice" />
+													<input type="hidden" name="amount" value="4.00" />
+													<input type="hidden" name="discount_amount" value="1.00" />
+													<input type="hidden" name="currency_code" value="USD" />
+													<input type="hidden" name="return" value=" " />
+													<input type="hidden" name="cancel_return" value=" " />
+													<input type="submit" name="submit" value="Add to cart" class="button" />
+												</fieldset>
+											</form>
+										</div>
+									</div>
+								</figure>
+							</div>
+						</div>
+						</div>
+					</div>
+					<div class="col-md-3 w3ls_w3l_banner_left">
+						<div class="hover14 column">
+						<div class="agile_top_brand_left_grid w3l_agile_top_brand_left_grid">
+							<div class="tag"><img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/tag.png', null )); ?> alt=" " class="img-responsive" /></div>
+							<div class="agile_top_brand_left_grid1">
+								<figure>
+									<div class="snipcart-item block">
+										<div class="snipcart-thumb">
+											<a href="single.html"><img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/15.png', null )); ?> alt=" " class="img-responsive" /></a>
+											<p>coco cola zero can (330 ml)</p>
+											<h4>$3.00 <span>$5.00</span></h4>
+										</div>
+										<div class="snipcart-details">
+											<form action="#" method="post">
+												<fieldset>
+													<input type="hidden" name="cmd" value="_cart" />
+													<input type="hidden" name="add" value="1" />
+													<input type="hidden" name="business" value=" " />
+													<input type="hidden" name="item_name" value="coco cola can" />
+													<input type="hidden" name="amount" value="3.00" />
+													<input type="hidden" name="discount_amount" value="1.00" />
+													<input type="hidden" name="currency_code" value="USD" />
+													<input type="hidden" name="return" value=" " />
+													<input type="hidden" name="cancel_return" value=" " />
+													<input type="submit" name="submit" value="Add to cart" class="button" />
+												</fieldset>
+											</form>
+										</div>
+									</div>
+								</figure>
+							</div>
+						</div>
+						</div>
+					</div>
+					<div class="col-md-3 w3ls_w3l_banner_left">
+						<div class="hover14 column">
+						<div class="agile_top_brand_left_grid w3l_agile_top_brand_left_grid">
+							<div class="agile_top_brand_left_grid_pos">
+								<img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/offer.png', null )); ?> alt=" " class="img-responsive" />
+							</div>
+							<div class="agile_top_brand_left_grid1">
+								<figure>
+									<div class="snipcart-item block">
+										<div class="snipcart-thumb">
+											<a href="single.html"><img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/16.png', null )); ?> alt=" " class="img-responsive" /></a>
+											<p>sprite bottle (2 ltr)</p>
+											<h4>$3.00 <span>$4.00</span></h4>
+										</div>
+										<div class="snipcart-details">
+											<form action="#" method="post">
+												<fieldset>
+													<input type="hidden" name="cmd" value="_cart" />
+													<input type="hidden" name="add" value="1" />
+													<input type="hidden" name="business" value=" " />
+													<input type="hidden" name="item_name" value="sprite bottle" />
+													<input type="hidden" name="amount" value="3.00" />
+													<input type="hidden" name="discount_amount" value="1.00" />
+													<input type="hidden" name="currency_code" value="USD" />
+													<input type="hidden" name="return" value=" " />
+													<input type="hidden" name="cancel_return" value=" " />
+													<input type="submit" name="submit" value="Add to cart" class="button" />
+												</fieldset>
+											</form>
+										</div>
+									</div>
+								</figure>
+							</div>
+						</div>
+						</div>
+					</div>
+					<div class="clearfix"> </div>
+				</div>
+			</div>
+		</div>
+	<?php
+}
+
+function dbsnet_homepage_banner_top_start(){
+	?>
+	<!-- banner start -->
+	<div class="banner">
+
+	<?php
+}
+
+function dbsnet_homepage_banner_top_left(){
+	?>
+	<div class="w3l_banner_nav_left">
+				<nav class="navbar nav_bottom">
+				 <!-- Brand and toggle get grouped for better mobile display -->
+				  <div class="navbar-header nav_2">
+					  <button type="button" class="navbar-toggle collapsed navbar-toggle1" data-toggle="collapse" data-target="#bs-megadropdown-tabs">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					  </button>
+				   </div> 
+				   <!-- Collect the nav links, forms, and other content for toggling -->
+					<div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
+						<ul class="nav navbar-nav nav_1">
+							<li><a href="products.html">Branded Foods</a></li>
+							<li><a href="household.html">Households</a></li>
+							<li class="dropdown mega-dropdown active">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Veggies & Fruits<span class="caret"></span></a>				
+								<div class="dropdown-menu mega-dropdown-menu w3ls_vegetables_menu">
+									<div class="w3ls_vegetables">
+										<ul>	
+											<li><a href="vegetables.html">Vegetables</a></li>
+											<li><a href="vegetables.html">Fruits</a></li>
+										</ul>
+									</div>                  
+								</div>				
+							</li>
+							<li><a href="kitchen.html">Kitchen</a></li>
+							<li><a href="short-codes.html">Short Codes</a></li>
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Beverages<span class="caret"></span></a>
+								<div class="dropdown-menu mega-dropdown-menu w3ls_vegetables_menu">
+									<div class="w3ls_vegetables">
+										<ul>
+											<li><a href="drinks.html">Soft Drinks</a></li>
+											<li><a href="drinks.html">Juices</a></li>
+										</ul>
+									</div>                  
+								</div>	
+							</li>
+							<li><a href="pet.html">Pet Food</a></li>
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Frozen Foods<span class="caret"></span></a>
+								<div class="dropdown-menu mega-dropdown-menu w3ls_vegetables_menu">
+									<div class="w3ls_vegetables">
+										<ul>
+											<li><a href="frozen.html">Frozen Snacks</a></li>
+											<li><a href="frozen.html">Frozen Nonveg</a></li>
+										</ul>
+									</div>                  
+								</div>	
+							</li>
+							<li><a href="bread.html">Bread & Bakery</a></li>
+						</ul>
+					 </div><!-- /.navbar-collapse -->
+				</nav>
+			</div>
+	<?php
+}
+
+function dbsnet_homepage_banner_top_right(){
+	?>
+	<div class="w3l_banner_nav_right">
+		<section class="slider">
+			<div class="flexslider">
+				<ul class="slides">
+					<li>
+						<div class="w3l_banner_nav_right_banner">
+							<h3>Make your <span>food</span> with Spicy.</h3>
+							<div class="more">
+								<a href="products.html" class="button--saqui button--round-l button--text-thick" data-text="Shop now">Shop now</a>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="w3l_banner_nav_right_banner1">
+							<h3>Make your <span>food</span> with Spicy.</h3>
+							<div class="more">
+								<a href="products.html" class="button--saqui button--round-l button--text-thick" data-text="Shop now">Shop now</a>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="w3l_banner_nav_right_banner2">
+							<h3>upto <i>50%</i> off.</h3>
+							<div class="more">
+								<a href="products.html" class="button--saqui button--round-l button--text-thick" data-text="Shop now">Shop now</a>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</section>
+		<!-- flexSlider -->
+			<!-- <link rel="stylesheet" href="css/flexslider.css" type="text/css" media="screen" property="" />
+			<script defer src="js/jquery.flexslider.js"></script> -->
+			<script type="text/javascript">
+			jQuery(window).load(function(){
+			  jQuery('.flexslider').flexslider({
+				animation: "slide",
+				start: function(slider){
+				  jQuery('body').removeClass('loading');
+				}
+			  });
+			});
+		  </script>
+		<!-- //flexSlider -->
+	</div>
+	
+	<?php
+}
+
+function dbsnet_homepage_banner_top_end(){
+	?>
+		<div class="clearfix"></div>
+		</div>
+	<!-- banner -->
+
+	<?php
 }
 
 function dbsnet_homepage_banner_bottom(){
+	$tenants = get_users(
+		array(
+			'role__in' => 'tenant_role'
+			)
+		);
+	$column_size = 12 / count($tenants);
 	?>
 	<div class="banner_bottom">
 		<div class="wthree_banner_bottom_left_grid_sub">
 		</div>
 		<div class="wthree_banner_bottom_left_grid_sub1">
-			<div class="col-md-4 wthree_banner_bottom_left">
+			<?php foreach($tenants as $tenant): ?>
+			<div class="col-md-<?php echo $column_size; ?> wthree_banner_bottom_left">
 				<div class="wthree_banner_bottom_left_grid">
-					<img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/4.jpg', null )); ?> alt=" " class="img-responsive" />
-					<div class="wthree_banner_bottom_left_grid_pos">
+					<!-- <img src=<?php //_e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/4.jpg', null )); ?> alt=" " class="img-responsive" /> -->
+					<?php echo get_avatar($tenant->ID, '500', '','', array('class' => 'img-responsive')); ?>
+					<!-- <div class="wthree_banner_bottom_left_grid_pos">
 						<h4>Discount Offer <span>25%</span></h4>
-					</div>
+					</div> -->
 				</div>
 			</div>
-			<div class="col-md-4 wthree_banner_bottom_left">
-				<div class="wthree_banner_bottom_left_grid">
-					<img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/5.jpg', null )); ?> alt=" " class="img-responsive" />
-					<div class="wthree_banner_btm_pos">
-						<h3>introducing <span>best store</span> for <i>groceries</i></h3>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4 wthree_banner_bottom_left">
-				<div class="wthree_banner_bottom_left_grid">
-					<img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/6.jpg', null )); ?> alt=" " class="img-responsive" />
-					<div class="wthree_banner_btm_pos1">
-						<h3>Save <span>Upto</span> $10</h3>
-					</div>
-				</div>
-			</div>
+			<?php endforeach; ?>
 			<div class="clearfix"> </div>
 		</div>
 		<div class="clearfix"> </div>
@@ -683,7 +1207,7 @@ function dbsnet_homepage_banner_bottom(){
 							<img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/9.jpg', null )); ?>  alt=" " class="img-responsive" />
 						</div>
 						<div class="w3l_fresh_vegetables_grid1_bottom">
-							<img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/8.jpg', null )); ?>  alt=" " class="img-responsive" />
+							<img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/11.jpg', null )); ?>  alt=" " class="img-responsive" />
 						</div>
 					</div>
 					<div class="clearfix"> </div>
@@ -740,62 +1264,6 @@ function dbsnet_homepage_slideshow(){
 	<?php
 }
 
-function dbsnet_homepage_advertisement(){
-	?>
-	<div class="kdz--emotion-leiste-wrapper">
-        <div class="container-advertisement">
-            <div class="box-bundle">
-                <img src="https://laguna-onlineshop.de/media/image/24/1a/0e/icon-leistungen_langlebige_produkte.png">
-                <div class="box-inhalt">
-                    <h1>Langlebige Produkte</h1>
-                    <p>Wir achten bei unseren Produkten auf besonders lange Haltbarkeit.</p>
-                </div>
-            </div>
-            <div class="box-bundle">
-                <img src="https://laguna-onlineshop.de/media/image/e3/a6/60/icon-leistungen_ohne_giftstoffe.png">
-                <div class="box-inhalt">
-                    <h1>Ohne Gift- und Schadstoffe</h1>
-                    <p>Frei von Schad- und Giftstoffen, BPA-frei und umweltfreundlich.</p>
-                </div>
-            </div>
-            <div class="box-bundle">
-                <img src="https://laguna-onlineshop.de/media/image/ba/f0/92/icon-leistungen_gewissenhafte_produktherstellung.png">
-                <div class="box-inhalt">
-                    <h1>Gewissenhafte Produktherstellung</h1>
-                    <p>Bei der Auswahl unserer Produkte achten wir auf faire Arbeitsbedingungen der Hersteller.</p>
-                </div>
-            </div>
-            <div class="box-bundle">
-                <img src="https://laguna-onlineshop.de/media/image/05/02/10/icon-leistungen_umweltfreundliche_materialien.png">
-                <div class="box-inhalt">
-                    <h1>Umweltfreundliche Materialien</h1>
-                    <p>Produkte ohne Plastik die helfen Mutter Erde ein Stück nachhaltiger zu gestalten.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-	<?php
-}
-
-function dbsnet_homepage_promotion(){
-	?>
-	<div class="kdz--emotion-promotion-wrapper" style="background: url(https://laguna-onlineshop.de/media/image/99/32/d9/abeego_bienwachsfolie_startbanner.png); background-repeat: no-repeat; background-size: cover !important; background-position: center center; ">
-        <div class="kdz--emotion-promotion-extended-content">
-                <p style="position: absolute; bottom: 10px; left: 10px;"><span style="color: #ffffff;">In verschiedenen Größen erhältlich!</span></p>
-        </div>
-        <div class="kdz--emotion-promotion-inner">
-            <div class="kdz--emotion-promotion-headline" style="position: absolute; top: 0; left: 0;background: #535353; margin: 20px 0 0 0; padding: 10px 10px 10px 10px; color: #ffffff">Frisch verpackt ohne Alufolie und Plastik</div>
-            <a href="#" target="_self">
-	            <div class="kdz--emotion-promotion-action" style="position: absolute; right: 0; bottom: 0; background: #9abf00; margin: 0 20px 20px 20px; padding: 10px 10px 10px 10px; color: #ffffff;">Jetzt kaufen</div>
-	        </a>
-            <div class="kdz--emotion-promotion-kreis" style="position: absolute; top: 0; right: 0; background: #ffffff; margin: 20px 20px 20px 20px; text-align: center; border-radius: 200px; min-width: 80px; min-height: 80px;">
-	            <div class="kdz--emotion-promotion-kreis-oben" style="color: #535254">ab</div>
-	            <div class="kdz--emotion-promotion-kreis-unten" style="color: #9abf00">18,95 €</div>
-	        </div>
-         </div>
-    </div>
-    <?php
-}
 
 /*function dbsnet_recent_products_shortcode( $args ) {
   if ( storefront_is_woocommerce_activated() ) {
@@ -810,6 +1278,61 @@ function dbsnet_homepage_promotion(){
       ) ) );
   }
 }*/
+
+function dbsnet_single_product(){
+	?>
+		<div class="agileinfo_single">
+				<h5>charminar pulao basmati rice 5 kg</h5>
+				<div class="col-md-4 agileinfo_single_left">
+					<img id="example" src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/76.png', null )); ?>  alt=" " class="img-responsive" />
+				</div>
+				<div class="col-md-8 agileinfo_single_right">
+					<div class="rating1">
+						<span class="starRating">
+							<input id="rating5" type="radio" name="rating" value="5">
+							<label for="rating5">5</label>
+							<input id="rating4" type="radio" name="rating" value="4">
+							<label for="rating4">4</label>
+							<input id="rating3" type="radio" name="rating" value="3" checked>
+							<label for="rating3">3</label>
+							<input id="rating2" type="radio" name="rating" value="2">
+							<label for="rating2">2</label>
+							<input id="rating1" type="radio" name="rating" value="1">
+							<label for="rating1">1</label>
+						</span>
+					</div>
+					<div class="w3agile_description">
+						<h4>Description :</h4>
+						<p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui 
+							officia deserunt mollit anim id est laborum.Duis aute irure dolor in 
+							reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla 
+							pariatur.</p>
+					</div>
+					<div class="snipcart-item block">
+						<div class="snipcart-thumb agileinfo_single_right_snipcart">
+							<h4>$21.00 <span>$25.00</span></h4>
+						</div>
+						<div class="snipcart-details agileinfo_single_right_details">
+							<form action="#" method="post">
+								<fieldset>
+									<input type="hidden" name="cmd" value="_cart" />
+									<input type="hidden" name="add" value="1" />
+									<input type="hidden" name="business" value=" " />
+									<input type="hidden" name="item_name" value="pulao basmati rice" />
+									<input type="hidden" name="amount" value="21.00" />
+									<input type="hidden" name="discount_amount" value="1.00" />
+									<input type="hidden" name="currency_code" value="USD" />
+									<input type="hidden" name="return" value=" " />
+									<input type="hidden" name="cancel_return" value=" " />
+									<input type="submit" name="submit" value="Add to cart" class="button" />
+								</fieldset>
+							</form>
+						</div>
+					</div>
+				</div>
+				<div class="clearfix"> </div>
+	<?php
+}
 
 function dbsnet_product_hot(){
 	$args = array(
@@ -1105,4 +1628,87 @@ function dbsnet_batch_get_price($price, $post){
 	}
 	//var_dump($price);die;
 	return $price;
+}
+
+// ABOUT US 
+function dbsnet_about_us(){
+	?>
+	<div class="privacy about">
+			<h3>About Us</h3>
+			<p class="animi">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis 
+				praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias 
+				excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui 
+				officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem 
+				rerum facilis est et expedita distinctio.</p>
+			<div class="agile_about_grids">
+				<div class="col-md-6 agile_about_grid_right">
+					<img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/31.jpg', null )); ?> alt=" " class="img-responsive" />
+				</div>
+				<div class="col-md-6 agile_about_grid_left">
+					<ol>
+						<li>laborum et dolorum fuga</li>
+						<li>corrupti quos dolores et quas</li>
+						<li>est et expedita distinctio</li>
+						<li>deleniti atque corrupti quos</li>
+						<li>excepturi sint occaecati cupiditate</li>
+						<li>accusamus et iusto odio</li>
+					</ol>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+		</div>
+<!-- //about -->
+		</div>
+		<div class="clearfix"></div>
+	</div>
+
+	<div class="team">
+		<div class="container">
+			<h3>Meet Our Amazing Team</h3>
+			<div class="agileits_team_grids">
+				<div class="col-md-3 agileits_team_grid">
+					<img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/32.jpg', null )); ?> alt=" " class="img-responsive" />
+					<h4>Martin Paul</h4>
+					<p>Manager</p>
+					<ul class="agileits_social_icons agileits_social_icons_team">
+						<li><a href="#" class="facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+						<li><a href="#" class="twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+						<li><a href="#" class="google"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+					</ul>
+				</div>
+				<div class="col-md-3 agileits_team_grid">
+					<img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/33.jpg', null )); ?> alt=" " class="img-responsive" />
+					<h4>Michael Rick</h4>
+					<p>Supervisor</p>
+					<ul class="agileits_social_icons agileits_social_icons_team">
+						<li><a href="#" class="facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+						<li><a href="#" class="twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+						<li><a href="#" class="google"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+					</ul>
+				</div>
+				<div class="col-md-3 agileits_team_grid">
+					<img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/34.jpg', null )); ?> alt=" " class="img-responsive" />
+					<h4>Thomas Carl</h4>
+					<p>Supervisor</p>
+					<ul class="agileits_social_icons agileits_social_icons_team">
+						<li><a href="#" class="facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+						<li><a href="#" class="twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+						<li><a href="#" class="google"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+					</ul>
+				</div>
+				<div class="col-md-3 agileits_team_grid">
+					<img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/35.jpg', null )); ?> alt=" " class="img-responsive" />
+					<h4>Laura Lee</h4>
+					<p>CEO</p>
+					<ul class="agileits_social_icons agileits_social_icons_team">
+						<li><a href="#" class="facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+						<li><a href="#" class="twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+						<li><a href="#" class="google"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+					</ul>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+		</div>
+	</div>
+	<?php
 }
