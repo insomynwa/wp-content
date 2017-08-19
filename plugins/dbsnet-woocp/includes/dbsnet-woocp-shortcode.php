@@ -30,27 +30,12 @@ class DBSnet_Woocp_Shortcode{
 			return "You aren't tenant.";
 		}
 
-		$outlets = DBSnet_Woocp_Group_Functions::GetOutlets($user->ID);
+		$outlets = DBSnet_Woocp_Group_Functions::GetTenantOutlets($user->ID);
 
 		if(!$outlets) return "You don't have outlet yet. Create Now!";
 
 		ob_start();
 		require plugin_dir_path( __FILE__ ) . 'views/outlet/list.php';
-		$html = ob_get_contents();
-		ob_end_clean();
-		
-		return $html;
-	}
-
-	public function dbsnet_woocp_outlet_product_list(){
-		$user = wp_get_current_user();
-		
-		$products = DBSnet_Woocp_Group_Functions::GetProducts($user->ID);
-
-		if(!$products) return "There is no product";
-
-		ob_start();
-		require plugin_dir_path( __FILE__ ) . 'views/product/list.php';
 		$html = ob_get_contents();
 		ob_end_clean();
 		

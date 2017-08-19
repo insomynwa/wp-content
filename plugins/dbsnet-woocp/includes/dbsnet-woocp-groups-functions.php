@@ -6,7 +6,7 @@ class DBSnet_Woocp_Group_Functions{
 
 	public function __construct(){}
 
-	public static function GetOutlets($paramMemberId){
+	public static function GetTenantOutlets($paramMemberId){
 		
 		$binder_group = get_user_meta($paramMemberId, 'binder_group', true);
 
@@ -25,6 +25,29 @@ class DBSnet_Woocp_Group_Functions{
 		return $outlets;
 	}
 
+	public static function GetOutlets(){
+
+		$outlet_args = array(
+			'role'		=> 'outlet_role',
+			'orderby'	=> 'ID',
+			'order'		=> 'ASC'
+			);
+
+		$outlets = get_users($outlet_args);
+
+		if(count($outlets)==0) return false;
+
+		return $outlets;
+	}
+
+	public static function GetBinderGroup($paramUserId){
+		return self::get_binder_group($paramUserId);
+	}
+
+	private static function get_binder_group($paramUserId){
+		return get_user_meta($paramUserId, 'binder_group', true);
+	}
+
 	public static function GetProducts($paramVendorId){
 
 		$product_args = array(
@@ -40,6 +63,23 @@ class DBSnet_Woocp_Group_Functions{
 		if(count($products)==0) return false;
 
 		return $products;
+	}
+
+	public static function GetTenant($paramBinderGroupId){
+		$tenant_args = array(
+			'role'		=> 'tenant_role',
+			'meta_key'	=> 'binder_group',
+			'meta_value'=>	$paramBinderGroupId
+			);
+
+		$tenants = get_users($tenant_args);
+		$tenant = null;
+
+		foreach ($tenants as $t) {
+			$tenant = $t;
+		}
+
+		return $tenant;
 	}
 
 }
