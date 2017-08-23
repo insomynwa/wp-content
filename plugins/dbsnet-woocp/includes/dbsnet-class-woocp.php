@@ -68,30 +68,30 @@ class DBSnet_Woocp{
 		// A. List
 		//$this->loader->add_filter('manage_edit-shop_order_columns', $customizer, 'dbsnet_woocp_order_custom_column',20,1);
 		//$this->loader->add_action('manage_shop_order_posts_custom_column', $customizer, 'dbsnet_woocp_order_custom_column_value',10,2);
-		$this->loader->add_filter('bulk_actions-edit-shop_order', $customizer, 'dbsnet_woocp_remove_order_bulk',999,1);
+		//$this->loader->add_filter('bulk_actions-edit-shop_order', $customizer, 'dbsnet_woocp_remove_order_bulk',999,1);
 
-		$this->loader->add_filter('post_row_actions',$customizer,'dbsnet_woocp_remove_link', 15, 2);
+		//$this->loader->add_filter('post_row_actions',$customizer,'dbsnet_woocp_remove_link', 15, 2);
 
-		$this->loader->add_action( 'add_meta_boxes_shop_order', $customizer, 'dbsnet_woocp_remove_order_metabox');
-		$this->loader->add_filter('get_user_option_meta-box-order_product',$customizer,'dbsnet_woocp_metabox_order');
+		//$this->loader->add_action( 'add_meta_boxes_shop_order', $customizer, 'dbsnet_woocp_remove_order_metabox');
+		//$this->loader->add_filter('get_user_option_meta-box-order_product',$customizer,'dbsnet_woocp_metabox_order');
 
 		$this->loader->add_action( 'user_new_form', $customizer, 'dbsnet_woocp_new_user_form_custom_field');
 		$this->loader->add_action( 'pre_get_posts', $customizer, 'dbsnet_woocp_custom_filter_product_list');
-		$this->loader->add_filter('get_sample_permalink_html', $customizer, 'dbsnet_woocp_remove_permalink_under_title');
-		$this->loader->add_filter('mce_buttons', $customizer, 'dbsnet_woocp_customize_first_toolbar' );
-		$this->loader->add_action('admin_head', $customizer, 'dbsnet_woocp_remove_add_media');
-		$this->loader->add_filter('wp_editor_settings', $customizer, 'dbsnet_woocp_remove_text_tab');
+		//$this->loader->add_filter('get_sample_permalink_html', $customizer, 'dbsnet_woocp_remove_permalink_under_title');
+		//$this->loader->add_filter('mce_buttons', $customizer, 'dbsnet_woocp_customize_first_toolbar' );
+		//$this->loader->add_action('admin_head', $customizer, 'dbsnet_woocp_remove_add_media');
+		//$this->loader->add_filter('wp_editor_settings', $customizer, 'dbsnet_woocp_remove_text_tab');
 		$this->loader->add_filter('get_user_option_screen_layout_product', $customizer, 'dbsnet_woocp_single_column_layout');
-		$this->loader->add_action('admin_head',$customizer, 'dbsnet_woocp_hide_publishing_actions');
-		$this->loader->add_action('admin_head',$customizer, 'dbsnet_woocp_hide_export_import_actions');
+		//$this->loader->add_action('admin_head',$customizer, 'dbsnet_woocp_hide_publishing_actions');
+		//$this->loader->add_action('admin_head',$customizer, 'dbsnet_woocp_hide_export_import_actions');
 		
 
 		$this->loader->add_action('wp_before_admin_bar_render', $customizer, 'dbsnet_woocp_customize_admin_bar',100);
 
 		$this->loader->add_filter('get_user_option_screen_layout_shop_order', $customizer, 'dbsnet_woocp_single_column_layout');
-		$this->loader->add_action('admin_head',$customizer,'dbsnet_woocp_hide_recalculate_order',100);
+		//$this->loader->add_action('admin_head',$customizer,'dbsnet_woocp_hide_recalculate_order',100);
 
-		$this->loader->add_filter('bulk_actions-edit-product', $customizer, 'dbsnet_woocp_remove_product_bulk',999,1);
+		//$this->loader->add_filter('bulk_actions-edit-product', $customizer, 'dbsnet_woocp_remove_product_bulk',999,1);
 	}
 	
 	private function define_multitenant_hooks(){
