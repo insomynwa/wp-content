@@ -66,11 +66,16 @@ class DBSnet_Woocp{
 
 		// Order
 		// A. List
+		$this->loader->add_filter('bulk_actions-edit-shop_order', $customizer, 'dbsnet_woocp_remove_order_bulk',999,1);
+		// $this->loader->add_filter('woocommerce_shop_order_search_fields', $customizer, 'dbsnet_woocp_search_customer_order',999,1);
+
+		// General custom
+		$this->loader->add_filter('post_row_actions',$customizer,'dbsnet_woocp_remove_row_link', 15, 2);
+
 		//$this->loader->add_filter('manage_edit-shop_order_columns', $customizer, 'dbsnet_woocp_order_custom_column',20,1);
 		//$this->loader->add_action('manage_shop_order_posts_custom_column', $customizer, 'dbsnet_woocp_order_custom_column_value',10,2);
-		//$this->loader->add_filter('bulk_actions-edit-shop_order', $customizer, 'dbsnet_woocp_remove_order_bulk',999,1);
 
-		//$this->loader->add_filter('post_row_actions',$customizer,'dbsnet_woocp_remove_link', 15, 2);
+		
 
 		//$this->loader->add_action( 'add_meta_boxes_shop_order', $customizer, 'dbsnet_woocp_remove_order_metabox');
 		//$this->loader->add_filter('get_user_option_meta-box-order_product',$customizer,'dbsnet_woocp_metabox_order');

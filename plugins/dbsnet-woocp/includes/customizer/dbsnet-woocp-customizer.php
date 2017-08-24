@@ -287,15 +287,26 @@ class DBSnet_Woocp_Customizer{
 		}
 	}
 
-	public function dbsnet_woocp_remove_link($actions, $post){
-		//var_dump(wp_get_current_user());
-		if(!current_user_can('manage_options')){
-			if($post->post_type != 'product'){
-				return $actions;
+	public function dbsnet_woocp_remove_row_link($actions, $post){
+		$new_columns = array();
+		$user = wp_get_current_user();
+		$user_role = get_userdata($user->ID);
+		$is_tenant = in_array('tenant_role', $user_role->roles);
+		$is_outlet = in_array('outlet_role', $user_role->roles);
+		$is_admin = current_user_can('manage_options');
+
+		if($is_outlet || $is_tenant){
+
+			if($post->post_type === 'product'){
+				//$product = wc_get_product($post->ID);
+				unset($actions['duplicate']);
+				unset($actions['inline hide-if-no-js']);
 			}
-			$product = wc_get_product($post->ID);
-			unset($actions['duplicate']);
-			unset($actions['inline hide-if-no-js']);
+			else if($post->post_type === 'shop_order'){
+				unset($actions['trash']);
+				unset($actions['edit']);
+			}
+			
 		}
 
 		return $actions;
@@ -462,7 +473,13 @@ class DBSnet_Woocp_Customizer{
 	}
 
 	public function dbsnet_woocp_remove_order_bulk($actions){
-		if(!current_user_can('manage_options')){
+		$user = wp_get_current_user();
+		$user_role = get_userdata($user->ID);
+		$is_tenant = in_array('tenant_role', $user_role->roles);
+		$is_outlet = in_array('outlet_role', $user_role->roles);
+		$is_admin = current_user_can('manage_options');
+
+		if($is_tenant || $is_outlet){
 			unset($actions['delete']);
 			unset($actions['trash']);
 			unset($actions['mark_processing']);
@@ -488,4 +505,9 @@ class DBSnet_Woocp_Customizer{
 		}
 		return $paramCurrencySymbol;
 	}
+
+	// public function dbsnet_woocp_search_customer_order($paramArray){
+	// 	$new_array = array();
+	// 	return $new_array;
+	// }
 }
