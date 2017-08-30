@@ -95,3 +95,109 @@ CART
 #site-header-cart > li:nth-child(2) > div > div{
     background:#fff;
 }
+
+/*Content*/
+
+#content > div{
+    max-width: 100%;
+}
+
+#main > section.storefront-product-section.storefront-recent-products > div > ul > li{
+    background-color:#FFFFFF;
+    padding: 15px;
+}
+
+#main > section.storefront-product-section.storefront-recent-products > div > ul > li:hover{
+    border-style:solid;
+    border-color:#2296F3;
+}
+
+#main > section.storefront-product-section.storefront-recent-products > div > ul > li > a.woocommerce-LoopProduct-link.woocommerce-loop-product__link > h2{
+    font-weight:600;
+}
+
+#main > section.storefront-product-section.storefront-best-selling-products > div > ul > li {
+     background-color:#FFFFFF;
+     padding: 15px;
+}
+
+#main > section.storefront-product-section.storefront-best-selling-products > div > ul > li:hover{
+    border-style:solid;
+    border-color:#2296F3;
+}
+
+#main > section.storefront-product-section.storefront-best-selling-products > div > ul > li > a.woocommerce-LoopProduct-link.woocommerce-loop-product__link > h2{
+    font-weight:600;
+}
+
+#main > section.storefront-product-section > div > ul > li > a.button{
+    background-color:#30D0E6;
+     border-color:#30D0E6;
+    color:white;
+}
+
+#main > section.storefront-product-section > div > ul > li > a.button:hover{
+    background-color:#2296F3;
+    border-color:#2296F3;
+}
+
+/* SHOP page*/
+
+#primary{
+    width: 100%;
+}
+
+#secondary{
+    float:none;
+    display:none;
+}
+
+#main > div.columns-5 > ul > li {
+    background-color:#fff;
+    padding: 15px;
+}
+
+#main > div.columns-5 > ul > li:hover{
+    border-style:solid;
+    border-color:#2296F3;
+}
+
+#main > div.columns-5 > ul > li > a.button{
+    background-color:#30D0E6;
+    border-color:#30D0E6;
+    color:white;
+}
+
+#main > div.columns-5 > ul > li > a.button:hover{
+    background-color:#2296F3;
+    border-color:#2296F3;
+}
+
+#main > div.columns-5 > ul > li > a.woocommerce-LoopProduct-link.woocommerce-loop-product__link > h2{
+    font-weight:600;
+}
+
+/* Cart */
+
+#post-5 > div > div > form > table > thead > tr > th{
+    background-color:#2296F3;
+    color:white;
+}
+
+#post-5 > div > div > form > table > tbody > tr > td > div > input.button {
+    background-color:#2296F3;
+    color:#fff;
+}
+
+#post-5 > div > div > form > table > tbody > tr > td > div > input.button:hover{
+    background-color:#30D0E6;
+}
+ 
+#post-5 > div > div > form > table > tbody > tr > td > input.button{
+    background-color:#2296F3;
+    color:#fff;
+}
+
+#post-5 > div > div > form > table > tbody > tr > td > input.button:hover{
+    background-color:#30D0E6;
+}

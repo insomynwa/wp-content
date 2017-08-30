@@ -25,18 +25,17 @@ get_header(); ?>
 <?php 
 
 	do_action('dbsnet_theme_breadcrumb');
-	do_action( 'dbsnet_single_product'); 
+	//do_action( 'dbsnet_single_product'); 
 
 ?>
 
-<div class="container bg-info">
-	<div class="row">
+<div class="agileinfo_single">
 
 		<?php while ( have_posts() ) : the_post(); ?>
 			<?php wc_get_template_part( 'content', 'single-product' ); ?>
 
 		<?php endwhile; // end of the loop. ?>
 
-      </div> 
 </div>
+
 <?php get_footer(); ?>

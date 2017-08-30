@@ -849,6 +849,28 @@ function dbsnet_homepage_banner_top_start(){
 }
 
 function dbsnet_homepage_banner_top_left(){
+
+	$taxonomy     = 'product_cat';
+	$orderby      = 'name';  
+	$show_count   = 0;      // 1 for yes, 0 for no
+	$pad_counts   = 0;      // 1 for yes, 0 for no
+	$hierarchical = 1;      // 1 for yes, 0 for no  
+	$title        = '';  
+	$empty        = 0;
+
+	$args = array(
+	     'taxonomy'     => $taxonomy,
+	     'orderby'      => $orderby,
+	     'show_count'   => $show_count,
+	     'pad_counts'   => $pad_counts,
+	     'hierarchical' => $hierarchical,
+	     'title_li'     => $title,
+	     'hide_empty'   => $empty,
+	     'parent'		=> 0,
+	     'number'		=> 3
+	);
+	$all_categories = get_categories( $args );
+
 	?>
 	<div class="w3l_banner_nav_left">
 				<nav class="navbar nav_bottom">
@@ -864,45 +886,11 @@ function dbsnet_homepage_banner_top_left(){
 				   <!-- Collect the nav links, forms, and other content for toggling -->
 					<div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
 						<ul class="nav navbar-nav nav_1">
-							<li><a href="products.html">Branded Foods</a></li>
-							<li><a href="household.html">Households</a></li>
-							<li class="dropdown mega-dropdown active">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Veggies & Fruits<span class="caret"></span></a>				
-								<div class="dropdown-menu mega-dropdown-menu w3ls_vegetables_menu">
-									<div class="w3ls_vegetables">
-										<ul>	
-											<li><a href="vegetables.html">Vegetables</a></li>
-											<li><a href="vegetables.html">Fruits</a></li>
-										</ul>
-									</div>                  
-								</div>				
+						<?php foreach($all_categories as $category): ?>
+							<li><a href="<?php echo get_term_link( $category->slug, 'product_cat' );?>">
+								<?php echo $category->name;?></a>
 							</li>
-							<li><a href="kitchen.html">Kitchen</a></li>
-							<li><a href="short-codes.html">Short Codes</a></li>
-							<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Beverages<span class="caret"></span></a>
-								<div class="dropdown-menu mega-dropdown-menu w3ls_vegetables_menu">
-									<div class="w3ls_vegetables">
-										<ul>
-											<li><a href="drinks.html">Soft Drinks</a></li>
-											<li><a href="drinks.html">Juices</a></li>
-										</ul>
-									</div>                  
-								</div>	
-							</li>
-							<li><a href="pet.html">Pet Food</a></li>
-							<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Frozen Foods<span class="caret"></span></a>
-								<div class="dropdown-menu mega-dropdown-menu w3ls_vegetables_menu">
-									<div class="w3ls_vegetables">
-										<ul>
-											<li><a href="frozen.html">Frozen Snacks</a></li>
-											<li><a href="frozen.html">Frozen Nonveg</a></li>
-										</ul>
-									</div>                  
-								</div>	
-							</li>
-							<li><a href="bread.html">Bread & Bakery</a></li>
+						<?php endforeach;?>
 						</ul>
 					 </div><!-- /.navbar-collapse -->
 				</nav>
@@ -1002,153 +990,65 @@ function dbsnet_homepage_banner_bottom(){
 }
 
  function dbsnet_product_hot_v2(){
+ 	$args = array(
+		'post_type' => 'product',
+		'stock' => 1,
+		'posts_per_page' => 4,
+		'orderby' =>'date',
+		'order' => 'DESC' 
+	);
+	$loop = new WP_Query( $args );
  	?>
 <!-- top-brands -->
 	<div class="top-brands">
 		<div class="container">
 			<h3>Hot Product</h3>
 			<div class="agile_top_brands_grids">
-				<div class="col-md-3 top_brand_left">
-					<div class="hover14 column">
-						<div class="agile_top_brand_left_grid">
-							<div class="tag"><img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/tag.png', null )); ?> alt=" " class="img-responsive" /></div>
-							<div class="agile_top_brand_left_grid1">
-								<figure>
-									<div class="snipcart-item block" >
-										<div class="snipcart-thumb">
-											<a href="single.html"><img title=" " alt=" " src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/1.png', null )); ?> /></a>		
-											<p>fortune sunflower oil</p>
-											<h4>$7.99 <span>$10.00</span></h4>
+				<?php
+				while ( $loop->have_posts() ) : $loop->the_post(); 
+				global $product;
+				?>
+					<div class="col-md-3 top_brand_left">
+						<div class="hover14 column">
+							<div class="agile_top_brand_left_grid">
+								<div class="agile_top_brand_left_grid1">
+									<figure>
+										<div class="snipcart-item block" >
+											<div class="snipcart-thumb">
+											<a href="<?php the_permalink(); ?>">
+											<?php if (has_post_thumbnail( $loop->post->ID )) : ?>
+											<?php echo get_the_post_thumbnail($loop->post->ID,array('140','140'), 'shop_catalog'); ?>
+											<?php else: ?>
+											<img style="height: 140px; width: 140px" src="<?php echo woocommerce_placeholder_img_src(); ?>">
+											<?php endif; ?>	
+												<p><?php the_title(); ?></p>
+											</a>
+											</div>
+											<div class="snipcart-details top_brand_home_details">
+												<form action="<?php the_permalink(); ?>" method="post">
+													<fieldset>
+														<input type="hidden" name="cmd" value="_cart" />
+														<input type="hidden" name="add" value="1" />
+														<input type="hidden" name="business" value=" " />
+														<input type="hidden" name="item_name" value="Fortune Sunflower Oil" />
+														<input type="hidden" name="amount" value="7.99" />
+														<input type="hidden" name="discount_amount" value="1.00" />
+														<input type="hidden" name="currency_code" value="USD" />
+														<input type="hidden" name="return" value=" " />
+														<input type="hidden" name="cancel_return" value=" " />
+														<input type="submit" name="submit" value="Details" class="button" />
+													</fieldset>
+														
+												</form>
+										
+											</div>
 										</div>
-										<div class="snipcart-details top_brand_home_details">
-											<form action="checkout.html" method="post">
-												<fieldset>
-													<input type="hidden" name="cmd" value="_cart" />
-													<input type="hidden" name="add" value="1" />
-													<input type="hidden" name="business" value=" " />
-													<input type="hidden" name="item_name" value="Fortune Sunflower Oil" />
-													<input type="hidden" name="amount" value="7.99" />
-													<input type="hidden" name="discount_amount" value="1.00" />
-													<input type="hidden" name="currency_code" value="USD" />
-													<input type="hidden" name="return" value=" " />
-													<input type="hidden" name="cancel_return" value=" " />
-													<input type="submit" name="submit" value="Add to cart" class="button" />
-												</fieldset>
-													
-											</form>
-									
-										</div>
-									</div>
-								</figure>
+									</figure>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="col-md-3 top_brand_left">
-					<div class="hover14 column">
-						<div class="agile_top_brand_left_grid">
-							<div class="agile_top_brand_left_grid1">
-								<figure>
-									<div class="snipcart-item block" >
-										<div class="snipcart-thumb">
-											<a href="single.html"><img title=" " alt=" " src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/3.png', null )); ?> /></a>		
-											<p>basmati rise (5 Kg)</p>
-											<h4>$11.99 <span>$15.00</span></h4>
-										</div>
-										<div class="snipcart-details top_brand_home_details">
-											<form action="#" method="post">
-												<fieldset>
-													<input type="hidden" name="cmd" value="_cart" />
-													<input type="hidden" name="add" value="1" />
-													<input type="hidden" name="business" value=" " />
-													<input type="hidden" name="item_name" value="basmati rise" />
-													<input type="hidden" name="amount" value="11.99" />
-													<input type="hidden" name="discount_amount" value="1.00" />
-													<input type="hidden" name="currency_code" value="USD" />
-													<input type="hidden" name="return" value=" " />
-													<input type="hidden" name="cancel_return" value=" " />
-													<input type="submit" name="submit" value="Add to cart" class="button" />
-												</fieldset>
-											</form>
-										</div>
-									</div>
-								</figure>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3 top_brand_left">
-					<div class="hover14 column">
-						<div class="agile_top_brand_left_grid">
-							<div class="agile_top_brand_left_grid_pos">
-								<img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/offer.png', null )); ?> alt=" " class="img-responsive" />
-							</div>
-							<div class="agile_top_brand_left_grid1">
-								<figure>
-									<div class="snipcart-item block">
-										<div class="snipcart-thumb">
-											<a href="single.html"><img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/2.png', null )); ?> alt=" " class="img-responsive" /></a>
-											<p>Pepsi soft drink (2 Ltr)</p>
-											<h4>$8.00 <span>$10.00</span></h4>
-										</div>
-										<div class="snipcart-details top_brand_home_details">
-											<form action="#" method="post">
-												<fieldset>
-													<input type="hidden" name="cmd" value="_cart" />
-													<input type="hidden" name="add" value="1" />
-													<input type="hidden" name="business" value=" " />
-													<input type="hidden" name="item_name" value="Pepsi soft drink" />
-													<input type="hidden" name="amount" value="8.00" />
-													<input type="hidden" name="discount_amount" value="1.00" />
-													<input type="hidden" name="currency_code" value="USD" />
-													<input type="hidden" name="return" value=" " />
-													<input type="hidden" name="cancel_return" value=" " />
-													<input type="submit" name="submit" value="Add to cart" class="button" />
-												</fieldset>
-											</form>
-										</div>
-									</div>
-								</figure>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3 top_brand_left">
-					<div class="hover14 column">
-						<div class="agile_top_brand_left_grid">
-							<div class="agile_top_brand_left_grid_pos">
-								<img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/offer.png', null )); ?> alt=" " class="img-responsive" />
-							</div>
-							<div class="agile_top_brand_left_grid1">
-								<figure>
-									<div class="snipcart-item block">
-										<div class="snipcart-thumb">
-											<a href="single.html"><img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/4.png', null )); ?>  alt=" " class="img-responsive" /></a>
-											<p>dogs food (4 Kg)</p>
-											<h4>$9.00 <span>$11.00</span></h4>
-										</div>
-										<div class="snipcart-details top_brand_home_details">
-											<form action="#" method="post">
-												<fieldset>
-													<input type="hidden" name="cmd" value="_cart" />
-													<input type="hidden" name="add" value="1" />
-													<input type="hidden" name="business" value=" " />
-													<input type="hidden" name="item_name" value="dogs food" />
-													<input type="hidden" name="amount" value="9.00" />
-													<input type="hidden" name="discount_amount" value="1.00" />
-													<input type="hidden" name="currency_code" value="USD" />
-													<input type="hidden" name="return" value=" " />
-													<input type="hidden" name="cancel_return" value=" " />
-													<input type="submit" name="submit" value="Add to cart" class="button" />
-												</fieldset>
-											</form>
-										</div>
-									</div>
-								</figure>
-							</div>
-						</div>
-					</div>
-				</div>
+				<?php endwhile;wp_reset_query(); ?>
 				<div class="clearfix"> </div>
 			</div>
 		</div>
@@ -1158,60 +1058,66 @@ function dbsnet_homepage_banner_bottom(){
  }
 
  function dbsnet_product_best_seller_v2(){
+ 	$args = array(
+	    'post_type' => 'product',
+	    'meta_key' => 'total_sales',
+	    'orderby' => 'meta_value_num',
+	    'posts_per_page' => 4,
+	);
+	$loop = new WP_Query( $args );
+
  	?>
  	<!-- fresh-vegetables -->
 	<div class="fresh-vegetables">
 		<div class="container">
 			<h3>Best Seller Products</h3>
 			<div class="w3l_fresh_vegetables_grids">
-				<div class="col-md-3 w3l_fresh_vegetables_grid w3l_fresh_vegetables_grid_left">
-					<div class="w3l_fresh_vegetables_grid2">
-						<ul>
-							<li><i class="fa fa-check" aria-hidden="true"></i><a href="products.html">All Brands</a></li>
-							<li><i class="fa fa-check" aria-hidden="true"></i><a href="vegetables.html">Vegetables</a></li>
-							<li><i class="fa fa-check" aria-hidden="true"></i><a href="vegetables.html">Fruits</a></li>
-							<li><i class="fa fa-check" aria-hidden="true"></i><a href="drinks.html">Juices</a></li>
-							<li><i class="fa fa-check" aria-hidden="true"></i><a href="pet.html">Pet Food</a></li>
-							<li><i class="fa fa-check" aria-hidden="true"></i><a href="bread.html">Bread & Bakery</a></li>
-							<li><i class="fa fa-check" aria-hidden="true"></i><a href="household.html">Cleaning</a></li>
-							<li><i class="fa fa-check" aria-hidden="true"></i><a href="products.html">Spices</a></li>
-							<li><i class="fa fa-check" aria-hidden="true"></i><a href="products.html">Dry Fruits</a></li>
-							<li><i class="fa fa-check" aria-hidden="true"></i><a href="products.html">Dairy Products</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-md-9 w3l_fresh_vegetables_grid_right">
-					<div class="col-md-4 w3l_fresh_vegetables_grid">
-						<div class="w3l_fresh_vegetables_grid1">
-							<img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/8.jpg', null )); ?>  alt=" " class="img-responsive" />
-						</div>
-					</div>
-					<div class="col-md-4 w3l_fresh_vegetables_grid">
-						<div class="w3l_fresh_vegetables_grid1">
-							<div class="w3l_fresh_vegetables_grid1_rel">
-								<img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/7.jpg', null )); ?>  alt=" " class="img-responsive" />
-								<div class="w3l_fresh_vegetables_grid1_rel_pos">
-									<div class="more m1">
-										<a href="products.html" class="button--saqui button--round-l button--text-thick" data-text="Shop now">Shop now</a>
-									</div>
+				<div class="w3l_fresh_vegetables_grid_right">
+				<?php
+				while ( $loop->have_posts() ) : $loop->the_post(); 
+				global $product;
+				?>
+					<div class="col-md-3 top_brand_left">
+						<div class="hover14 column">
+							<div class="agile_top_brand_left_grid">
+								<div class="agile_top_brand_left_grid1">
+									<figure>
+										<div class="snipcart-item block" >
+											<div class="snipcart-thumb">
+											<a href="<?php the_permalink(); ?>">
+											<?php if (has_post_thumbnail( $loop->post->ID )) : ?>
+											<?php echo get_the_post_thumbnail($loop->post->ID,array('140','140'), 'shop_catalog'); ?>
+											<?php else: ?>
+											<img style="height: 140px; width: 140px" src="<?php echo woocommerce_placeholder_img_src(); ?>">
+											<?php endif; ?>	
+												<p><?php the_title(); ?></p>
+											</a>
+											</div>
+											<div class="snipcart-details top_brand_home_details">
+												<form action="<?php the_permalink(); ?>" method="post">
+													<fieldset>
+														<input type="hidden" name="cmd" value="_cart" />
+														<input type="hidden" name="add" value="1" />
+														<input type="hidden" name="business" value=" " />
+														<input type="hidden" name="item_name" value="Fortune Sunflower Oil" />
+														<input type="hidden" name="amount" value="7.99" />
+														<input type="hidden" name="discount_amount" value="1.00" />
+														<input type="hidden" name="currency_code" value="USD" />
+														<input type="hidden" name="return" value=" " />
+														<input type="hidden" name="cancel_return" value=" " />
+														<input type="submit" name="submit" value="SHOP NOW" class="button" />
+													</fieldset>
+														
+												</form>
+										
+											</div>
+										</div>
+									</figure>
 								</div>
 							</div>
 						</div>
-						<div class="w3l_fresh_vegetables_grid1_bottom">
-							<img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/10.jpg', null )); ?>  alt=" " class="img-responsive" />
-							<div class="w3l_fresh_vegetables_grid1_bottom_pos">
-								<h5>Special Offers</h5>
-							</div>
-						</div>
 					</div>
-					<div class="col-md-4 w3l_fresh_vegetables_grid">
-						<div class="w3l_fresh_vegetables_grid1">
-							<img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/9.jpg', null )); ?>  alt=" " class="img-responsive" />
-						</div>
-						<div class="w3l_fresh_vegetables_grid1_bottom">
-							<img src=<?php _e(home_url( '/wp-content/themes/storefront-child-theme/assets/images/11.jpg', null )); ?>  alt=" " class="img-responsive" />
-						</div>
-					</div>
+				<?php endwhile;wp_reset_query(); ?>
 					<div class="clearfix"> </div>
 					<div class="agileinfo_move_text">
 						<div class="agileinfo_marquee">
