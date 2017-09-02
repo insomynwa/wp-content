@@ -12,38 +12,38 @@ class DBSnet_Woocp_Customizer{
 		require_once plugin_dir_path( __DIR__ ) . 'dbsnet-woocp-groups-functions.php';
 	}
 
-	public function dbsnet_woocp_customize_admin_menu(){
-		$user = wp_get_current_user();
-		if(in_array("tenant_role", $user->roles)){
-			remove_action( 'admin_color_scheme_picker', 'admin_color_scheme_picker' );
-		}
-		if(in_array("outlet_role", $user->roles)){
-			remove_action( 'admin_color_scheme_picker', 'admin_color_scheme_picker' );
-		}
+	// public function dbsnet_woocp_customize_admin_menu(){
+	// 	$user = wp_get_current_user();
+	// 	if(in_array("tenant_role", $user->roles)){
+	// 		remove_action( 'admin_color_scheme_picker', 'admin_color_scheme_picker' );
+	// 	}
+	// 	if(in_array("outlet_role", $user->roles)){
+	// 		remove_action( 'admin_color_scheme_picker', 'admin_color_scheme_picker' );
+	// 	}
 
-		$menu_name = 'woocommerce';
-		$removed_submenu = array('wc-addons','wc-status','wc-settings');
-		$this->removeSubmenu('tenant_role', $menu_name, $removed_submenu);
-		$this->removeSubmenu('outlet_role', $menu_name, $removed_submenu);
+	// 	$menu_name = 'woocommerce';
+	// 	$removed_submenu = array('wc-addons','wc-status','wc-settings');
+	// 	$this->removeSubmenu('tenant_role', $menu_name, $removed_submenu);
+	// 	$this->removeSubmenu('outlet_role', $menu_name, $removed_submenu);
 		
-		$menu_name = 'edit.php?post_type=product';
-		$removed_submenu_product = array(
-			'edit-tags.php?taxonomy=product_cat&amp;post_type=product',
-			'edit-tags.php?taxonomy=product_tag&amp;post_type=product',
-			'product_attributes'
-			);
-		$this->removeSubmenu('tenant_role', $menu_name, $removed_submenu_product);
-		$this->removeSubmenu('outlet_role', $menu_name, $removed_submenu_product);
-	}
+	// 	$menu_name = 'edit.php?post_type=product';
+	// 	$removed_submenu_product = array(
+	// 		'edit-tags.php?taxonomy=product_cat&amp;post_type=product',
+	// 		'edit-tags.php?taxonomy=product_tag&amp;post_type=product',
+	// 		'product_attributes'
+	// 		);
+	// 	$this->removeSubmenu('tenant_role', $menu_name, $removed_submenu_product);
+	// 	$this->removeSubmenu('outlet_role', $menu_name, $removed_submenu_product);
+	// }
 
-	private function removeSubmenu($role, $menu, $submenus){
-		$user = wp_get_current_user();
-		foreach ($submenus as $submenu) {
-			if(in_array($role, $user->roles)){
-				remove_submenu_page( $menu, $submenu );
-			}
-		}
-	}
+	// private function removeSubmenu($role, $menu, $submenus){
+	// 	$user = wp_get_current_user();
+	// 	foreach ($submenus as $submenu) {
+	// 		if(in_array($role, $user->roles)){
+	// 			remove_submenu_page( $menu, $submenu );
+	// 		}
+	// 	}
+	// }
 
 	/**
 	 * Create field in user profile form
@@ -106,13 +106,18 @@ class DBSnet_Woocp_Customizer{
 		}
 	}
 
-	public function dbsnet_woocp_remove_woocommerce_product_data(){
-		if(current_user_can( 'manage_options' )) return;
+	public function dbsnet_woocp_metabox_product(){
+		$this->remove_woocommerce_metabox_product();
+
+		$this->add_batch_metabox_product();
+	}
+
+	private function remove_woocommerce_metabox_product(){
+		//if(current_user_can( 'manage_options' )) return;
 		remove_meta_box('woocommerce-product-data', 'product', 'normal');
 	}
 
-	public function dbsnet_woocp_add_batch_meta_box_product(){
-
+	private function add_batch_metabox_product(){
 		add_meta_box( 'dbsnet_woocp_batch_metabox', __('Batch Produk'), array($this,'dbsnet_woocp_batch_metabox'), 'product', 'normal', 'high');
 	}
 
@@ -259,35 +264,76 @@ class DBSnet_Woocp_Customizer{
 		}
 	}
 
-	public function dbsnet_woocp_hide_export_import_actions(){
-		if(!current_user_can('manage_options')){
+	public function dbsnet_woocp_page_title_actions(){
+		$new_columns = array();
+		$user = wp_get_current_user();
+		$user_role = get_userdata($user->ID);
+		$is_tenant = in_array('tenant_role', $user_role->roles);
+		$is_outlet = in_array('outlet_role', $user_role->roles);
+
+		if($is_tenant || $is_outlet){
 			$screen = get_current_screen();
+			//var_dump($screen);
+		    if($screen->id == 'edit-shop_order' ){
+		        ?>
+		            <script>
+		            jQuery(document).ready(function($){
+		            	$('#wpbody-content div.wrap h1 a.page-title-action').remove();
+		            });
+		            </script>
+		        <?php
+		    }
+
+		    if($screen->id == 'edit-product'){
+		    	if($is_tenant){
+		    	?>
+		            <script>
+		            jQuery(document).ready(function($){
+		            	$('#wpbody-content div.wrap h1 a.page-title-action').remove();
+		            });
+		            </script>
+		        <?php
+		    	}
+		    	if($is_outlet){
+		    	?>
+		            <script>
+		            jQuery(document).ready(function($){
+		            	$('#wpbody-content div.wrap h1 a.page-title-action').not(':first').remove();
+		            });
+		            </script>
+		        <?php
+		    	}
+		    }
+		}
+
+		// if(!current_user_can('manage_options')){
+		// 	$screen = get_current_screen();
 				
 
-			$user = wp_get_current_user();
-			$user_role = get_userdata($user->ID);
+		// 	$user = wp_get_current_user();
+		// 	$user_role = get_userdata($user->ID);
 
-			if(in_array('tenant_role', $user_role->roles)){
-				echo '
-					<style type="text/css">
-						#wpbody-content > div.wrap > h1 > a.page-title-action{
-	                        display:none;
-	                    }
-					</style>
-				';
-			}else{
-				echo '
-					<style type="text/css">
-						#wpbody-content > div.wrap > h1 > a.page-title-action:not(:first-child){
-	                        display:none;
-	                    }
-					</style>
-				';
-			}
-		}
+		// 	if(in_array('tenant_role', $user_role->roles)){
+		// 		echo '
+		// 			<style type="text/css">
+		// 				#wpbody-content > div.wrap > h1 > a.page-title-action{
+	 //                        display:none;
+	 //                    }
+		// 			</style>
+		// 		';
+		// 	}else{
+		// 		echo '
+		// 			<style type="text/css">
+		// 				#wpbody-content > div.wrap > h1 > a.page-title-action:not(:first-child){
+	 //                        display:none;
+	 //                    }
+		// 			</style>
+		// 		';
+		// 	}
+		// }
 	}
 
-	public function dbsnet_woocp_remove_row_link($actions, $post){
+	public function dbsnet_woocp_post_row_actions($actions, $post){
 		$new_columns = array();
 		$user = wp_get_current_user();
 		$user_role = get_userdata($user->ID);
@@ -299,8 +345,13 @@ class DBSnet_Woocp_Customizer{
 
 			if($post->post_type === 'product'){
 				//$product = wc_get_product($post->ID);
-				unset($actions['duplicate']);
-				unset($actions['inline hide-if-no-js']);
+				if($is_tenant){
+					unset($actions['duplicate']);
+					unset($actions['inline hide-if-no-js']);
+					unset($actions['trash']);
+					unset($actions['edit']);
+				}
+				
 			}
 			else if($post->post_type === 'shop_order'){
 				unset($actions['trash']);
@@ -472,7 +523,7 @@ class DBSnet_Woocp_Customizer{
 		// }
 	}
 
-	public function dbsnet_woocp_remove_order_bulk($actions){
+	public function dbsnet_woocp_order_bulk($actions){
 		$user = wp_get_current_user();
 		$user_role = get_userdata($user->ID);
 		$is_tenant = in_array('tenant_role', $user_role->roles);
@@ -489,7 +540,7 @@ class DBSnet_Woocp_Customizer{
 		return $actions;
 	}
 
-	public function dbsnet_woocp_remove_product_bulk($actions){
+	public function dbsnet_woocp_product_bulk($actions){
 		$user = wp_get_current_user();
 		$user_role = get_userdata($user->ID);
 		if(in_array('tenant_role', $user_role->roles)){
@@ -510,4 +561,8 @@ class DBSnet_Woocp_Customizer{
 	// 	$new_array = array();
 	// 	return $new_array;
 	// }
+
+	public function dbsnet_woocp_edit_form_top(){
+		echo '<h2>edit_form_top</h2>';
+	}
 }
