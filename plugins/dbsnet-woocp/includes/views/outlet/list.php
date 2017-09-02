@@ -15,7 +15,7 @@
 				<a href="#"><?php echo $item->display_name ?></a>
 			</div>
 			<div>
-				<a href="#">Edit</a> | 
+				<a href="<?php echo admin_url().'admin.php?page=dbsnet-outlet-update' ?>&outlet=<?php echo $item->ID ?>">Edit</a> | 
 				<a href="#">Hapus</a>
 			</div>
 		</td>

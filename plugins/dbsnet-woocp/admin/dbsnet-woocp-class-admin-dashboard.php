@@ -67,6 +67,14 @@ class DBSnet_Woocp_Admin_Dashboard{
 				'dbsnet-outlet-new',
 				array( $this, 'dbsnet_woocp_render_outlet_page_new')
 				);
+			add_submenu_page(
+				'dbsnet-outlet',
+				__('Edit Outlet', 'dbsnet-woocp'),
+				__('Edit Outlet', 'dbsnet-woocp'),
+				'view_woocommerce_reports',
+				'dbsnet-outlet-update',
+				array( $this, 'dbsnet_woocp_render_outlet_page_edit')
+				);
 
 			// add_menu_page(
 			// 	__('Produk', 'dbsnet-woocp'),
@@ -140,8 +148,29 @@ class DBSnet_Woocp_Admin_Dashboard{
 		$data = array();
 
 		$data['page_title'] = "Tambah Outlet - ". $user->display_name;
-		$data['view_path'] = "views/outlet/form.php";
+		$data['view_path'] = "views/outlet/form-add.php";
+
 		$data['view_data']['outlet']['group'] = DBSnet_Woocp_Group_Functions::GetBinderGroup($user->ID);
+
+		echo DBSnet_Woocp_Template_Utility::generateHTML($this->template_path, $data);
+	}
+
+	public function dbsnet_woocp_render_outlet_page_edit(){
+		$outlet_id = $_GET['outlet'];
+		$outlet = get_userdata($outlet_id);
+
+		$user = wp_get_current_user();
+		$user_meta = get_userdata($user->ID);
+		$user_roles = $user_meta->roles;
+
+		$data = array();
+
+		$data['page_title'] = "Edit Outlet - ". $outlet->display_name;
+		$data['view_path'] = "views/outlet/form-update.php";
+
+		$data['view_data']['outlet']['group'] = DBSnet_Woocp_Group_Functions::GetBinderGroup($user->ID);
+
+		$data['view_data']['outlet']['object'] = $outlet;
 
 		echo DBSnet_Woocp_Template_Utility::generateHTML($this->template_path, $data);
 	}

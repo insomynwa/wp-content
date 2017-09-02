@@ -55,6 +55,8 @@
 				if($new_outlet_id){
 					//update_user_meta($new_outlet_id,'binder_group',$_POST['outlet-group']);
 					$message = "berhasil membuat outlet baru";
+				}else{
+					$message = "gagal membuat outlet baru";
 				}
 			}
 		}
@@ -78,13 +80,8 @@
 		<input type="password" name="outlet-password">
 	</div>
 	<div>
-		<?php $isNew = true; ?>
-		<?php if(isset($paramData['outlet']['id'])): ?>
-		<input type="hidden" name="outlet-id" value="<?php echo $paramData['outlet']['id']; ?>">
-		<?php $isNew = false; ?>
-		<?php endif; ?>
-		<input type="hidden" name="outlet-status" value="<?php echo $isNew; ?>">
 		<input type="hidden" name="group-id" value="<?php echo $paramData['outlet']['group']; ?>">
 		<input type="submit" name="outlet-submit" value="Tambah">
 	</div>
 </form>
+<a href="<?php echo admin_url().'admin.php?page=dbsnet-outlet' ?>">Kembali ke daftar outlet</a>
