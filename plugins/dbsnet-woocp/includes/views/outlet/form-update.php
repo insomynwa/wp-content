@@ -34,23 +34,24 @@
 ?>
 
 <form id="form-outlet-update" action="#" method="post">
-	<div>
+	<div class="form-group">
 		<?php if(isset($message)) echo $message; ?>
 	</div>
-	<div>
+	<div class="form-group">
 		<label for="outlet-username">Username: <?php echo $outlet->user_login; ?></label>
 	</div>
-	<div>
+	<div class="form-group">
 		<label for="outlet-email">Email:</label>
-		<input type="email" name="outlet-email" placeholder="email outlet" value="<?php if(isset($_POST['outlet-email'])){ echo $_POST['outlet-email'];} else{ echo $outlet->user_email;} ?>">
+		<input type="email" class="form-control" name="outlet-email" placeholder="email outlet" value="<?php if(isset($_POST['outlet-email'])){ echo $_POST['outlet-email'];} else{ echo $outlet->user_email;} ?>">
 	</div>
-	<div>
+	<div class="form-group">
 		<label for="outlet-password">Password Baru:</label>
-		<input type="password" name="outlet-password">
+		<input type="password" class="form-control" name="outlet-password" placeholder="password baru">
 	</div>
-	<div>
+	<div class="form-group">
 		<input type="hidden" name="group-id" value="<?php echo $paramData['outlet']['group']; ?>">
-		<input type="submit" name="outlet-submit" value="Simpan">
+		<!-- <input type="submit" name="outlet-submit" value="Simpan"> -->
 	</div>
+	<button type="submit" class="btn btn-info" name="outlet-submit">Simpan</button>
 </form>
 <a href="<?php echo admin_url().'admin.php?page=dbsnet-outlet' ?>">Kembali ke daftar outlet</a>

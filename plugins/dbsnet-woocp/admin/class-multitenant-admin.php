@@ -191,10 +191,13 @@ class DBSnet_Woocp_Multitenant_Admin {
 	 * @param deleted user id
 	 */
 	public function dbsnet_woocp_remove_deleted_user_component( $user_id ){
+
 		$user_meta = get_userdata($user_id);
 		$user_roles = $user_meta->roles;
+		$is_tenant = in_array('tenant_role', $user_roles);
+		$is_outlet = in_array('outlet_role', $user_roles);
 
-		if(in_array("tenant_role",$user_roles)){
+		if($is_tenant){
 			$member_role = "outlet_role";
 			$tenant_group_name = $user_meta->user_login;
 			if ( $group = Groups_Group::read_by_name( $tenant_group_name ) ) {
@@ -202,6 +205,22 @@ class DBSnet_Woocp_Multitenant_Admin {
 				
 				Groups_Group::delete( $group->group_id );
 			}
+		}
+		else if($is_outlet){
+			$args = array (
+		        'numberposts' => -1,
+		        'post_type' => array('product','product_variation'),
+		        'author' => $user_id
+		    );
+		    // get all posts by this user: posts, pages, attachments, etc..
+		    $user_posts = get_posts($args);
+
+		    if (empty($user_posts)) return;
+
+		    // delete all the user posts
+		    foreach ($user_posts as $user_post) {
+		        wp_update_post(array('ID'=> $user_post->ID,'post_status'=>'trash'));
+		    }
 		}
 	}
 

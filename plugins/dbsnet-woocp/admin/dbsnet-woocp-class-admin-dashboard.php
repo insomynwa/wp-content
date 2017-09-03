@@ -27,6 +27,10 @@ class DBSnet_Woocp_Admin_Dashboard{
 			remove_action( 'admin_color_scheme_picker', 'admin_color_scheme_picker' );
 		}
 
+		if($is_admin){
+			$this->add_plugin_menu();
+		}
+
 		if($is_admin || $is_tenant){
 			$this->add_custom_menu();
 
@@ -43,38 +47,46 @@ class DBSnet_Woocp_Admin_Dashboard{
 
 	private function add_custom_menu(){
 		add_menu_page(
-				__('Outlet', 'dbsnet-woocp'),
-				__('Outlet', 'dbsnet-woocp'),
-				'view_woocommerce_reports',
-				'dbsnet-outlet',
-				''//array( $this, 'dbsnet_woocp_render_outlet_page')
-				//$icon_url,
-				//$position
+			__('Outlet', 'dbsnet-woocp'),
+			__('Outlet', 'dbsnet-woocp'),
+			'view_woocommerce_reports',
+			'dbsnet-outlet',
+			''//array( $this, 'dbsnet_woocp_render_outlet_page')
+			//$icon_url,
+			//$position
 			);
-			add_submenu_page(
-				'dbsnet-outlet',
-				__('List Outlet', 'dbsnet-woocp'),
-				__('List Outlet', 'dbsnet-woocp'),
-				'view_woocommerce_reports',
-				'dbsnet-outlet',
-				array( $this, 'dbsnet_woocp_render_outlet_page')
+		add_submenu_page(
+			'dbsnet-outlet',
+			__('List Outlet', 'dbsnet-woocp'),
+			__('List Outlet', 'dbsnet-woocp'),
+			'view_woocommerce_reports',
+			'dbsnet-outlet',
+			array( $this, 'dbsnet_woocp_render_outlet_page')
 			);
-			add_submenu_page(
-				'dbsnet-outlet',
-				__('Tambah Outlet', 'dbsnet-woocp'),
-				__('Tambah Outlet', 'dbsnet-woocp'),
-				'view_woocommerce_reports',
-				'dbsnet-outlet-new',
-				array( $this, 'dbsnet_woocp_render_outlet_page_new')
-				);
-			add_submenu_page(
-				'dbsnet-outlet',
-				__('Edit Outlet', 'dbsnet-woocp'),
-				__('Edit Outlet', 'dbsnet-woocp'),
-				'view_woocommerce_reports',
-				'dbsnet-outlet-update',
-				array( $this, 'dbsnet_woocp_render_outlet_page_edit')
-				);
+		add_submenu_page(
+			'dbsnet-outlet',
+			__('Tambah Outlet', 'dbsnet-woocp'),
+			__('Tambah Outlet', 'dbsnet-woocp'),
+			'view_woocommerce_reports',
+			'dbsnet-outlet-new',
+			array( $this, 'dbsnet_woocp_render_outlet_page_new')
+			);
+		add_submenu_page(
+			'',//'dbsnet-outlet',
+			__('Edit Outlet', 'dbsnet-woocp'),
+			__('Edit Outlet', 'dbsnet-woocp'),
+			'view_woocommerce_reports',
+			'dbsnet-outlet-update',
+			array( $this, 'dbsnet_woocp_render_outlet_page_edit')
+			);
+		add_submenu_page(
+			'',//'dbsnet-outlet',
+			__('Hapus Outlet', 'dbsnet-woocp'),
+			__('Hapus Outlet', 'dbsnet-woocp'),
+			'view_woocommerce_reports',
+			'dbsnet-outlet-delete',
+			array( $this, 'dbsnet_woocp_render_outlet_page_delete')
+			);
 
 			// add_menu_page(
 			// 	__('Produk', 'dbsnet-woocp'),
@@ -93,6 +105,18 @@ class DBSnet_Woocp_Admin_Dashboard{
 			// 	'dbsnet-product',
 			// 	array( $this, 'dbsnet_woocp_render_product_page')
 			// );
+	}
+
+	private function add_plugin_menu(){
+		add_menu_page(
+			__('DBSNET', 'dbsnet-woocp'),
+			__('DBSNET', 'dbsnet-woocp'),
+			'manage_options',
+			'dbsnet-woocp',
+			''//array( $this, 'dbsnet_woocp_render_outlet_page')
+			//$icon_url,
+			//$position
+			);
 	}
 
 	// private function remove_woocommerce_menu(){
@@ -156,19 +180,55 @@ class DBSnet_Woocp_Admin_Dashboard{
 	}
 
 	public function dbsnet_woocp_render_outlet_page_edit(){
+		if(!isset($_GET['outlet'])){
+			return;
+		}
 		$outlet_id = $_GET['outlet'];
 		$outlet = get_userdata($outlet_id);
+		$outlet_group = DBSnet_Woocp_Group_Functions::GetBinderGroup($outlet_id);
 
 		$user = wp_get_current_user();
 		$user_meta = get_userdata($user->ID);
 		$user_roles = $user_meta->roles;
+		$user_group = DBSnet_Woocp_Group_Functions::GetBinderGroup($user->ID);
+
+		if($user_group!=$outlet_group)
+			return;
 
 		$data = array();
 
 		$data['page_title'] = "Edit Outlet - ". $outlet->display_name;
 		$data['view_path'] = "views/outlet/form-update.php";
 
-		$data['view_data']['outlet']['group'] = DBSnet_Woocp_Group_Functions::GetBinderGroup($user->ID);
+		$data['view_data']['outlet']['group'] = $user_group;
+
+		$data['view_data']['outlet']['object'] = $outlet;
+
+		echo DBSnet_Woocp_Template_Utility::generateHTML($this->template_path, $data);
+	}
+
+	public function dbsnet_woocp_render_outlet_page_delete(){
+		if(!isset($_GET['outlet'])){
+			return;
+		}
+		$outlet_id = $_GET['outlet'];
+		$outlet = get_userdata($outlet_id);
+		$outlet_group = DBSnet_Woocp_Group_Functions::GetBinderGroup($outlet_id);
+
+		$user = wp_get_current_user();
+		$user_meta = get_userdata($user->ID);
+		$user_roles = $user_meta->roles;
+		$user_group = DBSnet_Woocp_Group_Functions::GetBinderGroup($user->ID);
+
+		if($user_group!=$outlet_group)
+			return;
+
+		$data = array();
+
+		$data['page_title'] = "Hapus Outlet - ". $outlet->display_name;
+		$data['view_path'] = "views/outlet/form-delete.php";
+
+		$data['view_data']['outlet']['group'] = $user_group;
 
 		$data['view_data']['outlet']['object'] = $outlet;
 

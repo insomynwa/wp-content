@@ -10,9 +10,12 @@ class DBSnet_Woocp_Admin{
 	}
 
 	public function dbsnet_woocp_enqueue_scripts_and_styles(){
+		wp_enqueue_style( 'dbsnet-bootstrap-style', plugins_url( 'assets/css/bootstrap.min.css',__DIR__) );
+		wp_register_script( 'dbsnet-bootstrap-script', plugins_url( 'assets/js/bootstrap.min.js',__DIR__) );
 		wp_register_script( 'dbsnet-woocp', plugin_dir_url( __FILE__ ) . 'js/dbsnet-woocp.js' );
 		wp_enqueue_script( 'jquery-ui-datepicker' );
 		wp_enqueue_script( 'jquery-ui-progressbar' );
+		wp_enqueue_script('dbsnet-bootstrap-script');
 		wp_enqueue_script('dbsnet-woocp');
 
 		wp_localize_script(

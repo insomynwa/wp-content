@@ -64,24 +64,27 @@
 ?>
 
 <form id="form-outlet" action="#" method="post">
-	<div>
+	<div class="form-group">
 		<?php if(isset($message)) echo $message; ?>
 	</div>
-	<div>
+	<div class="form-group">
 		<label for="outlet-username">Username:</label>
-		<input type="text" name="outlet-username" placeholder="username outlet">
+		<input type="text" class="form-control" name="outlet-username" placeholder="username outlet">
 	</div>
-	<div>
+	<div class="form-group">
 		<label for="outlet-email">Email:</label>
-		<input type="email" name="outlet-email" placeholder="email outlet">
+		<input type="email" class="form-control" name="outlet-email" placeholder="email outlet">
 	</div>
-	<div>
+	<div class="form-group">
 		<label for="outlet-password">Password:</label>
-		<input type="password" name="outlet-password">
+		<input type="password" class="form-control" name="outlet-password">
 	</div>
-	<div>
+	<div class="form-group">
 		<input type="hidden" name="group-id" value="<?php echo $paramData['outlet']['group']; ?>">
-		<input type="submit" name="outlet-submit" value="Tambah">
+		
+		
 	</div>
+	<!-- <input type="submit" class="btn btn-default" name="outlet-submit" value="Tambah"> -->
+	<button type="submit" class="btn btn-info" name="outlet-submit">Tambah</button>
 </form>
 <a href="<?php echo admin_url().'admin.php?page=dbsnet-outlet' ?>">Kembali ke daftar outlet</a>
