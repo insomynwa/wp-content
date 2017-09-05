@@ -30,6 +30,9 @@ class DBSnet_Woocp_Admin_Dashboard{
 		if($is_admin){
 			$this->add_plugin_menu();
 		}
+		else if($is_tenant){
+			$this->add_tenant_menu();
+		}
 
 		if($is_admin || $is_tenant){
 			$this->add_custom_menu();
@@ -88,23 +91,7 @@ class DBSnet_Woocp_Admin_Dashboard{
 			array( $this, 'dbsnet_woocp_render_outlet_page_delete')
 			);
 
-			// add_menu_page(
-			// 	__('Produk', 'dbsnet-woocp'),
-			// 	__('Produk', 'dbsnet-woocp'),
-			// 	'view_woocommerce_reports',
-			// 	'dbsnet-product',
-			// 	''//array( $this, 'dbsnet_woocp_render_outlet_page')
-			// 	//$icon_url,
-			// 	//$position
-			// );
-			// add_submenu_page(
-			// 	'dbsnet-product',
-			// 	__('List Produk', 'dbsnet-woocp'),
-			// 	__('List Produk', 'dbsnet-woocp'),
-			// 	'view_woocommerce_reports',
-			// 	'dbsnet-product',
-			// 	array( $this, 'dbsnet_woocp_render_product_page')
-			// );
+			
 	}
 
 	private function add_plugin_menu(){
@@ -116,6 +103,26 @@ class DBSnet_Woocp_Admin_Dashboard{
 			''//array( $this, 'dbsnet_woocp_render_outlet_page')
 			//$icon_url,
 			//$position
+			);
+	}
+
+	private function add_tenant_menu(){
+		add_menu_page(
+			__('Produk', 'dbsnet-woocp'),
+			__('Produk', 'dbsnet-woocp'),
+			'view_woocommerce_reports',
+			'dbsnet-product',
+			''//array( $this, 'dbsnet_woocp_render_outlet_page')
+			//$icon_url,
+			//$position
+			);
+		add_submenu_page(
+			'dbsnet-product',
+			__('List Produk', 'dbsnet-woocp'),
+			__('List Produk', 'dbsnet-woocp'),
+			'view_woocommerce_reports',
+			'dbsnet-product',
+			array( $this, 'dbsnet_woocp_render_product_page')
 			);
 	}
 
@@ -235,7 +242,30 @@ class DBSnet_Woocp_Admin_Dashboard{
 		echo DBSnet_Woocp_Template_Utility::generateHTML($this->template_path, $data);
 	}
 
-	// public function dbsnet_woocp_render_product_page(){
-	// 	echo do_shortcode("[wcplpro wcplid='somerandomstringhere']");
-	// }
+	public function dbsnet_woocp_render_product_page(){
+		$data = array();
+		$user = wp_get_current_user();
+
+		$data['page_title'] = "Produk - ". $user->display_name;
+		$data['view_path'] = "views/tenant/list-product.php";
+
+		$user_meta = get_userdata($user->ID);
+		$user_roles = $user_meta->roles;
+
+		//require_once plugin_dir_path( __DIR__ ) . 'includes/tenant/dbsnet-woocp-class-tenant.php';
+		//require_once plugin_dir_path( __DIR__ ) . 'includes/product/dbsnet-woocp-class-product.php';
+
+		$outlets = DBSnet_Woocp_Tenant::GetOutlets($user->ID);
+//var_dump($outlets);
+		if($outlets){
+			$arr_outlet = array();
+			foreach ($outlets as $outlet) {
+				$arr_outlet[] = "".$outlet->ID;
+			}
+
+			$data['view_data']['product']['list'] =  DBSnet_Woocp_Outlet::GetProducts($arr_outlet);
+		}
+		
+		echo DBSnet_Woocp_Template_Utility::generateHTML($this->template_path, $data);
+	}
 }

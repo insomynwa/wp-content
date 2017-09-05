@@ -23,6 +23,9 @@ class DBSnet_Woocp{
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/dbsnet-woocp-class-admin-dashboard.php';
 		require_once plugin_dir_path( __FILE__ ) . 'dbsnet-class-woocp-loader.php';
 		require_once plugin_dir_path( __FILE__ ) . 'customizer/dbsnet-woocp-customizer.php';
+		require_once plugin_dir_path( __FILE__ ) . 'tenant/dbsnet-woocp-class-tenant.php';
+		require_once plugin_dir_path( __FILE__ ) . 'outlet/dbsnet-woocp-class-outlet.php';
+		require_once plugin_dir_path( __FILE__ ) . 'product/dbsnet-woocp-class-product.php';
 
 		$this->loader = new DBSnet_Woocp_Loader();
 	}
