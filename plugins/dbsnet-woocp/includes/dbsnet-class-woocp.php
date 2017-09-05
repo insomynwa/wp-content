@@ -16,6 +16,7 @@ class DBSnet_Woocp{
 		$this->define_admin_hooks();
 		$this->define_customizer_hooks();
 		$this->define_multitenant_hooks();
+		$this->define_widget_hooks();
 	}
 
 	private function load_dependencies() {
@@ -26,6 +27,8 @@ class DBSnet_Woocp{
 		require_once plugin_dir_path( __FILE__ ) . 'tenant/dbsnet-woocp-class-tenant.php';
 		require_once plugin_dir_path( __FILE__ ) . 'outlet/dbsnet-woocp-class-outlet.php';
 		require_once plugin_dir_path( __FILE__ ) . 'product/dbsnet-woocp-class-product.php';
+		require_once plugin_dir_path( __FILE__ ) . 'order/dbsnet-woocp-class-order.php';
+		require_once plugin_dir_path( __FILE__ ) . 'widget/dbsnet-woocp-class-widget.php';
 
 		$this->loader = new DBSnet_Woocp_Loader();
 	}
@@ -48,6 +51,8 @@ class DBSnet_Woocp{
 		//$this->loader->add_action('wp_print_scripts', $admin, 'dbsnet_woocp_remove_customer_password_strength',100);
 
 		$this->loader->add_action('admin_menu', $admin_dashboard, 'dbsnet_woocp_admin_menu');
+
+		
 	}
 
 	private function define_customizer_hooks(){
@@ -92,14 +97,16 @@ class DBSnet_Woocp{
 		//$this->loader->add_filter('mce_buttons', $customizer, 'dbsnet_woocp_customize_first_toolbar' );
 		//$this->loader->add_action('admin_head', $customizer, 'dbsnet_woocp_remove_add_media');
 		//$this->loader->add_filter('wp_editor_settings', $customizer, 'dbsnet_woocp_remove_text_tab');
+		$this->loader->add_filter('screen_layout_columns', $customizer, 'dbsnet_woocp_screen_column_layout',10,3);
 		$this->loader->add_filter('get_user_option_screen_layout_product', $customizer, 'dbsnet_woocp_single_column_layout');
+		$this->loader->add_filter('get_user_option_screen_layout_dashboard', $customizer, 'dbsnet_woocp_single_column_layout');
+		$this->loader->add_filter('get_user_option_screen_layout_shop_order', $customizer, 'dbsnet_woocp_single_column_layout');
 		//$this->loader->add_action('admin_head',$customizer, 'dbsnet_woocp_hide_publishing_actions');
 		
 		
 
 		$this->loader->add_action('wp_before_admin_bar_render', $customizer, 'dbsnet_woocp_customize_admin_bar',100);
 
-		$this->loader->add_filter('get_user_option_screen_layout_shop_order', $customizer, 'dbsnet_woocp_single_column_layout');
 		//$this->loader->add_action('admin_head',$customizer,'dbsnet_woocp_hide_recalculate_order',100);
 
 		
@@ -114,6 +121,10 @@ class DBSnet_Woocp{
 		$this->loader->add_action( 'delete_user', $multitenant, 'dbsnet_woocp_remove_deleted_user_component');
 	}
 
+	private function define_widget_hooks(){
+		$widget = new DBSnet_Woocp_Widget();
+		$this->loader->add_action( 'wp_dashboard_setup', $widget, 'dbsnet_woocp_widget',20);
+	}
 
 	public function run() {
 		$this->loader->run();

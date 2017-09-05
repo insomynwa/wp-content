@@ -17,7 +17,7 @@
 			<img src="<?php echo $image[0] ?>" style="max-width: 40px;max-height: 40px" />
 		</td>
 		<td><?php //var_dump($item); ?>
-			<?php echo $item->post_title; ?>
+			<a target="_blank" href="<?php echo esc_url(get_permalink($item->ID)); ?>"><?php echo $item->post_title; ?></a>
 		</td>
 		<td>
 			<?php echo DBSnet_Woocp_Outlet::Data($item->post_author)->display_name; ?>

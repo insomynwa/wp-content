@@ -219,6 +219,12 @@ class DBSnet_Woocp_Customizer{
 		}
 	}
 
+	public function dbsnet_woocp_screen_column_layout($columns){
+		$columns['dashboard'] = 1;
+
+		return $columns;
+	}
+
 	public function dbsnet_woocp_single_column_layout(){
 		return 1;
 	}
