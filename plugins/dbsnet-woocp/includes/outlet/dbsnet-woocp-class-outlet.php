@@ -35,9 +35,9 @@ class DBSnet_Woocp_Outlet {
 		return DBSnet_Woocp_Product::GetByOutletId($paramOutletId);
 	}
 
-	public static function GetOrders($paramOutletId){
+	public static function GetOrdersOnHold($paramOutletId){
 		//require_once plugin_dir_path( __DIR__ ) . 'product/dbsnet-woocp-class-product.php';
-		return DBSnet_Woocp_Order::GetByOutletId($paramOutletId);
+		return DBSnet_Woocp_Order::GetOnHoldByOutletId($paramOutletId);
 	}
 
 	public static function Data($paramOutletId){

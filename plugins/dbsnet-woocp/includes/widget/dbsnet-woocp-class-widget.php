@@ -61,6 +61,9 @@ class DBSnet_Woocp_Widget {
 	}
 
 	public function CallBackFunctions(){
-		echo "Halo fika";
+		//var_dump(DBSnet_Woocp_Order::GetOnHold());
+		
+		//var_dump($arr_items);
+		echo "Order On-hold: ";
 	}
 }

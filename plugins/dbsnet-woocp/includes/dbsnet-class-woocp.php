@@ -14,6 +14,7 @@ class DBSnet_Woocp{
 
 		$this->load_dependencies();
 		$this->define_admin_hooks();
+		$this->define_woocommerce_hooks();
 		$this->define_customizer_hooks();
 		$this->define_multitenant_hooks();
 		$this->define_widget_hooks();
@@ -29,6 +30,9 @@ class DBSnet_Woocp{
 		require_once plugin_dir_path( __FILE__ ) . 'product/dbsnet-woocp-class-product.php';
 		require_once plugin_dir_path( __FILE__ ) . 'order/dbsnet-woocp-class-order.php';
 		require_once plugin_dir_path( __FILE__ ) . 'widget/dbsnet-woocp-class-widget.php';
+		require_once plugin_dir_path( __FILE__ ) . 'dbsnet-woocp-class-woocommerce.php';
+		require_once plugin_dir_path( __FILE__ ) . 'dbsnet-woocp-class-utility.php';
+		require_once plugin_dir_path( __FILE__ ) . 'dbsnet-woocp-class-data.php';
 
 		$this->loader = new DBSnet_Woocp_Loader();
 	}
@@ -37,6 +41,7 @@ class DBSnet_Woocp{
 
 		$admin = new DBSnet_Woocp_Admin( $this->get_version() );
 		$admin_dashboard = new DBSnet_Woocp_Admin_Dashboard();
+		$data_woocp = new DBSnet_Woocp_Data();
 
 		$this->loader->add_action( 'save_post', $admin, 'dbsnet_woocp_save_update_product' );
 
@@ -50,9 +55,9 @@ class DBSnet_Woocp{
 
 		//$this->loader->add_action('wp_print_scripts', $admin, 'dbsnet_woocp_remove_customer_password_strength',100);
 
-		$this->loader->add_action('admin_menu', $admin_dashboard, 'dbsnet_woocp_admin_menu');
+		$this->loader->add_action( 'admin_menu', $admin_dashboard, 'dbsnet_woocp_admin_menu');
 
-		
+		//$this->loader->add_action( 'dokan_checkout_update_order_meta', $data_woocp, 'dbsnet_woocp_sync_insert_order');
 	}
 
 	private function define_customizer_hooks(){
@@ -124,6 +129,12 @@ class DBSnet_Woocp{
 	private function define_widget_hooks(){
 		$widget = new DBSnet_Woocp_Widget();
 		$this->loader->add_action( 'wp_dashboard_setup', $widget, 'dbsnet_woocp_widget',20);
+	}
+
+	private function define_woocommerce_hooks(){
+		$frontend = new DBSnet_Woocp_Woocommerce();
+		// $this->loader->add_action( 'woocommerce_new_order_item', $frontend, 'dbsnet_woocp_order_item_meta',10,3);
+		//$this->loader->add_action( 'woocommerce_checkout_update_order_meta', $frontend, 'dbsnet_woocp_create_sub_order',10);
 	}
 
 	public function run() {

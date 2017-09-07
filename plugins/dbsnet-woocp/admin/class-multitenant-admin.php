@@ -8,6 +8,9 @@ class DBSnet_Woocp_Multitenant_Admin {
 	 * Registering wordpress custom for this plugin
 	 */
 	public static function dbsnet_woocp_activate(){
+
+		//self::create_tables();
+
 		/*CREATE NEW ROLES*/
 		self::createCustomUserRoles();
 
@@ -251,5 +254,32 @@ class DBSnet_Woocp_Multitenant_Admin {
 	        }
 	    }*/
 	}
+
+    static function create_tables() {
+        include_once ABSPATH . 'wp-admin/includes/upgrade.php';
+
+        // $this->create_withdraw_table();
+        // $this->create_announcement_table();
+        self::create_sync_table();
+        // $this->create_refund_table();
+    }
+
+    static function create_sync_table() {
+        global $wpdb;
+
+        $sql = "CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}dbsnet_woocp_orders` (
+          `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+          `order_id` bigint(20) DEFAULT NULL,
+          `seller_id` bigint(20) DEFAULT NULL,
+          `order_total` float(11,2) DEFAULT NULL,
+          `net_amount` float(11,2) DEFAULT NULL,
+          `order_status` varchar(30) DEFAULT NULL,
+          PRIMARY KEY (`id`),
+          KEY `order_id` (`order_id`),
+          KEY `seller_id` (`seller_id`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+
+        dbDelta( $sql );
+    }
 
 }
