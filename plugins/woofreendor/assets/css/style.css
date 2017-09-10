@@ -1,0 +1,20 @@
+.batch-container-footer ,.batch-container-delete-footer{
+  padding: 10px 20px;
+  border-top: 1px solid #eee;
+  text-align: right;
+}
+.batch-container-delete-footer .woofreendor-delete-batch-spinner,.batch-container-footer .woofreendor-add-new-batch-spinner {
+  position: static;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+.batch-container-delete-footer, .batch-container-footer .woofreendor-show-add-batch-error .woofreendor-show-update-batch-error {
+  color: #d9534f;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+.woofreendor-update-batch-spinner ,.woofreendor-delete-batch-spinner{
+	left:75% !important;
+  	vertical-align: middle;
+  	position: static;
+}
