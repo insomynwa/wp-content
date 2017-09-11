@@ -47,7 +47,7 @@
                 <?php dokan_product_dashboard_errors(); ?>
 
                 <div class="dokan-w12">
-                    <?php Woofreendor_Dokan::_dokan_product_listing_filter(); ?>
+                    <?php woofreendor_product_listing_filter(); ?>
                 </div>
 
                 <div class="dokan-dahsboard-product-listing-wrapper">

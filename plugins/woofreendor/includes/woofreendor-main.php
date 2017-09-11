@@ -3,7 +3,7 @@ if ( !defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class Woofreendor{
+class Woofreendor_Main{
 	protected $loader;
 	protected $plugin_slug;
 	protected $version;
@@ -23,7 +23,7 @@ class Woofreendor{
 	}
 
 	private function load_dependencies() {
-		require_once plugin_dir_path( __FILE__ ) . 'admin/woofreendor-admin.php';
+		// require_once plugin_dir_path( __FILE__ ) . 'admin/woofreendor-admin.php';
 		require_once plugin_dir_path( __FILE__ ) . 'admin/woofreendor-admin-dashboard.php';
 		require_once plugin_dir_path( __FILE__ ) . 'woofreendor-loader.php';
 		require_once plugin_dir_path( __FILE__ ) . 'woofreendor-groups.php';
@@ -35,11 +35,12 @@ class Woofreendor{
 		require_once plugin_dir_path( __FILE__ ) . 'woofreendor-widget.php';
 		require_once plugin_dir_path( __FILE__ ) . 'woofreendor-dokan.php';
 		require_once plugin_dir_path( __FILE__ ) . 'woofreendor-template-utility.php';
-		require_once plugin_dir_path( __FILE__ ) . 'woofreendor-ajax.php';
+		//require_once plugin_dir_path( __FILE__ ) . 'woofreendor-ajax.php';
 		require_once plugin_dir_path( __FILE__ ) . 'woofreendor-batch.php';
+		require_once plugin_dir_path( __FILE__ ) . 'woofreendor-shortcode.php';
 
 		$this->loader = new Woofreendor_Loader();
-		// Dokan_Ajax::init()->init_ajax();
+		// Woofreendor_Shortcode::init()->init_shortcode();
 	}
 
 	private function define_admin_hooks() {
@@ -47,12 +48,12 @@ class Woofreendor{
 		$admin = new Woofreendor_Admin( $this->get_version() );
 		//$admin_dashboard = new Woofreendor_Admin_Dashboard();
 
-		$this->loader->add_action( 'admin_notices', $admin, 'debug_admin_menus');
+		// $this->loader->add_action( 'admin_notices', $admin, 'debug_admin_menus');
 
 		//$this->loader->add_action( 'save_post', $admin, 'woofreendor_save_update_product' );
 
 		// Load javascript or styles
-		$this->loader->add_action( 'admin_enqueue_scripts', $admin, 'woofreendor_admin_enqueue_scripts_and_styles' );
+		// $this->loader->add_action( 'admin_enqueue_scripts', $admin, 'woofreendor_admin_enqueue_scripts_and_styles' );
 		
 		// $this->loader->add_action('wp_ajax_AjaxUpdateBatch', $admin, 'woofreendor_update_batch_ajax');
 		// $this->loader->add_action('wp_ajax_AjaxDeleteBatch', $admin, 'woofreendor_delete_batch_ajax');
@@ -65,17 +66,18 @@ class Woofreendor{
 	private function define_dokan_hooks(){//var_dump("FUCK");
 		$wfd_dokan = new Woofreendor_Dokan();
 		
-		$this->loader->add_action( 'dokan_admin_menu', $wfd_dokan, 'woofreendor_load_admin_settings', 10, 2);
-		$this->loader->add_action( 'wp_head', $wfd_dokan, 'woofreendor_remove_actions');
+		// $this->loader->add_action( 'dokan_admin_menu', $wfd_dokan, 'woofreendor_load_admin_settings', 10, 2);
+		// $this->loader->add_action( 'wp_head', $wfd_dokan, 'woofreendor_remove_actions');
 		
-		$this->loader->add_action( 'dokan_get_dashboard_nav', $wfd_dokan, 'woofreendor_dokan_dashboard_nav');
-		$this->loader->add_action( 'dokan_render_product_listing_template', $wfd_dokan, 'woofreendor_render_product_listing_template', 11);
-		$this->loader->add_action( 'dokan_render_product_edit_template', $wfd_dokan, 'woofreendor_load_product_edit_template', 11);
-		$this->loader->add_filter( 'template_include', $wfd_dokan, 'product_edit_template', 999,1);
-		$this->loader->add_filter( 'dokan_product_types', $wfd_dokan, 'woofreendor_set_default_product_types', 10, 1);
-		$this->loader->add_action( 'dokan_after_listing_product', $wfd_dokan, 'woofreendor_load_add_new_product_popup', 10);
-		$this->loader->add_action( 'dokan_product_content_inside_area_after', $wfd_dokan, 'woofreendor_product_content_inside_area_after');
-		//$this->loader->add_action( 'dokan_render_new_product_template', $wfd_dokan, 'woofreendor_render_new_product_template', 100);
+		// $this->loader->add_action( 'dokan_get_dashboard_nav', $wfd_dokan, 'woofreendor_dokan_dashboard_nav');
+		// $this->loader->add_action( 'dokan_render_product_listing_template', $wfd_dokan, 'woofreendor_render_product_listing_template', 11);
+		// $this->loader->add_action( 'dokan_render_product_edit_template', $wfd_dokan, 'woofreendor_load_product_edit_template', 11);
+		//$this->loader->add_filter( 'template_include', $wfd_dokan, 'product_edit_template', 999,1);
+		//$this->loader->add_filter( 'template_include', $wfd_dokan, 'tenant_template', 999,1);
+		// $this->loader->add_filter( 'dokan_product_types', $wfd_dokan, 'woofreendor_set_default_product_types', 10, 1);
+		// $this->loader->add_action( 'dokan_after_listing_product', $wfd_dokan, 'woofreendor_load_add_new_product_popup', 10);
+		// $this->loader->add_action( 'dokan_product_content_inside_area_after', $wfd_dokan, 'woofreendor_product_content_inside_area_after');
+		// $this->loader->add_action( 'dokan_render_new_product_template', $wfd_dokan, 'woofreendor_render_new_product_template', 10);
 	}
 
 	private function define_customizer_hooks(){
@@ -85,14 +87,20 @@ class Woofreendor{
 		//$this->loader->add_action( 'admin_menu', $customizer, 'dbsnet_woocp_customize_admin_menu',400);
 
 		// Misc
+
+		// User Profile
+		// $this->loader->add_action( 'show_user_profile', $customizer, 'woofreendor_add_user_meta_fields',10,1);
+		// $this->loader->add_action( 'edit_user_profile', $customizer, 'woofreendor_add_user_meta_fields',10,1);
+		// $this->loader->add_action( 'personal_options_update', $customizer, 'woofreendor_save_meta_fields',10,1);
+		// $this->loader->add_action( 'edit_user_profile_update', $customizer, 'woofreendor_save_meta_fields',10,1);
 		
 
 		// Product
 		// A. List
-		$this->loader->add_action('init', $customizer, 'woofreendor_register_scripts');
-		$this->loader->add_action('wp_enqueue_scripts', $customizer, 'woofreendor_scripts');
-		$this->loader->add_action('woofreendor_batches_row', $customizer, 'woofreendor_render_batches_row',10,1);
-		$this->loader->add_filter('woofreendor_localized_args', $customizer, 'woofreendor_conditional_localized_args',10,1);
+		//$this->loader->add_action('init', $customizer, 'woofreendor_register_scripts');
+		//$this->loader->add_action('wp_enqueue_scripts', $customizer, 'woofreendor_scripts');
+		// $this->loader->add_action('woofreendor_batches_row', $customizer, 'woofreendor_render_batches_row',10,1);
+		//$this->loader->add_filter('woofreendor_localized_args', $customizer, 'woofreendor_conditional_localized_args',10,1);
 		//$this->loader->add_filter('bulk_actions-edit-product', $customizer, 'dbsnet_woocp_product_bulk',999,1);
 
 		// B. Form
@@ -141,18 +149,18 @@ class Woofreendor{
 		$wfd_ajax = new Woofreendor_Ajax();
 		
 
-		$this->loader->add_action( 'wp_ajax_woofreendor_create_new_batch', $wfd_ajax, 'create_batch');
-		$this->loader->add_action( 'wp_ajax_woofreendor_update_batch', $wfd_ajax, 'update_batch');
-		$this->loader->add_action( 'wp_ajax_woofreendor_reload_batch', $wfd_ajax, 'reload_batch');
-		$this->loader->add_action( 'wp_ajax_woofreendor_delete_batch', $wfd_ajax, 'delete_batch');
+		// $this->loader->add_action( 'wp_ajax_woofreendor_create_new_batch', $wfd_ajax, 'create_batch');
+		// $this->loader->add_action( 'wp_ajax_woofreendor_update_batch', $wfd_ajax, 'update_batch');
+		// $this->loader->add_action( 'wp_ajax_woofreendor_reload_batch', $wfd_ajax, 'reload_batch');
+		// $this->loader->add_action( 'wp_ajax_woofreendor_delete_batch', $wfd_ajax, 'delete_batch');
 	} 
 	
 	private function define_multitenant_hooks(){
 		$wfd_groups = new Woofreendor_Groups();
 		
 
-		$this->loader->add_action( 'user_register', $wfd_groups, 'woofreendor_new_user_group');
-		$this->loader->add_action( 'delete_user', $wfd_groups, 'woofreendor_remove_deleted_user_component');
+		// $this->loader->add_action( 'user_register', $wfd_groups, 'woofreendor_new_user_group');
+		// $this->loader->add_action( 'delete_user', $wfd_groups, 'woofreendor_remove_deleted_user_component');
 	}
 
 	private function define_widget_hooks(){

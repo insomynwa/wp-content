@@ -57,7 +57,7 @@ get_header( 'shop' );
     <div id="dokan-primary" class="dokan-single-store dokan-w8">
         <div id="dokan-content" class="store-page-wrap woocommerce" role="main">
 
-            <?php dokan_get_template_part( 'store-header' );?>
+            <?php dokan_get_template_part( 'store-header' ); ?>
 
             <?php do_action( 'dokan_store_profile_frame_after', $store_user, $store_info ); ?>
 

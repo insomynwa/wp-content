@@ -4,27 +4,44 @@ if ( !defined( 'ABSPATH' ) ) {
 }
 class Woofreendor_Installer {
 
+    function do_install() {
+
+        // installs
+        $this->createUserRoles();
+
+
+        $groups_name = array( 'Wf_Tenant', 'Wf_Outlet' );
+        $this->createGroups($groups_name);
+
+        $this->setupPages();
+
+        if( class_exists( 'Woofreendor_Rewrites' )){
+            Woofreendor_Rewrites::init()->register_rule();
+        }
+
+        flush_rewrite_rules();
+    }
 	/**
 	 * Registering wordpress custom for this plugin
 	 */
-	public static function woofreendor_activate(){
+	// public static function woofreendor_activate(){
 
-		/*CREATE NEW ROLES*/
-		self::createUserRoles();
+	// 	/*CREATE NEW ROLES*/
+	// 	self::createUserRoles();
 
-		/*SETUP USER GROUP*/
-		$groups_name = array( 'Wf_Tenant', 'Wf_Outlet' );
-		self::createGroups($groups_name);
+	// 	/*SETUP USER GROUP*/
+	// 	$groups_name = array( 'Wf_Tenant', 'Wf_Outlet' );
+	// 	self::createGroups($groups_name);
 
-		/*SETUP PAGE*/
-		self::setupPages();
-	}
+	// 	/*SETUP PAGE*/
+	// 	self::setupPages();
+	// }
 
 	/**
 	 * Create custom user roles 
 	 * @return null
 	 */
-	static function createUserRoles(){
+	function createUserRoles(){
 		/*
 		CREATE NEW ROLES
 		*/
@@ -54,7 +71,9 @@ class Woofreendor_Installer {
 
 		$tenant_cap_wp = $user_global_cap;
 
-		add_role('woofreendor_tenant_role', __( 'Tenant' ), $tenant_roles_wp);
+        if(! $this->role_exists('woofreendor_tenant_role')){
+            add_role('woofreendor_tenant_role', __( 'Tenant' ), $tenant_roles_wp);
+        }
 
 		/*
 			ADD CAPABILITIES TO THE NEW ROLES
@@ -70,7 +89,7 @@ class Woofreendor_Installer {
 	 * @param  group name
 	 * @return null
 	 */
-	static function createGroups($groups_name){
+	function createGroups($groups_name){
 		foreach($groups_name as $group_name){
 			if ( !( $group = Groups_Group::read_by_name( $group_name ) ) ) {
 				$group_id = Groups_Group::create( array( 'name' => $group_name ) );
@@ -78,7 +97,7 @@ class Woofreendor_Installer {
 		}
 	}
 
-	static function setupPages(){
+	function setupPages(){
 		$meta_key = '_wp_page_template';
 
         // return if pages were created before
@@ -112,14 +131,14 @@ class Woofreendor_Installer {
 
         if ( $pages ) {
             foreach ($pages as $page) {
-                $page_id = self::createPages( $page );
+                $page_id = $this->createPages( $page );
 
                 if ( $page_id ) {
                     $woofreendor_page_settings[$page['page_id']] = $page_id;
 
                     if ( isset( $page['child'] ) && count( $page['child'] ) > 0 ) {
                         foreach ($page['child'] as $child_page) {
-                            $child_page_id = self::createPages( $child_page );
+                            $child_page_id = $this->createPages( $child_page );
 
                             if ( $child_page_id ) {
                                 $woofreendor_page_settings[$child_page['page_id']] = $child_page_id;
@@ -136,7 +155,7 @@ class Woofreendor_Installer {
         update_option( 'woofreendor_pages_created', true );
 	}
 
-    static function createPages( $page ) {
+    function createPages( $page ) {
         $meta_key = '_wp_page_template';
         $page_obj = get_page_by_path( $page['post_title'] );
 
@@ -162,5 +181,24 @@ class Woofreendor_Installer {
 
         return false;
     }
+
+    function role_exists($role){
+        if(!empty($role)){
+            return $GLOBALS['wp_roles']->is_role($role);
+        }
+        return false;
+    }
+
+    // public static function setup_page_redirect( $plugin ) {
+
+    //     if ( !get_transient( '_woofreendor_setup_page_redirect' ) ) {
+    //         return;
+    //     }
+    //     // Delete the redirect transient
+    //     delete_transient( '_woofreendor_setup_page_redirect' );
+
+    //     wp_safe_redirect( add_query_arg( array( 'page' => 'dokan-setup' ), admin_url( 'index.php' ) ) );
+    //     exit;
+    // }
 
 }
