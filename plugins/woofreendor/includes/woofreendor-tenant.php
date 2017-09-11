@@ -32,22 +32,22 @@ class Woofreendor_Tenant {
 		return get_userdata($paramOutletId);
 	}
 
-	public static function GetAll( $paramArgs ){
-		$defaults = array(
-	        'role'       => 'woofreendor_tenant_role',
-	        'number'     => 9,
-	        'offset'     => 0,
-	        'orderby'    => 'registered',
-	        'order'      => 'ASC'
-	    );
+	// public static function GetAll( $paramArgs ){
+	// 	$defaults = array(
+	//         'role'       => 'woofreendor_tenant_role',
+	//         'number'     => 9,
+	//         'offset'     => 0,
+	//         'orderby'    => 'registered',
+	//         'order'      => 'ASC'
+	//     );
 
-	    $args = wp_parse_args( $args, $defaults );
+	//     $args = wp_parse_args( $args, $defaults );
 
-	    $user_query = new WP_User_Query( $args );
-	    $tenants    = $user_query->get_results();
+	//     $user_query = new WP_User_Query( $args );
+	//     $tenants    = $user_query->get_results();
 
-	    return array( 'users' => $tenants, 'count' => $user_query->total_users );
-	}
+	//     return array( 'users' => $tenants, 'count' => $user_query->total_users );
+	// }
 
 	public static function GetInfo( $paramID ){
 		$info = get_user_meta( $paramID, 'woofreendor_profile_settings', true );

@@ -14,7 +14,6 @@ class Woofreendor_Template_Shortcodes {
      *  @since 2.4
      */
     function __construct() {
-        add_shortcode( 'woofreendor-tenants', array( $this, 'tenant_listing' ));  
         add_shortcode( 'woofreendor-tenant-dashboard', array( $this, 'load_template_files' ) );      
     }
 

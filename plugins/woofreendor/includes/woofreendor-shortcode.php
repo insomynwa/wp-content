@@ -71,7 +71,7 @@ class Woofreendor_Shortcode{
             'per_row'    => $attr['per_row']
         ) );
         ob_start();
-        Woofreendor_Template_Utility::GetTemplatePart( 'tenant-lists', false, $template_args );
+        woofreendor_get_template_part( 'tenant-lists', false, $template_args );
         $content = ob_get_clean();
 
         return apply_filters( 'woofreendor_tenant_listing', $content, $attr );
