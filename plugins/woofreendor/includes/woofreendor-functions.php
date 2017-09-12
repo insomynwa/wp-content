@@ -1,5 +1,6 @@
 <?php
 require_once dirname(__FILE__) . '/woofreendor-batch-functions.php';
+require_once dirname(__FILE__) . '/woofreendor-outlet-functions.php';
 
 function woofreendor_get_tenant_info( $tenant_id ) {
     $info = get_user_meta( $tenant_id, 'woofreendor_profile_settings', true );
@@ -21,6 +22,7 @@ function woofreendor_get_tenant_info( $tenant_id ) {
 
     return $info;
 }
+
 function woofreendor_is_user_tenant( $user_id ) {
     if ( ! user_can( $user_id, 'woofreendor_tenant' ) ) {
         return false;
@@ -28,6 +30,15 @@ function woofreendor_is_user_tenant( $user_id ) {
 
     return true;
 }
+
+function woofreendor_is_user_outlet( $user_id ) {
+    if ( ! user_can( $user_id, 'woofreendor_outlet' ) ) {
+        return false;
+    }
+
+    return true;
+}
+
 function woofreendor_locate_template( $template_name, $template_path = '', $default_path = '', $pro = false ) {
     $woofreendor = Woofreendor::init();
 
@@ -54,6 +65,7 @@ function woofreendor_locate_template( $template_name, $template_path = '', $defa
     // Return what we found
     return apply_filters('woofreendor_locate_template', $template, $template_name, $template_path );
 }
+
 function woofreendor_is_tenant_page() {
     $custom_tenant_url = dokan_get_option( 'custom_tenant_url', 'woofreendor_general', 'tenant' );
 
@@ -63,6 +75,7 @@ function woofreendor_is_tenant_page() {
 
     return false;
 }
+
 function woofreendor_get_tenant_url( $user_id ) {
     $userdata = get_userdata( $user_id );
     $user_nicename = ( !false == $userdata ) ? $userdata->user_nicename : '';
@@ -70,6 +83,7 @@ function woofreendor_get_tenant_url( $user_id ) {
     $custom_tenant_url = dokan_get_option( 'custom_tenant_url', 'woofreendor_general', 'tenant' );
     return sprintf( '%s/%s/', home_url( '/' . $custom_tenant_url ), $user_nicename );
 }
+
 function woofreendor_get_template_part( $slug, $name = '', $args = array() ) {
     $woofreendor = Woofreendor::init();
 
@@ -205,56 +219,131 @@ function woofreendor_get_binder_group($paramUserId){
     return get_user_meta( $paramUserId, 'binder_group', true);
 }
 
-function woofreendor_tenants() {
-    $attr = shortcode_atts( apply_filters( 'woofreendor_tenant_listing_per_page', array(
-        'per_page' => 10,
-        'search'   => 'yes',
-        'per_row'  => 3,
-    ) ), $atts );
-    $paged   = max( 1, get_query_var( 'paged' ) );
-    $limit   = $attr['per_page'];
-    $offset  = ( $paged - 1 ) * $limit;
+function woofreendor_get_tenant_tabs( $tenant_id ) {
 
-    $tenant_args = array(
-        'number' => $limit,
-        'offset' => $offset
+    $tabs = array(
+        'outlets' => array(
+            'title' => __( 'Outlets', 'woofreendor' ),
+            'url'   => woofreendor_get_tenant_url( $tenant_id )
+        ),
     );
 
-    // if search is enabled, perform a search
-    if ( 'yes' == $attr['search'] ) {
-        $search_term = isset( $_GET['woofreendor_tenant_search'] ) ? sanitize_text_field( $_GET['woofreendor_tenant_search'] ) : '';
-        if ( '' != $search_term ) {
+    $store_info = woofreendor_get_tenant_info( $tenant_id );
+    // $tnc_enable = dokan_get_option( 'seller_enable_terms_and_conditions', 'dokan_general', 'off' );
 
-            $tenant_args['meta_query'] = array(
-                 array(
-                    'key'     => 'woofreendor_tenant_name',
-                    'value'   => $search_term,
-                    'compare' => 'LIKE'
-                )
-            );
+    // if ( isset($store_info['enable_tnc']) && $store_info['enable_tnc'] == 'on' && $tnc_enable == 'on' ) {
+    //     $tabs['terms_and_conditions'] = array(
+    //         'title' => __( 'Terms and Conditions', 'dokan-lite' ),
+    //         'url'   => dokan_get_toc_url( $tenant_id )
+    //     );
+    // }
+
+    return apply_filters( 'woofreendor_tenant_tabs', $tabs, $tenant_id );
+}
+
+function woofreendor_get_tenant_short_address( $tenant_id, $line_break = true ) {
+    $store_address = woofreendor_get_tenant_address( $tenant_id, true );
+
+    $short_address = array();
+    $formatted_address = '';
+
+    if ( ! empty( $store_address['street_1'] ) && empty( $store_address['street_2'] ) ) {
+        $short_address[] = $store_address['street_1'];
+    } else if ( empty( $store_address['street_1'] ) && ! empty( $store_address['street_2'] ) ) {
+        $short_address[] = $store_address['street_2'];
+    } else if ( ! empty( $store_address['street_1'] ) && ! empty( $store_address['street_2'] ) ) {
+        $short_address[] = $store_address['street_1'];
+    }
+
+    if ( ! empty( $store_address['city'] ) && ! empty( $store_address['city'] ) ) {
+        $short_address[] = $store_address['city'];
+    }
+
+    if ( ! empty( $store_address['state'] ) && ! empty( $store_address['country'] ) ) {
+        $short_address[] = $store_address['state'] . ', ' . $store_address['country'];
+    } else if ( ! empty( $store_address['country'] ) ) {
+        $short_address[] = $store_address['country'];
+    }
+
+    if ( ! empty( $short_address  ) && $line_break ) {
+        $formatted_address = implode( '<br>', $short_address );
+    } else {
+        if ( count( $short_address ) > 1 ) {
+            $formatted_address = implode( ', ', $short_address );
+        } else {
+            $formatted_address = implode( ' ', $short_address );
         }
     }
 
-    $tenants = woofreendor_get_tenants( apply_filters( 'woofreendor_tenant_listing_args', $tenant_args ) );
 
-    /**
-     * Filter for store listing args
-     *
-     * @since 2.4.9
-     */
-    $template_args = apply_filters( 'woofreendor_tenant_list_args', array(
-        'tenants'    => $tenants,
-        'limit'      => $limit,
-        'offset'     => $offset,
-        'paged'      => $paged,
-        'image_size' => 'full',
-        'search'     => $attr['search'],
-        'per_row'    => $attr['per_row']
-    ) );
-    ob_start();
-    woofreendor_get_template_part( 'tenant-lists', false, $template_args );
-    $content = ob_get_clean();
-
-    return apply_filters( 'woofreendor_tenant_listing', $content, $attr );
+    return apply_filters( 'woofreendor_tenant_header_adress', $formatted_address, $store_address, $short_address );
 }
-add_shortcode( 'woofreendor-tenants', 'woofreendor_tenants');  
+
+
+function woofreendor_get_tenant_address( $tenant_id = '', $get_array = false ) {
+
+    if ( $tenant_id == '' ) {
+        $tenant_id = get_current_user_id();
+    }
+
+    $profile_info = woofreendor_get_tenant_info( $tenant_id );
+
+    if ( isset( $profile_info['address'] ) ) {
+
+        $address = $profile_info['address'];
+
+        $country_obj = new WC_Countries();
+        $countries   = $country_obj->countries;
+        $states      = $country_obj->states;
+
+        $street_1     = isset( $address['street_1'] ) ? $address['street_1'] : '';
+        $street_2     = isset( $address['street_2'] ) ? $address['street_2'] : '';
+        $city         = isset( $address['city'] ) ? $address['city'] : '';
+
+        $zip          = isset( $address['zip'] ) ? $address['zip'] : '';
+        $country_code = isset( $address['country'] ) ? $address['country'] : '';
+        $state_code   = isset( $address['state'] ) ? $address['state'] : '';
+        $state_code   = isset( $address['state'] ) ? ( $address['state'] == 'N/A' ) ? '' : $address['state'] : '';
+
+        $country_name = isset( $countries[$country_code] ) ? $countries[$country_code] : '';
+        $state_name   = isset( $states[$country_code][$state_code] ) ? $states[$country_code][$state_code] : $state_code;
+
+    } else {
+        return 'N/A';
+    }
+
+    if ( $get_array == true ) {
+        $address = array(
+            'street_1' => $street_1,
+            'street_2' => $street_2,
+            'city'     => $city,
+            'zip'      => $zip,
+            'country'  => $country_name,
+            'state'    => isset( $states[$country_code][$state_code] ) ? $states[$country_code][$state_code] : $state_code,
+        );
+
+        return apply_filters( 'woofreendor_get_tenant_address', $address, $profile_info );
+    }
+
+    $country           = new WC_Countries();
+    $formatted_address = $country->get_formatted_address( array(
+        'address_1' => $street_1,
+        'address_2' => $street_2,
+        'city'      => $city,
+        'postcode'  => $zip,
+        'state'     => $state_code,
+        'country'   => $country_code
+    ) );
+
+    return apply_filters( 'woofreendor_get_tenant_formatted_address', $formatted_address, $profile_info );
+}
+
+add_action( 'wp', 'woofreendor_set_is_home_false_on_tenant' );
+
+function woofreendor_set_is_home_false_on_tenant() {
+    global $wp_query;
+
+    if ( woofreendor_is_tenant_page() ) {
+        $wp_query->is_home = false;
+    }
+}

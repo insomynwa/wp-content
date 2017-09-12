@@ -23,6 +23,10 @@ class Woofreendor_Ajax{
         add_action( 'wp_ajax_woofreendor_update_batch', array( $this, 'update_batch' ) );
         add_action( 'wp_ajax_woofreendor_reload_batch', array( $this, 'reload_batch' ) );
         add_action( 'wp_ajax_woofreendor_delete_batch', array( $this, 'delete_batch' ) );
+
+        add_action( 'wp_ajax_woofreendor_create_new_outlet', array( $this, 'create_outlet' ) );
+        add_action( 'wp_ajax_woofreendor_update_outlet', array( $this, 'update_outlet' ) );
+        add_action( 'wp_ajax_woofreendor_delete_outlet', array( $this, 'delete_outlet' ) );
     }
 
     public function create_batch() { 
@@ -102,6 +106,72 @@ class Woofreendor_Ajax{
         $response = woofreendor_render_batch_row($product_id);
         //var_dump($response);
         wp_send_json_success( $response );
+    }
+
+    public function create_outlet() { 
+        check_ajax_referer( 'add-outlet', 'security' );
+
+        if ( ! current_user_can( 'woofreendor_tenant' ) ) {
+            die(-1);
+        }
+
+        parse_str( $_POST['postdata'], $postdata );
+
+        $response = woofreendor_save_outlet( $postdata );
+
+        if ( is_wp_error( $response ) ) {
+            wp_send_json_error( $response );
+        }
+
+        if ( is_int( $response ) ) {
+            wp_send_json_success( $response );
+        } else {
+            wp_send_json_error( __( 'Something wrong, please try again later', 'dokan-lite' ) );
+        }
+    }
+
+    public function update_outlet() { 
+        check_ajax_referer( 'update-outlet', 'security' );
+
+        if ( ! current_user_can( 'woofreendor_tenant' ) ) {
+            die(-1);
+        }
+
+        parse_str( $_POST['postdata'], $postdata );
+
+        $response = woofreendor_update_outlet( $postdata );
+
+        if ( is_wp_error( $response ) ) {
+            wp_send_json_error( $response );
+        }
+
+        if ( is_int( $response ) ) {
+            wp_send_json_success( $response );
+        } else {
+            wp_send_json_error( __( 'Something wrong, please try again later', 'dokan-lite' ) );
+        }
+    }
+
+    public function delete_outlet() { 
+        check_ajax_referer( 'delete-outlet', 'security' );
+
+        if ( ! current_user_can( 'woofreendor_tenant' ) ) {
+            die(-1);
+        }
+
+        parse_str( $_POST['postdata'], $postdata );
+
+        $response = woofreendor_delete_outlet( $postdata );
+        
+        if ( is_wp_error( $response ) ) {
+            wp_send_json_error( $response );
+        }
+
+        if ( $response ) {
+            wp_send_json_success( $response );
+        } else {
+            wp_send_json_error( __( 'Something wrong, please try again later', 'dokan-lite' ) );
+        }
     }
 
 }

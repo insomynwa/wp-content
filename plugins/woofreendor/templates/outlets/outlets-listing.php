@@ -35,7 +35,7 @@
                     <?php //dokan_product_listing_status_filter(); ?>
 
                     <span class="dokan-add-product-link">
-                        <a href="<?php echo woofreendor_get_navigation_url( 'new-product' ); ?>" class="dokan-btn dokan-btn-theme dokan-right <?php echo ( 'on' == dokan_get_option( 'disable_product_popup', 'dokan_selling', 'off' ) ) ? '' : 'dokan-add-new-outlet'; ?>">
+                        <a data-outlet_action='create_new' id="woofreendor-add-new-outlet-btn" href="<?php echo woofreendor_get_navigation_url( 'new-outlet' ); ?>" class="dokan-btn dokan-btn-theme dokan-right <?php echo ( 'on' == dokan_get_option( 'disable_product_popup', 'dokan_selling', 'off' ) ) ? '' : 'woofreendor-add-new-outlet'; ?>">
                             <i class="fa fa-briefcase">&nbsp;</i>
                             <?php _e( 'Tambah Outlet', 'woofreendor' ); ?>
                         </a>
@@ -49,7 +49,7 @@
                 </div>
 
                 <div class="dokan-dahsboard-product-listing-wrapper">
-                    <table class="dokan-table dokan-table-striped product-listing-table">
+                    <table id="table_outlets" class="dokan-table dokan-table-striped product-listing-table">
                         <thead>
                             <tr>
                                 <th><?php _e( 'Gambar', 'woofreendor' ); ?></th>
@@ -71,6 +71,7 @@
                             // //$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
                             // if($pagenum==1) $offset=0;
                             // else $offset = ($pagenum-1)*$no;
+                            $binder_group = woofreendor_get_binder_group( get_current_user_id());
                             $args = array(
                                 'role' => 'seller', 
                                 'number' => $limit, 
@@ -78,17 +79,14 @@
                                 'order'          => 'ASC',
                                 'orderby'        => 'display_name',
                                 'meta_key'       => 'binder_group',
-                                'meta_value'     => woofreendor_get_binder_group( get_current_user_id())
+                                'meta_value'     => intval($binder_group)
                                 );
-
+                            // var_dump(woofreendor_get_binder_group( get_current_user_id()));
                             $paged       = isset( $_GET['pagenum'] ) ? absint( $_GET['pagenum'] ) : 1;
                             $limit       = 10;
                             $count       = 0;
                             $offset      = ( $paged - 1 ) * $limit;
-                            $user_search = 
-                                new WP_User_Query( 
-                                    $args 
-                                    );
+                            $user_search = new WP_User_Query( $args );
                             $outlets     = (array) $user_search->get_results();
 
 
@@ -97,16 +95,28 @@
                                     ?>
                                 <tr>
                                     <td>#</td>
-                                    <td><?php echo $outlet->display_name; ?></td>
-                                    <td><?php echo $outlet->user_login; ?></td>
-                                    <td><?php echo $outlet->user_email; ?></td>
-                                    <td></td>
+                                    <td><?php echo $outlet->display_name; ?>
+                                        <input type="hidden" name="outlet_displayname_<?php echo $outlet->ID; ?>" value="<?php echo $outlet->display_name; ?>">
+                                    </td>
+                                    <td><?php echo $outlet->user_login; ?>
+                                        <input type="hidden" name="outlet_username_<?php echo $outlet->ID; ?>" value="<?php echo $outlet->user_login; ?>">
+                                    </td>
+                                    <td><?php echo $outlet->user_email; ?>
+                                        <input type="hidden" name="outlet_email_<?php echo $outlet->ID; ?>" value="<?php echo $outlet->user_email; ?>">
+                                    </td>
+                                    <td>
+                                        <a href="#" data-outlet_action='update_outlet' class="dokan-btn dokan-btn-theme woofreendor_update_outlet" data-outlet_id="<?php echo $outlet->ID; ?>"><?php _e( 'Update', 'woofreendor' ) ?></a>
+                                    </td>
+                                    <td>
+                                        <a href="#" class="dokan-btn dokan-btn-default dokan-btn-sm woofreendor_delete_outlet" data-outlet_id="<?php echo $outlet->ID; ?>"><?php _e( 'Hapus', 'woofreendor' ) ?></a>
+                                    </td>
                                     <td class="diviader"></td>
                                 </tr>
 
                                 <?php $count++; } ?>
 
-                                <?php } else { ?>
+                                <?php } 
+                                else { ?>
                                 <tr>
                                     <td colspan="5"><?php _e( 'Outlet tidak diketemukan.', 'woofreendor' ); ?></td>
                                 </tr>
@@ -156,7 +166,7 @@
              *  @since 2.4
              */
             do_action( 'dokan_dashboard_content_inside_after' );
-            do_action( 'dokan_after_listing_product' );
+            do_action( 'woofreendor_after_listing_outlet' );
             ?>
 
         </div><!-- #primary .content-area -->

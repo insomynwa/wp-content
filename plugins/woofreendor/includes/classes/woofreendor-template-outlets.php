@@ -24,6 +24,7 @@ class Woofreendor_Template_Outlets {
     function __construct() {
         add_action( 'woofreendor_render_new_outlet_template', array( $this, 'render_new_outlet_template' ), 10 );
         add_action( 'woofreendor_render_outlet_listing_template', array( $this, 'render_outlet_listing_template' ), 11 );
+        add_action( 'woofreendor_after_listing_outlet', array( $this, 'load_add_new_outlet_popup' ), 10 );
     }
 
     /**
@@ -41,7 +42,7 @@ class Woofreendor_Template_Outlets {
         return $instance;
     }
 
-    public function render_new_outlet_template( $query_vars ) {
+    function render_new_outlet_template( $query_vars ) {
         if ( isset( $query_vars['new-outlet'] ) && !WeDevs_Dokan::init()->is_pro_exists() ) {
             woofreendor_get_template_part( 'outlets/new-outlet' );
         }
@@ -49,6 +50,11 @@ class Woofreendor_Template_Outlets {
 
     function render_outlet_listing_template( $action ) {
         woofreendor_get_template_part( 'outlets/outlets-listing');
+    }
+
+    function load_add_new_outlet_popup() {
+        woofreendor_get_template_part( 'outlets/tmpl-add-update-outlet-popup' );
+        woofreendor_get_template_part( 'outlets/tmpl-delete-outlet-popup' );
     }
 
 }

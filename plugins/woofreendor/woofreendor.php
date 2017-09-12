@@ -291,7 +291,7 @@ final class Woofreendor{
 
     public function conditional_localized_args( $paramDefaultArgs ){
 		if ( dokan_is_seller_dashboard()
-				|| woofreendor_is_tenant_dashboard()
+				|| woofreendor_is_tenant_dashboard()//woofreendor_is_tenant_page
                 || ( get_query_var( 'edit' ) && is_singular( 'product' ) )
                 || dokan_is_store_page()
                 || is_account_page()
@@ -313,7 +313,10 @@ final class Woofreendor{
                 'reload_batch_nonce'              => wp_create_nonce( 'reload-batch' ),
                 'update_batch_nonce'              => wp_create_nonce( 'update-batch' ),
                 'delete_batch_nonce'              => wp_create_nonce( 'delete-batch' ),
-                'add_batch_nonce'                 => wp_create_nonce( 'add-batch' )
+                'add_batch_nonce'                 => wp_create_nonce( 'add-batch' ),
+                'add_outlet_nonce'                 => wp_create_nonce( 'add-outlet' ),
+                'update_outlet_nonce'                 => wp_create_nonce( 'update-outlet' ),
+                'delete_outlet_nonce'                 => wp_create_nonce( 'delete-outlet' )
             );
 
             $paramDefaultArgs = array_merge( $paramDefaultArgs, $custom_args );

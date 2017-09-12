@@ -16,7 +16,8 @@ class Woofreendor_Rewrites {
     public function __construct() {
         $this->custom_tenant_url = dokan_get_option( 'custom_tenant_url', 'woofreendor_general', 'tenant' );
 
-        add_action( 'init', array( $this, 'register_rule' ) );
+        // add_action( 'init', array( $this, 'register_rule' ) );
+        add_action( 'init', array( $this, 'test_register_rule' ) );
 
         add_filter( 'template_include', array( $this, 'tenant_template' ) );
         add_filter( 'template_include', array( $this,  'product_edit_template' ),999 );
@@ -59,8 +60,8 @@ class Woofreendor_Rewrites {
         if (  woofreendor_is_tenant_page() ) {
             $author      = get_query_var( $this->custom_tenant_url );
             $seller_info = get_user_by( 'slug', $author );
-            $crumbs[1]   = array( ucwords($this->custom_tenant_url) , site_url().'/'.$this->custom_tenant_url );
-            $crumbs[2]   = array( $author, woofreendor_get_tenant_url( $seller_info->data->ID ) );
+            //$crumbs[1]   = array( ucwords($this->custom_tenant_url) , site_url().'/'.$this->custom_tenant_url );
+            //$crumbs[2]   = array( $author, woofreendor_get_tenant_url( $seller_info->data->ID ) );
         }
 
         return $crumbs;
@@ -80,6 +81,42 @@ class Woofreendor_Rewrites {
      *
      * @return void
      */
+    function test_register_rule(){
+        $this->query_vars = apply_filters( 'dokan_query_var_filter', array(
+            'outlets',
+            'new-outlet'
+        ) );
+
+        foreach ( $this->query_vars as $var ) {
+            add_rewrite_endpoint( $var, EP_PAGES );
+        }
+
+        add_rewrite_rule( 
+            $this->custom_tenant_url.'/([^/]+)/?$', 
+            'index.php?'.$this->custom_tenant_url.'=$matches[1]', 
+            'top' );
+        add_rewrite_rule( 
+            $this->custom_tenant_url.'/([^/]+)/page/?([0-9]{1,})/?$', 
+            'index.php?'.$this->custom_tenant_url.'=$matches[1]&paged=$matches[2]', 
+            'top' );
+        add_rewrite_rule( 
+            $this->custom_tenant_url.'/([^/]+)/section/?([0-9]{1,})/?$', 
+            'index.php?'.$this->custom_tenant_url.'=$matches[1]&term=$matches[2]&term_section=true', 
+            'top' );
+        add_rewrite_rule( 
+            $this->custom_tenant_url.'/([^/]+)/section/?([0-9]{1,})/page/?([0-9]{1,})/?$', 
+            'index.php?'.$this->custom_tenant_url.'=$matches[1]&term=$matches[2]&paged=$matches[3]&term_section=true', 
+            'top' );
+
+        add_rewrite_rule( 
+            $this->custom_tenant_url.'/([^/]+)/toc?$', 
+            'index.php?'.$this->custom_tenant_url.'=$matches[1]&toc=true', 
+            'top' );
+        add_rewrite_rule( 
+            $this->custom_tenant_url.'/([^/]+)/toc/page/?([0-9]{1,})/?$', 
+            'index.php?'.$this->custom_tenant_url.'=$matches[1]&paged=$matches[2]&toc=true', 
+            'top' );
+    }
     function register_rule() {
         $this->query_vars = apply_filters( 'dokan_query_var_filter', array(
             'outlets',
@@ -89,6 +126,35 @@ class Woofreendor_Rewrites {
         foreach ( $this->query_vars as $var ) {
             add_rewrite_endpoint( $var, EP_PAGES );
         }
+
+        add_rewrite_rule( 
+            $this->custom_tenant_url.'/([^/]+)/?$', 
+            'index.php?'.$this->custom_tenant_url.'=$matches[1]', 
+            'top' );
+        add_rewrite_rule( 
+            $this->custom_tenant_url.'/([^/]+)/page/?([0-9]{1,})/?$', 
+            'index.php?'.$this->custom_tenant_url.'=$matches[1]&paged=$matches[2]', 
+            'top' );
+
+        add_rewrite_rule( 
+            $this->custom_tenant_url.'/([^/]+)/section/?([0-9]{1,})/?$', 
+            'index.php?'.$this->custom_tenant_url.'=$matches[1]&term=$matches[2]&term_section=true', 
+            'top' );
+        add_rewrite_rule( 
+            $this->custom_tenant_url.'/([^/]+)/section/?([0-9]{1,})/page/?([0-9]{1,})/?$', 
+            'index.php?'.$this->custom_tenant_url.'=$matches[1]&term=$matches[2]&paged=$matches[3]&term_section=true', 
+            'top' );
+
+        add_rewrite_rule( 
+            $this->custom_tenant_url.'/([^/]+)/toc?$', 
+            'index.php?'.$this->custom_tenant_url.'=$matches[1]&toc=true', 
+            'top' );
+        add_rewrite_rule( 
+            $this->custom_tenant_url.'/([^/]+)/toc/page/?([0-9]{1,})/?$', 
+            'index.php?'.$this->custom_tenant_url.'=$matches[1]&paged=$matches[2]&toc=true', 
+            'top' );
+
+        do_action( 'dokan_rewrite_rules_loaded', $this->custom_tenant_url );
     }
 
     /**
@@ -99,8 +165,11 @@ class Woofreendor_Rewrites {
      * @return array
      */
     function register_query_var( $vars ) {
-        
+        $vars[] = $this->custom_tenant_url;
 
+        foreach ( $this->query_vars as $var ) {
+            $vars[] = $var;
+        }
         return $vars;
     }
 
@@ -134,7 +203,6 @@ class Woofreendor_Rewrites {
 
             return woofreendor_locate_template( 'tenant.php' );
         }
-
         return $template;
     }
 

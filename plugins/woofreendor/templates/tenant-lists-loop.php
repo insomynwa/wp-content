@@ -7,8 +7,8 @@
                     $tenant_info = woofreendor_get_tenant_info( $tenant->ID );
                     $banner_id  = isset( $tenant_info['banner'] ) ? $tenant_info['banner'] : 0;
                     $tenant_name = isset( $tenant_info['tenant_name'] ) ? esc_html( $tenant_info['tenant_name'] ) : __( 'N/A', 'woofreendor' );
-                    $tenant_url  = dokan_get_store_url( $tenant->ID );
-                    $store_address  = dokan_get_seller_short_address( $tenant->ID );
+                    $tenant_url  = woofreendor_get_tenant_url( $tenant->ID );
+                    $store_address  = woofreendor_get_tenant_short_address( $tenant->ID );
                     $banner_url = ( $banner_id ) ? wp_get_attachment_image_src( $banner_id, $image_size ) : DOKAN_PLUGIN_ASSEST . '/images/default-store-banner.png';
                     ?>
 

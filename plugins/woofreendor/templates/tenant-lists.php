@@ -13,7 +13,7 @@
     ?>
 
         <form role="search" method="get" class="dokan-seller-search-form" action="">
-            <input type="search" id="search" class="search-field dokan-seller-search" placeholder="<?php esc_attr_e( 'Search Vendor &hellip;', 'dokan-lite' ); ?>" value="<?php echo esc_attr( $search_query ); ?>" name="woofreendor_tenant_search" title="<?php esc_attr_e( 'Search seller &hellip;', 'dokan-lite' ); ?>" />
+            <input type="search" id="search" class="search-field dokan-seller-search" placeholder="<?php esc_attr_e( 'Search Tenant &hellip;', 'dokan-lite' ); ?>" value="<?php echo esc_attr( $search_query ); ?>" name="woofreendor_tenant_search" title="<?php esc_attr_e( 'Search seller &hellip;', 'dokan-lite' ); ?>" />
             <input type="hidden" id="pagination_base" name="pagination_base" value="<?php echo $pagination_base ?>" />
             <input type="hidden" id="nonce" name="nonce" value="<?php echo wp_create_nonce( 'dokan-seller-listing-search' ); ?>" />
             <div class="dokan-overlay" style="display: none;"><span class="dokan-ajax-loader"></span></div>

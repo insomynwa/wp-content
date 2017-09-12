@@ -114,7 +114,7 @@ class Dokan_Rewrites {
         } else {
             add_rewrite_rule( $base . '/([^/]+)(/[0-9]+)?/edit/?$', 'index.php?product=$matches[1]&page=$matches[2]&edit=true', 'top' );
         }
-
+        
         add_rewrite_rule( $this->custom_store_url.'/([^/]+)/?$', 'index.php?'.$this->custom_store_url.'=$matches[1]', 'top' );
         add_rewrite_rule( $this->custom_store_url.'/([^/]+)/page/?([0-9]{1,})/?$', 'index.php?'.$this->custom_store_url.'=$matches[1]&paged=$matches[2]', 'top' );
 

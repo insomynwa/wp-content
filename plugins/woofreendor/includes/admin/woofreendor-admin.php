@@ -20,10 +20,10 @@ class Woofreendor_Admin{
 		remove_submenu_page( 'dokan', 'dokan-pro-features' );
 		remove_submenu_page( 'dokan', 'dokan-addons' );
 
-		add_submenu_page( 'dokan', __( 'Tenant Listing', 'woofreendor' ), __( 'All Tenants', 'woofreendor' ), 'manage_options', 'woofreendor-tenants', array( $this, 'tenant_listing' ) );
+		add_submenu_page( 'dokan', __( 'Tenant Listing', 'woofreendor' ), __( 'All Tenants', 'woofreendor' ), 'manage_options', 'woofreendor-tenants', array( $this, 'tenant_listing_dashboard' ) );
 	}
 
-	function tenant_listing() {
+	function tenant_listing_dashboard() {
         include 'html-woofreendor-tenant.php';
     }
 

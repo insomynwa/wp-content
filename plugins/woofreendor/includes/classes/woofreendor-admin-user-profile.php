@@ -5,12 +5,115 @@ if ( !defined( 'ABSPATH' ) ) {
 class Woofreendor_Admin_User_Profile{
 
 	public function __construct() {
+
+        add_action( 'user_register', array( $this, 'new_user_group' ) );
+        add_action( 'delete_user', array( $this, 'remove_deleted_user_component' ) );
+
         add_action( 'show_user_profile', array( $this, 'add_meta_fields' ), 20 );
         add_action( 'edit_user_profile', array( $this, 'add_meta_fields' ), 20 );
 
         add_action( 'personal_options_update', array( $this, 'save_meta_fields' ) );
         add_action( 'edit_user_profile_update', array( $this, 'save_meta_fields' ) );
 
+    }
+
+    function new_user_group($user_id){
+        $user_meta=get_userdata($user_id);
+        $user_roles = $user_meta->roles;
+
+        $obligate_group_name = "";
+        $binder_group_name = "";
+        $binder_group_id = 0;
+            
+        if( woofreendor_is_user_tenant($user_id) ) {
+            $obligate_group_name = "Wf_Tenant";
+            $binder_group_name = $user_meta->user_login;
+            $binder_group_id = $this->create_group($binder_group_name);
+            update_user_meta($user_id, 'binder_group', $binder_group_id);
+        }
+        else if( woofreendor_is_user_outlet($user_id) ) {
+            $obligate_group_name = "Wf_Outlet";
+            if(isset($_POST['group-id'])){
+                update_user_meta($user_id, 'binder_group', $_POST['group-id']);
+            }
+            $user_meta=get_userdata($user_id);
+            $binder_group_id = $user_meta->binder_group;
+        }
+        $obligate_group_id = $this->get_group_id($obligate_group_name);
+        $this->assign_group($user_id, array($obligate_group_id,$binder_group_id));
+    }
+
+    function create_group($group_name){
+        if ( !( $group = Groups_Group::read_by_name( $group_name ) ) ) {
+            $group_id = Groups_Group::create( array( 'name' => $group_name ) );
+            return $group_id;
+        }
+        return $group->group_id;
+    }
+
+    function get_group_id($group_name){
+        $registered_group = Groups_Group::read_by_name($group_name);
+        if ( !$registered_group ) {
+            $registered_group_id = Groups_Group::create( array( 'name' => $group_name ) );
+        } else {
+            $registered_group_id = $registered_group->group_id;
+        }
+        return $registered_group_id;
+    }
+
+    function assign_group($user_id, $assinged_groups_id){
+        foreach ($assinged_groups_id as $assinged_group_id) {
+            Groups_User_Group::create(
+                array(
+                    'user_id'   => $user_id,
+                    'group_id'  => $assinged_group_id
+                    )
+                );
+        }
+    }
+
+    function remove_deleted_user_component( $user_id ){
+
+        $user_meta = get_userdata($user_id);
+        $user_roles = $user_meta->roles;
+        $is_tenant = woofreendor_is_user_tenant($user_id);
+        $is_outlet = woofreendor_is_user_outlet($user_id);
+
+        if($is_tenant){
+            $member_role = "seller";
+            $tenant_group_name = $user_meta->user_login;
+            if ( $group = Groups_Group::read_by_name( $tenant_group_name ) ) {
+                $this->revoke_group_member($group->group_id, $member_role);
+                
+                Groups_Group::delete( $group->group_id );
+            }
+        }
+        else if($is_outlet){
+            // $args = array (
+            //     'numberposts' => -1,
+            //     'post_type' => array('product','product_variation'),
+            //     'author' => $user_id
+            // );
+            // get all posts by this user: posts, pages, attachments, etc..
+            // $user_posts = get_posts($args);
+
+            // if ( empty($user_posts) ) return;
+
+            // delete all the user posts
+            // foreach ($user_posts as $user_post) {
+            //     wp_update_post(array('ID'=> $user_post->ID,'post_status'=>'trash'));
+            // }
+        }
+    }
+
+    function revoke_group_member($group_id, $member_role){
+        $binder_group = new Groups_Group($group_id);
+        foreach($binder_group->users as $outlet){
+            $member_meta = get_userdata($outlet->ID);
+            if(in_array($member_role,$member_meta->roles)){
+                update_user_meta($outlet->ID, 'binder_group', -1 );
+            }
+        }
     }
 
     function add_meta_fields( $user ) {
