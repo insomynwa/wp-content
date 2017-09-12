@@ -117,7 +117,7 @@ class Woofreendor_Ajax{
 
         parse_str( $_POST['postdata'], $postdata );
 
-        $response = woofreendor_save_outlet( $postdata );
+        $response = woofreendor_save_outlet_ajax( $postdata );
 
         if ( is_wp_error( $response ) ) {
             wp_send_json_error( $response );
@@ -139,7 +139,7 @@ class Woofreendor_Ajax{
 
         parse_str( $_POST['postdata'], $postdata );
 
-        $response = woofreendor_update_outlet( $postdata );
+        $response = woofreendor_update_outlet_ajax( $postdata );
 
         if ( is_wp_error( $response ) ) {
             wp_send_json_error( $response );
@@ -161,7 +161,7 @@ class Woofreendor_Ajax{
 
         parse_str( $_POST['postdata'], $postdata );
 
-        $response = woofreendor_delete_outlet( $postdata );
+        $response = woofreendor_delete_outlet_ajax( $postdata );
         
         if ( is_wp_error( $response ) ) {
             wp_send_json_error( $response );

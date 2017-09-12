@@ -61,12 +61,12 @@ final class Woofreendor{
 
             wp_die( '<div class="error"><p>' . sprintf( __( '<b>Woofreendor</b> requires %sWoocommerce%s to be installed & activated!', 'woofreendor' ), '<a target="_blank" href="https://wordpress.org/plugins/woocommerce/">', '</a>' ) . '</p></div>' );
         }
-        if ( ! in_array('groups/groups.php', apply_filters('active_plugins', get_option('active_plugins'))) ) {
-            require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-            deactivate_plugins( plugin_basename( __FILE__ ) );
+        // if ( ! in_array('groups/groups.php', apply_filters('active_plugins', get_option('active_plugins'))) ) {
+        //     require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+        //     deactivate_plugins( plugin_basename( __FILE__ ) );
 
-            wp_die( '<div class="error"><p>' . sprintf( __( '<b>Woofreendor</b> requires %sGroups%s to be installed & activated!', 'woofreendor' ), '<a target="_blank" href="#">', '</a>' ) . '</p></div>' );
-        }
+        //     wp_die( '<div class="error"><p>' . sprintf( __( '<b>Woofreendor</b> requires %sGroups%s to be installed & activated!', 'woofreendor' ), '<a target="_blank" href="#">', '</a>' ) . '</p></div>' );
+        // }
         if ( ! class_exists( 'WeDevs_Dokan' ) ) {
             if ( ! current_user_can( 'manage_options' ) ) {
                 return;

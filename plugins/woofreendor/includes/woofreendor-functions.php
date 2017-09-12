@@ -1,6 +1,8 @@
 <?php
+require_once dirname(__FILE__) . '/woofreendor-product-functions.php';
 require_once dirname(__FILE__) . '/woofreendor-batch-functions.php';
 require_once dirname(__FILE__) . '/woofreendor-outlet-functions.php';
+require_once dirname(__FILE__) . '/woofreendor-tenant-functions.php';
 
 function woofreendor_get_tenant_info( $tenant_id ) {
     $info = get_user_meta( $tenant_id, 'woofreendor_profile_settings', true );
@@ -125,23 +127,6 @@ function woofreendor_get_template_part( $slug, $name = '', $args = array() ) {
         include( $template );
     }
 }
-function woofreendor_get_tenants( $args = array() ) {
-
-    $defaults = array(
-	        'role'       => 'woofreendor_tenant_role',
-	        'number'     => 9,
-	        'offset'     => 0,
-	        'orderby'    => 'registered',
-	        'order'      => 'ASC'
-	    );
-
-    $args = wp_parse_args( $args, $defaults );
-
-    $user_query = new WP_User_Query( $args );
-    $sellers    = $user_query->get_results();
-
-    return array( 'users' => $sellers, 'count' => $user_query->total_users );
-}
 function woofreendor_is_tenant_dashboard() {
     $page_id = dokan_get_option( 'tenant_dashboard', 'woofreendor_pages' );
 
@@ -215,9 +200,9 @@ function woofreendor_get_navigation_url( $name = '' ) {
     return apply_filters( 'woofreendor_get_navigation_url', $url, $name );
 }
 
-function woofreendor_get_binder_group($paramUserId){
-    return get_user_meta( $paramUserId, 'binder_group', true);
-}
+// function woofreendor_get_binder_group($paramUserId){
+//     return get_user_meta( $paramUserId, 'binder_group', true);
+// }
 
 function woofreendor_get_tenant_tabs( $tenant_id ) {
 

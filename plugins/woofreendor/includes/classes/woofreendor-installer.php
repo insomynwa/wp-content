@@ -10,8 +10,8 @@ class Woofreendor_Installer {
         $this->createUserRoles();
 
 
-        $groups_name = array( 'Wf_Tenant', 'Wf_Outlet' );
-        $this->createGroups($groups_name);
+        // $groups_name = array( 'Wf_Tenant', 'Wf_Outlet' );
+        // $this->createGroups($groups_name);
 
         $this->setupPages();
 
@@ -89,13 +89,13 @@ class Woofreendor_Installer {
 	 * @param  group name
 	 * @return null
 	 */
-	function createGroups($groups_name){
-		foreach($groups_name as $group_name){
-			if ( !( $group = Groups_Group::read_by_name( $group_name ) ) ) {
-				$group_id = Groups_Group::create( array( 'name' => $group_name ) );
-			}
-		}
-	}
+	// function createGroups($groups_name){
+	// 	foreach($groups_name as $group_name){
+	// 		if ( !( $group = Groups_Group::read_by_name( $group_name ) ) ) {
+	// 			$group_id = Groups_Group::create( array( 'name' => $group_name ) );
+	// 		}
+	// 	}
+	// }
 
 	function setupPages(){
 		$meta_key = '_wp_page_template';

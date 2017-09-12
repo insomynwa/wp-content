@@ -71,15 +71,15 @@
                             // //$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
                             // if($pagenum==1) $offset=0;
                             // else $offset = ($pagenum-1)*$no;
-                            $binder_group = woofreendor_get_binder_group( get_current_user_id());
+                            //$binder_group = woofreendor_get_binder_group( get_current_user_id());
                             $args = array(
                                 'role' => 'seller', 
                                 'number' => $limit, 
                                 'offset' => $offset,
                                 'order'          => 'ASC',
                                 'orderby'        => 'display_name',
-                                'meta_key'       => 'binder_group',
-                                'meta_value'     => intval($binder_group)
+                                'meta_key'       => 'tenant_id',
+                                'meta_value'     => get_current_user_id()
                                 );
                             // var_dump(woofreendor_get_binder_group( get_current_user_id()));
                             $paged       = isset( $_GET['pagenum'] ) ? absint( $_GET['pagenum'] ) : 1;

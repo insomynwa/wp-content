@@ -1,16 +1,16 @@
 <?php
 
-function woofreendor_save_outlet($paramPostData){
+function woofreendor_save_outlet_ajax($paramPostData){
 
 	$post_tenant_id = sanitize_text_field( $paramPostData['tenant_id'] );
-    $post_binder_group = sanitize_text_field( $paramPostData['binder_group'] );
+    // $post_binder_group = sanitize_text_field( $paramPostData['binder_group'] );
     $post_email = sanitize_text_field( $paramPostData['outlet_email'] );
     $post_password = sanitize_text_field( $paramPostData['outlet_password'] );
     $post_username = sanitize_text_field( $paramPostData['outlet_username'] );
 
     $isValidPost =
         intval($post_tenant_id) > 0                &&
-        intval($post_binder_group) > 0            &&
+        // intval($post_binder_group) > 0            &&
         $post_email != ""              &&
         $post_password != ""                 &&
         $post_username != ""
@@ -55,8 +55,10 @@ function woofreendor_save_outlet($paramPostData){
 
                 $new_outlet_id = wp_insert_user($outlet_data);
                 if($new_outlet_id){
-                    update_user_meta($new_outlet_id,'binder_group', $post_binder_group);
-                    update_user_meta($new_outlet_id,'tenant_id', $post_tenant_id);
+                    // update_user_meta($new_outlet_id,'binder_group', $post_binder_group);
+                    // update_user_meta($new_outlet_id,'tenant_id', $post_tenant_id);
+                    // update_user_meta($new_outlet_id,'has_tenant', 1);
+                    woofreendor_enable_outlet( $new_outlet_id, $post_tenant_id);
                     return intval($new_outlet_id);
                 }
             }
@@ -64,7 +66,8 @@ function woofreendor_save_outlet($paramPostData){
     }
     return false;
 }
-function woofreendor_update_outlet($paramPostData){
+
+function woofreendor_update_outlet_ajax($paramPostData){
 
     $email = sanitize_text_field($paramPostData['outlet_email']);
     $password = sanitize_text_field($paramPostData['outlet_password']);
@@ -98,7 +101,7 @@ function woofreendor_update_outlet($paramPostData){
     return false;
 }
 
-function woofreendor_delete_outlet($paramPostData){
+function woofreendor_delete_outlet_ajax($paramPostData){
 
     $post_outlet_id = sanitize_text_field( $paramPostData['outlet_id'] );
     $post_tenant_id = sanitize_text_field( $paramPostData['tenant_id'] );
@@ -109,6 +112,19 @@ function woofreendor_delete_outlet($paramPostData){
 
     require_once(ABSPATH.'wp-admin/includes/user.php');
     if(wp_delete_user($post_outlet_id)){
+        $products = woofreendor_get_outlet_publish_products($post_outlet_id);
+        if($products['count']>0){
+            foreach ($products['products'] as $product) {
+                woofreendor_permanently_delete_product($product->ID);
+            }
+        }
+        
+        $batches = woofreendor_get_outlet_publish_batches($post_outlet_id);
+        if($batches['count']>0){
+            foreach ($batches['batches'] as $batch) {
+                woofreendor_permanently_delete_product($batch->ID);
+            }
+        }
         return true;
     }
     
@@ -131,4 +147,14 @@ function woofreendor_is_owner_outlet($paramOutletId, $paramTenantId){
     $owner = get_user_meta( $paramOutletId, 'tenant_id', true );
 
     return ($owner == $paramTenantId);
+}
+
+function woofreendor_disable_outlet($paramOutletId){
+    update_user_meta( $paramOutletId,'tenant_id', 0 );
+    update_user_meta( $paramOutletId, 'has_tenant', false);
+}
+
+function woofreendor_enable_outlet($paramOutletId, $paramTenantId){
+    update_user_meta( $paramOutletId,'tenant_id', $paramTenantId);
+    update_user_meta( $paramOutletId,'has_tenant', true);
 }
