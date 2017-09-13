@@ -1,11 +1,11 @@
 <?php
-if ( !defined( 'ABSPATH' ) ) {
-	exit;
-}
-class Woofreendor_Customizer{
+// if ( !defined( 'ABSPATH' ) ) {
+// 	exit;
+// }
+// class Woofreendor_Customizer{
 
-	public function __construct(){
-	}
+// 	public function __construct(){
+// 	}
 
 	// public function woofreendor_register_scripts(){
  //        wp_register_style( 'woofreendor-style', plugins_url( 'assets/css/style.css', __DIR__ ), false, null );
@@ -53,35 +53,35 @@ class Woofreendor_Customizer{
  //        }
 	// }
 
-	private function _dokan_dashboard_scripts() {
-		wp_enqueue_script( 'woofreendor-script' );
-	}
+// 	private function _dokan_dashboard_scripts() {
+// 		wp_enqueue_script( 'woofreendor-script' );
+// 	}
 
-	public function woofreendor_conditional_localized_args( $paramDefaultArgs ){
-		if ( dokan_is_seller_dashboard()
-                || ( get_query_var( 'edit' ) && is_singular( 'product' ) )
-                || dokan_is_store_page()
-                || is_account_page()
-                || apply_filters( 'dokan_force_load_extra_args', false )
-            ) {
+// 	public function woofreendor_conditional_localized_args( $paramDefaultArgs ){
+// 		if ( dokan_is_seller_dashboard()
+//                 || ( get_query_var( 'edit' ) && is_singular( 'product' ) )
+//                 || dokan_is_store_page()
+//                 || is_account_page()
+//                 || apply_filters( 'dokan_force_load_extra_args', false )
+//             ) {
 
-            $custom_args             = array (
-                'product_title_required'              => __( 'Nama produk harus diisi', 'dokan-lite' ),
-                'product_category_required'           => __( 'Kategori produk harus dipilih', 'dokan-lite' ),
-                'reload_batch_error'           => __( 'Terjadi kesalahan', 'dokan-lite' ),
-                'reload_batch_nonce'              => wp_create_nonce( 'reload-batch' ),
-                'update_batch_nonce'              => wp_create_nonce( 'update-batch' ),
-                'delete_batch_nonce'              => wp_create_nonce( 'delete-batch' ),
-                'add_batch_nonce'                 => wp_create_nonce( 'add-batch' )
-            );
+//             $custom_args             = array (
+//                 'product_title_required'              => __( 'Nama produk harus diisi', 'dokan-lite' ),
+//                 'product_category_required'           => __( 'Kategori produk harus dipilih', 'dokan-lite' ),
+//                 'reload_batch_error'           => __( 'Terjadi kesalahan', 'dokan-lite' ),
+//                 'reload_batch_nonce'              => wp_create_nonce( 'reload-batch' ),
+//                 'update_batch_nonce'              => wp_create_nonce( 'update-batch' ),
+//                 'delete_batch_nonce'              => wp_create_nonce( 'delete-batch' ),
+//                 'add_batch_nonce'                 => wp_create_nonce( 'add-batch' )
+//             );
 
-            $paramDefaultArgs = array_merge( $paramDefaultArgs, $custom_args );
-        }
+//             $paramDefaultArgs = array_merge( $paramDefaultArgs, $custom_args );
+//         }
 
-        return $paramDefaultArgs;
-	}
+//         return $paramDefaultArgs;
+// 	}
 
-	public function woofreendor_render_batches_row($paramProductId ){
-		echo Woofreendor_Template_Utility::GenerateHTML( plugin_dir_path( __DIR__ ) . 'templates/products/batches-row', $paramProductId);
-	}
-}
+// 	public function woofreendor_render_batches_row($paramProductId ){
+// 		echo Woofreendor_Template_Utility::GenerateHTML( plugin_dir_path( __DIR__ ) . 'templates/products/batches-row', $paramProductId);
+// 	}
+// }

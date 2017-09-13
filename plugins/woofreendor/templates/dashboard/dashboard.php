@@ -19,7 +19,7 @@
          *
          *  @since 2.4
          */
-        do_action( 'woofreendor_dashboard_content_before' );
+        do_action( 'dokan_dashboard_content_before' );
     ?>
 
     <div class="dokan-dashboard-content">

@@ -1,11 +1,11 @@
 <?php
-if ( !defined( 'ABSPATH' ) ) {
-	exit;
-}
-class DBSnet_Woocp_Woocommerce {
+// if ( !defined( 'ABSPATH' ) ) {
+// 	exit;
+// }
+// class DBSnet_Woocp_Woocommerce {
 
-	public function __construct(){
+// 	public function __construct(){
 		
-	}
+// 	}
 	
-}
+// }

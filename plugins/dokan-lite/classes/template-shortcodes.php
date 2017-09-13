@@ -76,7 +76,7 @@ class Dokan_Template_Shortcodes {
             dokan_get_template_part('settings/store');
             return ob_get_clean();
         }
-
+        
         if ( isset( $wp->query_vars['page'] ) ) {
             dokan_get_template_part( 'dashboard/dashboard' );
             return ob_get_clean();

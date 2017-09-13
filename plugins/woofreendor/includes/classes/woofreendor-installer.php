@@ -119,12 +119,12 @@ class Woofreendor_Installer {
                 'page_id'    => 'tenant_listing',
                 'content'    => '[woofreendor-tenants]'
             ),
-            array(
-                'post_title' => __( 'My Outlets', 'woofreendor' ),
-                'slug'       => 'my-outlets',
-                'page_id'    => 'my_outlets',
-                'content'    => '[woofreendor-my-outlets]'
-            ),
+            // array(
+            //     'post_title' => __( 'My Outlets', 'woofreendor' ),
+            //     'slug'       => 'my-outlets',
+            //     'page_id'    => 'my_outlets',
+            //     'content'    => '[woofreendor-my-outlets]'
+            // ),
         );
 
         $woofreendor_page_settings = array();

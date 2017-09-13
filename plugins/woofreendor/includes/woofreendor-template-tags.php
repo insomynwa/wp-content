@@ -2,7 +2,7 @@
 
 function woofreendor_dashboard_nav( $active_menu = '' ) {
 
-    $nav_menu          = woofreendor_get_dashboard_nav();
+    $nav_menu          = dokan_get_dashboard_nav();
     $active_menu_parts = explode( '/', $active_menu );
 
     if ( isset( $active_menu_parts[1] ) && $active_menu_parts[0] == 'settings' && array_key_exists( $active_menu_parts[1], $nav_menu['settings']['sub'] ) ) {
@@ -19,9 +19,17 @@ function woofreendor_dashboard_nav( $active_menu = '' ) {
         $menu .= sprintf( '<li class="%s"><a href="%s">%s %s</a></li>', $class, $item['url'], $item['icon'], $item['title'] );
     }
 
+    if(woofreendor_is_user_tenant(get_current_user_id())) {
+        $view_store_url = woofreendor_get_tenant_url( get_current_user_id());
+        $edit_acc_url = woofreendor_get_navigation_url( 'edit-account' );
+    }else{
+        $view_store_url = dokan_get_store_url( get_current_user_id());
+        $edit_acc_url = dokan_get_navigation_url( 'edit-account' );
+    }
+    
     $menu .= '<li class="dokan-common-links dokan-clearfix">
-            <a title="' . __( 'Lihat Outlet', 'woofreendor' ) . '" class="tips" data-placement="top" href="' . woofreendor_get_tenant_url( get_current_user_id()) .'" target="_blank"><i class="fa fa-external-link"></i></a>
-            <a title="' . __( 'Edit Account', 'woofreendor' ) . '" class="tips" data-placement="top" href="' . woofreendor_get_navigation_url( 'edit-account' ) . '"><i class="fa fa-user"></i></a>
+            <a title="' . __( 'Lihat Outlet', 'woofreendor' ) . '" class="tips" data-placement="top" href="' . $view_store_url .'" target="_blank"><i class="fa fa-external-link"></i></a>
+            <a title="' . __( 'Edit Account', 'woofreendor' ) . '" class="tips" data-placement="top" href="' . $edit_acc_url . '"><i class="fa fa-user"></i></a>
             <a title="' . __( 'Log out', 'woofreendor' ) . '" class="tips" data-placement="top" href="' . wp_logout_url( home_url() ) . '"><i class="fa fa-power-off"></i></a>
         </li>';
 

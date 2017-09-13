@@ -24,7 +24,9 @@
                     </td>
                     <th><?php _e( 'Username', 'woofreendor' ); ?></th>
                     <th><?php _e( 'Name', 'woofreendor' ); ?></th>
+                    <th><?php _e( 'Shop Name', 'woofreendor' ); ?></th>
                     <th><?php _e( 'E-mail', 'woofreendor' ); ?></th>
+                    <th><?php _e( 'Outlets', 'woofreendor' ); ?></th>
                 </tr>
             </thead>
             <tbody>
@@ -39,7 +41,10 @@
                 if ( $tenants ) {
 
                     foreach ($tenants as $user) {
+                        $info = woofreendor_get_tenant_info( $user->ID );
+                        $url = woofreendor_get_tenant_url($user->ID);
                         $edit_link = esc_url( add_query_arg( 'wp_http_referer', urlencode( wp_unslash( $_SERVER['REQUEST_URI'] ) ), get_edit_user_link( $user->ID ) ) );
+                        $outlet_counts = woofreendor_count_outlet_by_tenant( $user->ID );
                         ?>
                         <tr class="<?php echo ($count % 2 == 0) ? 'alternate' : 'odd'; ?> ">
                             <th class="check-column">
@@ -49,7 +54,9 @@
                                 <strong><a href="<?php echo $edit_link ?>"><?php echo $user->user_login; ?></a></strong>
                             </td>
                             <td><?php echo $user->display_name; ?></td>
+                            <td><?php echo empty( $info['tenant_name'] ) ? '--' : '<a href= "' . $url . '" target="_BLANK" >' . $info['tenant_name'] . '</a>'; ?></td>
                             <td><?php echo $user->user_email; ?></td>
+                            <td><?php echo $outlet_counts['count']; ?></td>
                         </tr>
                         <?php
                         $count++;

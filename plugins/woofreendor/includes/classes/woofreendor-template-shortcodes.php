@@ -14,7 +14,7 @@ class Woofreendor_Template_Shortcodes {
      *  @since 2.4
      */
     function __construct() {
-        add_shortcode( 'woofreendor-tenant-dashboard', array( $this, 'load_template_files' ) );      
+        add_shortcode( 'woofreendor-tenant-dashboard', array( Dokan_Template_Shortcodes::init(), 'load_template_files' ) );      
     }
 
     /**
@@ -85,50 +85,31 @@ class Woofreendor_Template_Shortcodes {
     //     return apply_filters( 'woofreendor_tenant_listing', $content, $attr );
     // }
 
-    public function load_template_files() {
-        global $wp;
+    // public function load_template_files() {
+    //     global $wp;
         
-        if ( ! function_exists( 'WC' ) ) {
-            return sprintf( __( 'Please install <a href="%s"><strong>WooCommerce</strong></a> plugin first', 'dokan-lite' ), 'http://wordpress.org/plugins/woocommerce/' );
-        }
+    //     if ( ! function_exists( 'WC' ) ) {
+    //         return sprintf( __( 'Please install <a href="%s"><strong>WooCommerce</strong></a> plugin first', 'dokan-lite' ), 'http://wordpress.org/plugins/woocommerce/' );
+    //     }
         
-        ob_start();
+    //     ob_start();
 
-        if ( isset( $wp->query_vars['outlets'] ) ) {
-            woofreendor_get_template_part( 'outlets/outlets' );
-            return ob_get_clean();
-        }
+    //     if ( isset( $wp->query_vars['outlets'] ) ) {
+    //         woofreendor_get_template_part( 'outlets/outlets' );
+    //         return ob_get_clean();
+    //     }
 
-        if ( isset( $wp->query_vars['new-outlet'] ) ) {
-            do_action( 'woofreendor_render_new_outlet_template', $wp->query_vars );
-            return ob_get_clean();
-        }
+    //     if ( isset( $wp->query_vars['new-outlet'] ) ) {
+    //         do_action( 'woofreendor_render_new_outlet_template', $wp->query_vars );
+    //         return ob_get_clean();
+    //     }
 
-        // if ( isset( $wp->query_vars['orders'] ) ) {
-        //     dokan_get_template_part( 'orders/orders' );
-        //     return ob_get_clean();
-        // }
-
-        // if ( isset( $wp->query_vars['withdraw'] ) ) {
-        //     dokan_get_template_part( 'withdraw/withdraw' );
-        //     return ob_get_clean();
-        // }
-
-        // if ( isset( $wp->query_vars['settings'] ) ) {
-        //     dokan_get_template_part('settings/store');
-        //     return ob_get_clean();
-        // }
-
-        if ( isset( $wp->query_vars['page'] ) ) {
-            woofreendor_get_template_part( 'dashboard/dashboard' );
-            return ob_get_clean();
-        }
-        // if ( isset( $wp->query_vars['edit-account'] ) ) {
-        //     dokan_get_template_part( 'dashboard/edit-account' );
-        //     return ob_get_clean();
-        // }
+    //     // if ( isset( $wp->query_vars['page'] ) ) {
+    //     //     woofreendor_get_template_part( 'dashboard/dashboard' );
+    //     //     return ob_get_clean();
+    //     // }
         
-        do_action( 'dokan_load_custom_template', $wp->query_vars );
+    //     // do_action( 'dokan_load_custom_template', $wp->query_vars );
   
-    }
+    // }
 }

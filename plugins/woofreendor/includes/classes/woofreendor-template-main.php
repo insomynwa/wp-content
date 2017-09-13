@@ -13,7 +13,9 @@ class Woofreendor_Template_Main {
      * @since 2.4
      */
     function __construct() {
-        add_action( 'woofreendor_dashboard_content_before', array( $this, 'get_dashboard_side_navigation' ), 10 );
+        remove_action( 'dokan_dashboard_content_before', array( Dokan_Template_Main::init(), 'get_dashboard_side_navigation' ), 10 );
+        add_action( 'dokan_dashboard_content_before', array( $this, 'get_dashboard_side_navigation' ), 10 );
+        // add_action( 'woofreendor_dashboard_content_before', array( $this, 'get_dashboard_side_navigation' ), 10 );
     }
 
     /**

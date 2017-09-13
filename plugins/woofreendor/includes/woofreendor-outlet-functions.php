@@ -158,3 +158,30 @@ function woofreendor_enable_outlet($paramOutletId, $paramTenantId){
     update_user_meta( $paramOutletId,'tenant_id', $paramTenantId);
     update_user_meta( $paramOutletId,'has_tenant', true);
 }
+
+function woofreendor_count_outlet_by_tenant( $paramTenantId ){
+    $args = array(
+            'role'       => 'seller',
+            'orderby'    => 'registered',
+            'order'      => 'ASC',
+            'meta_query' => array(
+                'relation'  => 'AND',
+                    array(
+                        'key'   => 'has_tenant',
+                        'value' => true,
+                        'compare'=> '='
+                        ),
+                    array(
+                        'key'   => 'tenant_id',
+                        'value' => $paramTenantId,
+                        'compare'=> '='
+                        )
+                    )
+                
+                );
+
+    $user_query = new WP_User_Query( $args );
+    $sellers    = $user_query->get_results();
+
+    return array( 'users' => $sellers, 'count' => $user_query->total_users );
+}

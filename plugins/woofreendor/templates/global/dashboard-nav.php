@@ -5,11 +5,12 @@ $active_class = ' class="active"'
 
 <div class="dokan-dash-sidebar">
     <?php
-    if ( woofreendor_is_user_tenant( get_current_user_id() ) ) {
+    // var_dump("DASBOARD_NAV LOCAL".woofreendor_is_tenant_dashboard());
+    //if ( woofreendor_is_tenant_dashboard() ) {
         echo woofreendor_dashboard_nav( $active_menu ); 
-    }else{
-    	echo dokan_dashboard_nav( $active_menu ); 
-    }
+    // }else{
+    // 	echo dokan_dashboard_nav( $active_menu ); 
+    // }
     
     ?>
 </div>
