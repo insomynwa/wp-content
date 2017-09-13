@@ -236,12 +236,15 @@ class Dokan_Rewrites {
      */
     function store_query_filter( $query ) {
         global $wp_query;
-
+// var_dump($wp_query->query_vars);
         $author = get_query_var( $this->custom_store_url );
+// var_dump($author);
 
         if ( !is_admin() && $query->is_main_query() && !empty( $author ) ) {
             $seller_info  = get_user_by( 'slug', $author );
+ // var_dump($seller_info);
             $store_info   = dokan_get_store_info( $seller_info->data->ID );
+ // var_dump($store_info);
             $post_per_page = isset( $store_info['store_ppp'] ) && !empty( $store_info['store_ppp'] ) ? $store_info['store_ppp'] : 12;
             set_query_var( 'posts_per_page', $post_per_page );
             $query->set( 'post_type', 'product' );

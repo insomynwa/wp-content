@@ -24,7 +24,7 @@ class Woofreendor_Rewrites {
         // add_filter( 'template_include', array( $this,  'tenant_toc_template' ) );
 
         add_filter( 'query_vars', array( $this, 'register_query_var' ) );
-        add_filter( 'pre_get_posts', array( $this, 'tenant_query_filter' ) );
+       add_filter( 'pre_get_posts', array( $this, 'tenant_query_filter' ) );
         add_filter( 'woocommerce_get_breadcrumb', array( $this, 'tenant_page_breadcrumb'), 10 ,1  );
     }
 
@@ -205,28 +205,6 @@ class Woofreendor_Rewrites {
         }
         return $template;
     }
-
-    /**
-     * Returns the terms_and_conditions template
-     *
-     * @since 2.3
-     *
-     * @param string $template
-     *
-     * @return string
-     */
-    // function tenant_toc_template( $template ) {
-
-    //     if ( ! $this->is_woo_installed() ) {
-    //         return $template;
-    //     }
-    //     if ( get_query_var( 'toc' ) ) {
-    //         return dokan_locate_template( 'tenant-toc.php' );
-    //     }
-
-    //     return $template;
-
-    // }
 
     /**
      * Returns the edit product template

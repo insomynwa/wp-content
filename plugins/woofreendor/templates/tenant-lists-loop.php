@@ -91,7 +91,7 @@
             ?>
 
         <?php else:  ?>
-            <p class="dokan-error"><?php _e( 'No vendor found!', 'woofreendor' ); ?></p>
+            <p class="dokan-error"><?php _e( 'No outlet found!', 'woofreendor' ); ?></p>
         <?php endif; ?>
     </div>
 </div>
