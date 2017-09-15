@@ -205,7 +205,7 @@ class Woofreendor_Rewrites {
         if ( !is_admin() && $query->is_main_query() && !empty( $author ) ) {
             $seller_info  = get_user_by( 'slug', $author );
             $tenant_info   = woofreendor_get_tenant_info( $seller_info->data->ID );
-            $post_per_page = isset( $tenant_info['tenant_ppp'] ) && !empty( $tenant_info['tenant_ppp'] ) ? $tenant_info['tenant_ppp'] : 12;
+            $post_per_page = isset( $tenant_info['tenant_opp'] ) && !empty( $tenant_info['tenant_opp'] ) ? $tenant_info['tenant_opp'] : 12;
             set_query_var( 'posts_per_page', $post_per_page );
             $query->set( 'post_type', 'product' );
             $query->set( 'author_name', $author );

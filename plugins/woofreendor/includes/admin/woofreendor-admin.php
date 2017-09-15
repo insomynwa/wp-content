@@ -57,6 +57,23 @@ class Woofreendor_Admin{
 
         do_action( 'dokan_enqueue_admin_dashboard_script' );
     }
+	
+	function debug_admin_menus() {
+		if ( !is_admin())
+			return;
+
+		$tenant = get_role('shop_manager');
+		// var_dump($tenant->capabilities);
+		/*global $submenu, $menu, $pagenow;
+
+		//	var_dump(get_taxonomy('product_cat'));die;
+		if ( current_user_can('manage_options') ) { // ONLY DO THIS FOR ADMIN
+			if( $pagenow == 'index.php' ) {  // PRINTS ON DASHBOARD
+				echo '<pre>'; print_r( $menu ); echo '</pre>'; // TOP LEVEL MENUS
+				echo '<pre>'; print_r( $submenu ); echo '</pre>'; // SUBMENUS
+			}
+		}*/
+	}
 
 	/**
 	 * Invoked by ajax action whenever user click the "Add Row" button
@@ -266,20 +283,5 @@ class Woofreendor_Admin{
 	// 	return $new_columns;
 	// }
 
-
-	function debug_admin_menus() {
-		if ( !is_admin())
-	        return;
-
-	    /*global $submenu, $menu, $pagenow;
-
-		//	var_dump(get_taxonomy('product_cat'));die;
-	    if ( current_user_can('manage_options') ) { // ONLY DO THIS FOR ADMIN
-	        if( $pagenow == 'index.php' ) {  // PRINTS ON DASHBOARD
-	            echo '<pre>'; print_r( $menu ); echo '</pre>'; // TOP LEVEL MENUS
-	            echo '<pre>'; print_r( $submenu ); echo '</pre>'; // SUBMENUS
-	        }
-	    }*/
-	}
 }
 new Woofreendor_Admin();

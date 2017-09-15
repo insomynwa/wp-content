@@ -22,13 +22,15 @@ function woofreendor_dashboard_nav( $active_menu = '' ) {
     if(woofreendor_is_user_tenant(get_current_user_id())) {
         $view_store_url = woofreendor_get_tenant_url( get_current_user_id());
         $edit_acc_url = woofreendor_get_navigation_url( 'edit-account' );
+        $link_title = "Lihat Tenant";
     }else{
         $view_store_url = dokan_get_store_url( get_current_user_id());
         $edit_acc_url = dokan_get_navigation_url( 'edit-account' );
+        $link_title = "Lihat Outlet";
     }
     
     $menu .= '<li class="dokan-common-links dokan-clearfix">
-            <a title="' . __( 'Lihat Outlet', 'woofreendor' ) . '" class="tips" data-placement="top" href="' . $view_store_url .'" target="_blank"><i class="fa fa-external-link"></i></a>
+            <a title="' . __( $link_title, 'woofreendor' ) . '" class="tips" data-placement="top" href="' . $view_store_url .'" target="_blank"><i class="fa fa-external-link"></i></a>
             <a title="' . __( 'Edit Account', 'woofreendor' ) . '" class="tips" data-placement="top" href="' . $edit_acc_url . '"><i class="fa fa-user"></i></a>
             <a title="' . __( 'Log out', 'woofreendor' ) . '" class="tips" data-placement="top" href="' . wp_logout_url( home_url() ) . '"><i class="fa fa-power-off"></i></a>
         </li>';

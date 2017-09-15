@@ -102,7 +102,7 @@ class Woofreendor_Template_Dashboard {
             // var_dump(dokan_is_seller_dashboard());
 
             // $paramUrls = $this->add_new_dashboard_url_nav( $paramUrls );
-
+            // var_dump($paramUrls['settings']['url']);
             $mod_link_url = array(
                 'dashboard'  =>  woofreendor_get_navigation_url(),
                 'settings'   =>  woofreendor_get_navigation_url( 'settings/tenant' ),
@@ -110,6 +110,7 @@ class Woofreendor_Template_Dashboard {
 
             $paramUrls = $this->mod_link_url( $paramUrls, $mod_link_url);
 
+            // var_dump($paramUrls['settings']['url']);
             $rem_url = array( 'products', 'orders', 'withdraw');
             $paramUrls = $this->remove_tenant_nav( $paramUrls, $rem_url);
         }

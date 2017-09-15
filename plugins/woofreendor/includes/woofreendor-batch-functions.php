@@ -74,5 +74,6 @@ function woofreendor_delete_batch($paramPostData){
     return false;
 }
 function woofreendor_render_batch_row($paramProductId){
-	return Woofreendor_Template_Utility::GenerateHTML( plugin_dir_path( __DIR__ ) . 'templates/products/batches-row', $paramProductId);
+	return woofreendor_generate_html( plugin_dir_path( __DIR__ ) . 'templates/products/batches-row', $paramProductId);
+	//return Woofreendor_Template_Utility::GenerateHTML( plugin_dir_path( __DIR__ ) . 'templates/products/batches-row', $paramProductId);
 }

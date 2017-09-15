@@ -53,35 +53,41 @@ class Woofreendor_Installer {
 		if ( ! isset( $wp_roles ) ) {
 			$wp_roles = new WP_Roles();
 		}
-
-		$user_global_cap = array(
-			'read'                   => true,
-            'publish_posts'          => true,
-            'edit_posts'             => true,
-            'delete_published_posts' => true,
-            'edit_published_posts'   => true,
-            'delete_posts'           => true,
-            'manage_categories'      => true,
-            'moderate_comments'      => true,
-            'unfiltered_html'        => true,
-            'upload_files'           => true,
-            'edit_shop_orders'       => true,
-            'dokandar'               => true
-			);
-
-		$tenant_cap_wp = $user_global_cap;
-
+        $this->clear_dev_role();
         if(! $this->role_exists('woofreendor_tenant_role')){
-            add_role('woofreendor_tenant_role', __( 'Tenant' ), $tenant_roles_wp);
+            $tenant_cap_wp = array(
+                'read'                  => true,
+                'upload_files'          => true,
+                'woofreendor_tenant'    => true
+                );
+            
+            add_role('woofreendor_tenant_role', __( 'Tenant' , 'woofreendor' ), $tenant_cap_wp);
+        }else{
+            // $wp_roles->add_cap( 'woofreendor_tenant_role', 'publish_posts');
+            // $wp_roles->add_cap( 'woofreendor_tenant_role', 'delete_published_posts');
+            // $wp_roles->add_cap( 'woofreendor_tenant_role', 'edit_published_posts');
+            // $wp_roles->add_cap( 'woofreendor_tenant_role', 'delete_posts');
+            // $wp_roles->add_cap( 'woofreendor_tenant_role', 'manage_categories');
+            // $wp_roles->add_cap( 'woofreendor_tenant_role', 'moderate_comments');
+            // $wp_roles->add_cap( 'woofreendor_tenant_role', 'unfiltered_html');
+            // $wp_roles->add_cap( 'woofreendor_tenant_role', 'edit_shop_orders');
+            // $wp_roles->add_cap( 'woofreendor_tenant_role', 'dokandar');
+
+            $wp_roles->add_cap( 'woofreendor_tenant_role', 'read');
+            $wp_roles->add_cap( 'woofreendor_tenant_role', 'edit_post');
+            $wp_roles->add_cap( 'woofreendor_tenant_role', 'upload_files');
+            $wp_roles->add_cap( 'woofreendor_tenant_role', 'woofreendor_tenant');
         }
 
 		/*
 			ADD CAPABILITIES TO THE NEW ROLES
 		*/
-		$wp_roles->add_cap( 'woofreendor_tenant_role', 'woofreendor_tenant');
+		// $wp_roles->add_cap( 'woofreendor_tenant_role', 'woofreendor_tenant');
 		$wp_roles->add_cap( 'seller', 'woofreendor_outlet');
 		$wp_roles->add_cap( 'shop_manager', 'dokandar' );
         $wp_roles->add_cap( 'administrator', 'dokandar' );
+		$wp_roles->add_cap( 'shop_manager', 'woofreendor_tenant' );
+        $wp_roles->add_cap( 'administrator', 'woofreendor_tenant' );
 	}
 
 	/**
@@ -181,12 +187,35 @@ class Woofreendor_Installer {
 
         return false;
     }
-
+    
+    /**
+     * Check existing role
+     *
+     * @param string $role
+     * @return void
+     */
     function role_exists($role){
         if(!empty($role)){
             return $GLOBALS['wp_roles']->is_role($role);
         }
         return false;
+    }
+
+    /**
+     * Clear Role
+     *
+     * @return void
+     */
+    function clear_dev_role(){
+        if( $this->role_exists('woofrendor_tenant_role')){
+            remove_role( 'woofrendor_tenant_role' );
+        }
+        if( $this->role_exists('tenant_role')){
+            remove_role( 'tenant_role' );
+        }
+        if( $this->role_exists('outlet_role')){
+            remove_role( 'outlet_role' );
+        }
     }
 
     // public static function setup_page_redirect( $plugin ) {

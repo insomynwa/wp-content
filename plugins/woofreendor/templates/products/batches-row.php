@@ -1,6 +1,6 @@
 <?php
 
-$batches = Woofreendor_Product::GetBatches($paramData);
+$batches = woofreendor_get_batches($paramData);
 
 foreach($batches as $batch){
     $meta_batch_startdate = get_post_meta( $batch->ID, 'attribute_produksi', true ); 

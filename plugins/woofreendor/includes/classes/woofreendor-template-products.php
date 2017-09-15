@@ -96,7 +96,8 @@ class Woofreendor_Template_Products {
     }
 
     function woofreendor_render_batches_row($paramProductId ){
-        echo Woofreendor_Template_Utility::GenerateHTML( plugin_dir_path( dirname(__DIR__) ) . 'templates/products/batches-row', $paramProductId);
+        //echo Woofreendor_Template_Utility::GenerateHTML( plugin_dir_path( dirname(__DIR__) ) . 'templates/products/batches-row', $paramProductId);
+        echo woofreendor_generate_html(plugin_dir_path( dirname(__DIR__) ) . 'templates/products/batches-row', $paramProductId);
     }
 
     function product_content_inside_area_after(){

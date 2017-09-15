@@ -405,3 +405,405 @@
     });
 
 })(jQuery);
+
+(function($){
+    // $.validator.setDefaults({ ignore: ":hidden" });
+    
+    var validatorError = function(error, element) {
+        var form_group = $(element).closest('.form-group');
+        form_group.addClass('has-error').append(error);
+    };
+
+    var validatorSuccess = function(label, element) {
+        $(element).closest('.form-group').removeClass('has-error');
+    };
+
+    // var api = wp.customize;
+
+    var Woofreendor_Settings = {
+        init: function() {
+            var self = this;
+
+            //image upload
+            $('a.woofreendor-upload-banner').on('click', this.imageUpload);
+            /* $('a.dokan-remove-banner-image').on('click', this.removeBanner); */
+
+            $('a.woofreendor-upload-photo').on('click', this.gragatarImageUpload);
+            /* $('a.dokan-gravatar-drag').on('click', this.simpleImageUpload);
+            $('a.dokan-remove-gravatar-image').on('click', this.removeGravatar); */
+
+            this.validateForm(self);
+
+            return false;
+        },
+
+        /* calculateImageSelectOptions: function(attachment, controller) {
+            var xInit = parseInt(dokan.store_banner_dimension.width, 10),
+                yInit = parseInt(dokan.store_banner_dimension.height, 10),
+                flexWidth = !! parseInt(dokan.store_banner_dimension['flex-width'], 10),
+                flexHeight = !! parseInt(dokan.store_banner_dimension['flex-height'], 10),
+                ratio, xImg, yImg, realHeight, realWidth,
+                imgSelectOptions;
+
+            realWidth = attachment.get('width');
+            realHeight = attachment.get('height');
+
+            this.headerImage = new api.HeaderTool.ImageModel();
+            this.headerImage.set({
+                themeWidth: xInit,
+                themeHeight: yInit,
+                themeFlexWidth: flexWidth,
+                themeFlexHeight: flexHeight,
+                imageWidth: realWidth,
+                imageHeight: realHeight
+            });
+
+            controller.set( 'canSkipCrop', ! this.headerImage.shouldBeCropped() );
+
+            ratio = xInit / yInit;
+            xImg = realWidth;
+            yImg = realHeight;
+
+            if ( xImg / yImg > ratio ) {
+                yInit = yImg;
+                xInit = yInit * ratio;
+            } else {
+                xInit = xImg;
+                yInit = xInit / ratio;
+            }
+
+            imgSelectOptions = {
+                handles: true,
+                keys: true,
+                instance: true,
+                persistent: true,
+                imageWidth: realWidth,
+                imageHeight: realHeight,
+                x1: 0,
+                y1: 0,
+                x2: xInit,
+                y2: yInit
+            };
+
+            if (flexHeight === false && flexWidth === false) {
+                imgSelectOptions.aspectRatio = xInit + ':' + yInit;
+            }
+            if (flexHeight === false ) {
+                imgSelectOptions.maxHeight = yInit;
+            }
+            if (flexWidth === false ) {
+                imgSelectOptions.maxWidth = xInit;
+            }
+
+            return imgSelectOptions;
+        },*/
+
+        onSelect: function() {
+            var attachment = this.frame.state().get('selection').first().toJSON();
+            var url = attachment.url,
+                w = attachment.width,
+                h = attachment.height;
+            this.setImageFromURL(url, attachment.id, w, h);
+            // this.frame.setState('cropper');
+        },
+
+        /* onCropped: function(croppedImage) {
+            var url = croppedImage.url,
+                attachmentId = croppedImage.attachment_id,
+                w = croppedImage.width,
+                h = croppedImage.height;
+            this.setImageFromURL(url, attachmentId, w, h);
+        }, */
+
+        /* onSkippedCrop: function(selection) {
+            var url = selection.get('url'),
+                w = selection.get('width'),
+                h = selection.get('height');
+            this.setImageFromURL(url, selection.id, w, h);
+        }, */
+
+        setImageFromURL: function(url, attachmentId, width, height) {
+            if ( $(this.uploadBtn).hasClass('woofreendor-upload-banner') ) {
+                var wrap = $(this.uploadBtn).closest('.dokan-banner');
+                wrap.find('input.dokan-file-field').val(attachmentId);
+                wrap.find('img.dokan-banner-img').attr('src', url);
+                $(this.uploadBtn).parent().siblings('.image-wrap', wrap).removeClass('dokan-hide');
+                $(this.uploadBtn).parent('.button-area').addClass('dokan-hide');
+            } else if ( $(this.uploadBtn).hasClass('woofreendor-upload-photo') ) {
+                var wrap = $(this.uploadBtn).closest('.dokan-gravatar');
+                wrap.find('input.dokan-file-field').val(attachmentId);
+                wrap.find('img.dokan-gravatar-img').attr('src', url);
+                $(this.uploadBtn).parent().siblings('.gravatar-wrap', wrap).removeClass('dokan-hide');
+                $(this.uploadBtn).parent('.gravatar-button-area').addClass('dokan-hide');
+            }
+        },
+
+        /* removeImage: function() {
+            api.HeaderTool.currentHeader.trigger('hide');
+            api.HeaderTool.CombinedList.trigger('control:removeImage');
+        }, */
+
+        imageUpload: function(e) {
+            e.preventDefault();
+
+            var file_frame,
+                settings = Woofreendor_Settings;
+
+            settings.uploadBtn = this;
+
+            settings.frame = wp.media({
+                multiple: false,
+                button: {
+                    text: 'Select Banner',//dokan.selectAndCrop,
+                    close: true//false
+                },
+                title: 'Select Banner'
+                /* states: [
+                    new wp.media.controller.Library({
+                        title:     dokan.chooseImage,
+                        library:   wp.media.query({ type: 'image' }),
+                        multiple:  false,
+                        date:      false,
+                        priority:  20,
+                        suggestedWidth: dokan.store_banner_dimension.width,
+                        suggestedHeight: dokan.store_banner_dimension.height
+                    }),
+                    new wp.media.controller.Cropper({
+                        suggestedWidth: 5000,
+                        imgSelectOptions: settings.calculateImageSelectOptions
+                    })
+                ] */
+            });
+
+            settings.frame.on('select', settings.onSelect, settings);
+            /* settings.frame.on('cropped', settings.onCropped, settings);
+            settings.frame.on('skippedcrop', settings.onSkippedCrop, settings); */
+
+            settings.frame.open();
+
+        },
+
+        /* calculateImageSelectOptionsProfile: function(attachment, controller) {
+            var xInit = 150,
+                yInit = 150,
+                flexWidth = !! parseInt(dokan.store_banner_dimension['flex-width'], 10),
+                flexHeight = !! parseInt(dokan.store_banner_dimension['flex-height'], 10),
+                ratio, xImg, yImg, realHeight, realWidth,
+                imgSelectOptions;
+
+            realWidth = attachment.get('width');
+            realHeight = attachment.get('height');
+
+            this.headerImage = new api.HeaderTool.ImageModel();
+            this.headerImage.set({
+                themeWidth: xInit,
+                themeHeight: yInit,
+                themeFlexWidth: flexWidth,
+                themeFlexHeight: flexHeight,
+                imageWidth: realWidth,
+                imageHeight: realHeight
+            });
+
+            controller.set( 'canSkipCrop', ! this.headerImage.shouldBeCropped() );
+
+            ratio = xInit / yInit;
+            xImg = realWidth;
+            yImg = realHeight;
+
+            if ( xImg / yImg > ratio ) {
+                yInit = yImg;
+                xInit = yInit * ratio;
+            } else {
+                xInit = xImg;
+                yInit = xInit / ratio;
+            }
+
+            imgSelectOptions = {
+                handles: true,
+                keys: true,
+                instance: true,
+                persistent: true,
+                imageWidth: realWidth,
+                imageHeight: realHeight,
+                x1: 0,
+                y1: 0,
+                x2: xInit,
+                y2: yInit
+            };
+
+            if (flexHeight === false && flexWidth === false) {
+                imgSelectOptions.aspectRatio = xInit + ':' + yInit;
+            }
+            if (flexHeight === false ) {
+                imgSelectOptions.maxHeight = yInit;
+            }
+            if (flexWidth === false ) {
+                imgSelectOptions.maxWidth = xInit;
+            }
+
+            return imgSelectOptions;
+        }, */
+
+        /* simpleImageUpload : function(e) {
+            e.preventDefault();
+                var file_frame,
+                self = $(this);
+
+            // If the media frame already exists, reopen it.
+            if ( file_frame ) {
+                file_frame.open();
+                return;
+            }
+
+            // Create the media frame.
+            file_frame = wp.media.frames.file_frame = wp.media({
+                title: jQuery( this ).data( 'uploader_title' ),
+                button: {
+                    text: jQuery( this ).data( 'uploader_button_text' )
+                },
+                multiple: false
+            });
+
+            // When an image is selected, run a callback.
+            file_frame.on( 'select', function() {
+                var attachment = file_frame.state().get('selection').first().toJSON();
+
+                var wrap = self.closest('.dokan-gravatar');
+                wrap.find('input.dokan-file-field').val(attachment.id);
+                wrap.find('img.dokan-gravatar-img').attr('src', attachment.url);
+                self.parent().siblings('.gravatar-wrap', wrap).removeClass('dokan-hide');
+                self.parent('.gravatar-button-area').addClass('dokan-hide');
+
+            });
+
+            // Finally, open the modal
+            file_frame.open();
+        }, */
+
+        gragatarImageUpload: function(e) {
+            e.preventDefault();
+
+            var file_frame,
+                settings = Woofreendor_Settings;
+
+            settings.uploadBtn = this;
+
+            settings.frame = wp.media({
+                multiple: false,
+                button: {
+                    text: 'Select Photo',//dokan.selectAndCrop,
+                    close: true//false
+                },
+                title: 'Select Photo'
+                /* states: [
+                    new wp.media.controller.Library({
+                        title:     dokan.chooseImage,
+                        library:   wp.media.query({ type: 'image' }),
+                        multiple:  false,
+                        date:      false,
+                        priority:  20,
+                        suggestedWidth: 150,
+                        suggestedHeight: 150
+                    }),
+                    new wp.media.controller.Cropper({
+                        imgSelectOptions: settings.calculateImageSelectOptionsProfile
+                    })
+                ] */
+            });
+
+            settings.frame.on('select', settings.onSelect, settings);
+            /* settings.frame.on('cropped', settings.onCropped, settings);
+            settings.frame.on('skippedcrop', settings.onSkippedCrop, settings); */
+            // console.log(settings);
+            settings.frame.open();
+
+        },
+        
+        submitSettings: function(form_id) {
+
+            if ( typeof tinyMCE != 'undefined' ) {
+                tinyMCE.triggerSave();
+            }
+
+            var self = $( "form#" + form_id ),
+                form_data = self.serialize() + '&action=woofreendor_settings&form_id=' + form_id;
+
+            self.find('.ajax_prev').append('<span class="dokan-loading"> </span>');
+            $.post(woofreendor.ajaxurl, form_data, function(resp) {
+
+                self.find('span.dokan-loading').remove();
+                $('html,body').animate({scrollTop:100});
+
+                if ( resp.success ) {
+                    // Harcoded Customization for template-settings function
+                        $('.dokan-ajax-response').html( $('<div/>', {
+                        'class': 'dokan-alert dokan-alert-success',
+                        'html': '<p>' + resp.data.msg + '</p>',
+                    }) );
+
+                    $('.dokan-ajax-response').append(resp.data.progress);
+
+                }else {
+                    $('.dokan-ajax-response').html( $('<div/>', {
+                        'class': 'dokan-alert dokan-alert-danger',
+                        'html': '<p>' + resp.data + '</p>'
+                    }) );
+                }
+            });
+        },
+
+        validateForm: function(self) {
+
+            $("form#tenant-form").validate({
+                //errorLabelContainer: '#errors'
+                submitHandler: function(form) {
+                    self.submitSettings( form.getAttribute('id') );
+                },
+                errorElement: 'span',
+                errorClass: 'error',
+                errorPlacement: validatorError,
+                success: validatorSuccess
+            });
+
+        }//,
+
+        /* removeBanner: function(e) {
+            e.preventDefault();
+
+            var self = $(this);
+            var wrap = self.closest('.image-wrap');
+            var instruction = wrap.siblings('.button-area');
+
+            wrap.find('input.dokan-file-field').val('0');
+            wrap.addClass('dokan-hide');
+            instruction.removeClass('dokan-hide');
+        }, */
+
+        /* removeGravatar: function(e) {
+            e.preventDefault();
+
+            var self = $(this);
+            var wrap = self.closest('.gravatar-wrap');
+            var instruction = wrap.siblings('.gravatar-button-area');
+
+            wrap.find('input.dokan-file-field').val('0');
+            wrap.addClass('dokan-hide');
+            instruction.removeClass('dokan-hide');
+        }, */
+    };
+
+    $(function() {
+        Woofreendor_Settings.init();
+
+        $('.dokan-form-horizontal').on('change', 'input[type=checkbox]#lbl_setting_minimum_quantity', function(){
+            var showSWDiscount =  $( '.show_if_needs_sw_discount' );
+            if ( $( this ).is(':checked') ) {
+                showSWDiscount.find('input[type="number"]').val('');
+                showSWDiscount.slideDown('slow');
+            } else {
+                showSWDiscount.slideUp('slow');
+            }
+        } );
+    });
+    
+})(jQuery);

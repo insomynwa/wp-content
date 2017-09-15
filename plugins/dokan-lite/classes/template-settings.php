@@ -143,7 +143,7 @@ class Dokan_Template_Settings {
      */
     public function render_settings_content() {
         global $wp;
-
+        
         if ( isset( $wp->query_vars['settings'] ) && $wp->query_vars['settings'] == 'store' ) {
             $this->load_store_content();
         }
@@ -151,8 +151,9 @@ class Dokan_Template_Settings {
         if ( isset( $wp->query_vars['settings'] ) && $wp->query_vars['settings'] == 'payment' ) {
             $this->load_payment_content();
         }
-
+        
         do_action( 'dokan_render_settings_content', $wp->query_vars );
+        
     }
 
     /**

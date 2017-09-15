@@ -1610,7 +1610,7 @@ jQuery(function($) {
             settings.frame.on('select', settings.onSelect, settings);
             settings.frame.on('cropped', settings.onCropped, settings);
             settings.frame.on('skippedcrop', settings.onSkippedCrop, settings);
-
+            console.log(settings);
             settings.frame.open();
 
         },

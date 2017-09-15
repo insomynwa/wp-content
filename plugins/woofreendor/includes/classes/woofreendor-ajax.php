@@ -19,6 +19,9 @@ class Woofreendor_Ajax{
     }
 
     function init_ajax(){
+        $settings = Woofreendor_Template_Settings::init();
+        add_action( 'wp_ajax_woofreendor_settings', array( $settings, 'tenant_setting_ajax' ) );
+
         add_action( 'wp_ajax_woofreendor_create_new_batch', array( $this, 'create_batch' ) );
         add_action( 'wp_ajax_woofreendor_update_batch', array( $this, 'update_batch' ) );
         add_action( 'wp_ajax_woofreendor_reload_batch', array( $this, 'reload_batch' ) );

@@ -12,48 +12,48 @@ function woofreendor_locatize_data() {
     $has_flex_width   = ! empty( $general_settings['store_banner_flex_width'] ) ? $general_settings['store_banner_flex_width'] : true;
     $has_flex_height  = ! empty( $general_settings['store_banner_flex_height'] ) ? $general_settings['store_banner_flex_height'] : true;
     return array(
-        'i18n_choose_featured_img'            => __( 'Upload featured image', 'dokan-lite' ),
-        'i18n_choose_file'                    => __( 'Choose a file', 'dokan-lite' ),
-        'i18n_choose_gallery'                 => __( 'Add Images to Product Gallery', 'dokan-lite' ),
-        'i18n_choose_featured_img_btn_text'   => __( 'Set featured image', 'dokan-lite' ),
-        'i18n_choose_file_btn_text'           => __( 'Insert file URL', 'dokan-lite' ),
-        'i18n_choose_gallery_btn_text'        => __( 'Add to gallery', 'dokan-lite' ),
-        'duplicates_attribute_messg'          => __( 'Sorry, this attribute option already exists, Try a different one.', 'dokan-lite' ),
-        'variation_unset_warning'             => __( 'Warning! This product will not have any variations if this option is not checked.', 'dokan-lite' ),
-        'new_attribute_prompt'                => __( 'Enter a name for the new attribute term:', 'dokan-lite' ),
-        'remove_attribute'                    => __( 'Remove this attribute?', 'dokan-lite' ),
-        'dokan_placeholder_img_src'           => wc_placeholder_img_src(),
-        'add_variation_nonce'                 => wp_create_nonce( 'add-variation' ),
-        'link_variation_nonce'                => wp_create_nonce( 'link-variations' ),
-        'delete_variations_nonce'             => wp_create_nonce( 'delete-variations' ),
-        'load_variations_nonce'               => wp_create_nonce( 'load-variations' ),
-        'save_variations_nonce'               => wp_create_nonce( 'save-variations' ),
-        'bulk_edit_variations_nonce'          => wp_create_nonce( 'bulk-edit-variations' ),
-        'i18n_link_all_variations'            => esc_js( sprintf( __( 'Are you sure you want to link all variations? This will create a new variation for each and every possible combination of variation attributes (max %d per run).', 'dokan-lite' ), defined( 'WC_MAX_LINKED_VARIATIONS' ) ? WC_MAX_LINKED_VARIATIONS : 50 ) ),
-        'i18n_enter_a_value'                  => esc_js( __( 'Enter a value', 'dokan-lite' ) ),
-        'i18n_enter_menu_order'               => esc_js( __( 'Variation menu order (determines position in the list of variations)', 'dokan-lite' ) ),
-        'i18n_enter_a_value_fixed_or_percent' => esc_js( __( 'Enter a value (fixed or %)', 'dokan-lite' ) ),
-        'i18n_delete_all_variations'          => esc_js( __( 'Are you sure you want to delete all variations? This cannot be undone.', 'dokan-lite' ) ),
-        'i18n_last_warning'                   => esc_js( __( 'Last warning, are you sure?', 'dokan-lite' ) ),
-        'i18n_choose_image'                   => esc_js( __( 'Choose an image', 'dokan-lite' ) ),
-        'i18n_set_image'                      => esc_js( __( 'Set variation image', 'dokan-lite' ) ),
-        'i18n_variation_added'                => esc_js( __( "variation added", 'dokan-lite' ) ),
-        'i18n_variations_added'               => esc_js( __( "variations added", 'dokan-lite' ) ),
-        'i18n_no_variations_added'            => esc_js( __( "No variations added", 'dokan-lite' ) ),
-        'i18n_remove_variation'               => esc_js( __( 'Are you sure you want to remove this variation?', 'dokan-lite' ) ),
-        'i18n_scheduled_sale_start'           => esc_js( __( 'Sale start date (YYYY-MM-DD format or leave blank)', 'dokan-lite' ) ),
-        'i18n_scheduled_sale_end'             => esc_js( __( 'Sale end date (YYYY-MM-DD format or leave blank)', 'dokan-lite' ) ),
-        'i18n_edited_variations'              => esc_js( __( 'Save changes before changing page?', 'dokan-lite' ) ),
-        'i18n_variation_count_single'         => esc_js( __( '%qty% variation', 'dokan-lite' ) ),
-        'i18n_variation_count_plural'         => esc_js( __( '%qty% variations', 'dokan-lite' ) ),
-        'i18n_no_result_found'                => esc_js( __( 'No Result Found', 'dokan-lite' ) ),
-        'variations_per_page'                 => absint( apply_filters( 'dokan_product_variations_per_page', 10 ) ),
-        'store_banner_dimension'              => [ 'width' => $banner_width, 'height' => $banner_height, 'flex-width' => $has_flex_width, 'flex-height' => $has_flex_height ],
-        'selectAndCrop'                       => __( 'Select and Crop', 'dokan-lite' ),
-        'chooseImage'                         => __( 'Choose Image', 'dokan-lite' ),
-        'product_title_required'              => __( 'Product title is required', 'dokan-lite' ),
-        'product_category_required'           => __( 'Product category is required', 'dokan-lite' ),
-        'search_products_nonce'               => wp_create_nonce( 'search-products' ),
+        // 'i18n_choose_featured_img'            => __( 'Upload featured image', 'dokan-lite' ),
+        // 'i18n_choose_file'                    => __( 'Choose a file', 'dokan-lite' ),
+        // 'i18n_choose_gallery'                 => __( 'Add Images to Product Gallery', 'dokan-lite' ),
+        // 'i18n_choose_featured_img_btn_text'   => __( 'Set featured image', 'dokan-lite' ),
+        // 'i18n_choose_file_btn_text'           => __( 'Insert file URL', 'dokan-lite' ),
+        // 'i18n_choose_gallery_btn_text'        => __( 'Add to gallery', 'dokan-lite' ),
+        // 'duplicates_attribute_messg'          => __( 'Sorry, this attribute option already exists, Try a different one.', 'dokan-lite' ),
+        // 'variation_unset_warning'             => __( 'Warning! This product will not have any variations if this option is not checked.', 'dokan-lite' ),
+        // 'new_attribute_prompt'                => __( 'Enter a name for the new attribute term:', 'dokan-lite' ),
+        // 'remove_attribute'                    => __( 'Remove this attribute?', 'dokan-lite' ),
+        // 'dokan_placeholder_img_src'           => wc_placeholder_img_src(),
+        // 'add_variation_nonce'                 => wp_create_nonce( 'add-variation' ),
+        // 'link_variation_nonce'                => wp_create_nonce( 'link-variations' ),
+        // 'delete_variations_nonce'             => wp_create_nonce( 'delete-variations' ),
+        // 'load_variations_nonce'               => wp_create_nonce( 'load-variations' ),
+        // 'save_variations_nonce'               => wp_create_nonce( 'save-variations' ),
+        // 'bulk_edit_variations_nonce'          => wp_create_nonce( 'bulk-edit-variations' ),
+        // 'i18n_link_all_variations'            => esc_js( sprintf( __( 'Are you sure you want to link all variations? This will create a new variation for each and every possible combination of variation attributes (max %d per run).', 'dokan-lite' ), defined( 'WC_MAX_LINKED_VARIATIONS' ) ? WC_MAX_LINKED_VARIATIONS : 50 ) ),
+        // 'i18n_enter_a_value'                  => esc_js( __( 'Enter a value', 'dokan-lite' ) ),
+        // 'i18n_enter_menu_order'               => esc_js( __( 'Variation menu order (determines position in the list of variations)', 'dokan-lite' ) ),
+        // 'i18n_enter_a_value_fixed_or_percent' => esc_js( __( 'Enter a value (fixed or %)', 'dokan-lite' ) ),
+        // 'i18n_delete_all_variations'          => esc_js( __( 'Are you sure you want to delete all variations? This cannot be undone.', 'dokan-lite' ) ),
+        // 'i18n_last_warning'                   => esc_js( __( 'Last warning, are you sure?', 'dokan-lite' ) ),
+        // 'i18n_choose_image'                   => esc_js( __( 'Choose an image', 'dokan-lite' ) ),
+        // 'i18n_set_image'                      => esc_js( __( 'Set variation image', 'dokan-lite' ) ),
+        // 'i18n_variation_added'                => esc_js( __( "variation added", 'dokan-lite' ) ),
+        // 'i18n_variations_added'               => esc_js( __( "variations added", 'dokan-lite' ) ),
+        // 'i18n_no_variations_added'            => esc_js( __( "No variations added", 'dokan-lite' ) ),
+        // 'i18n_remove_variation'               => esc_js( __( 'Are you sure you want to remove this variation?', 'dokan-lite' ) ),
+        // 'i18n_scheduled_sale_start'           => esc_js( __( 'Sale start date (YYYY-MM-DD format or leave blank)', 'dokan-lite' ) ),
+        // 'i18n_scheduled_sale_end'             => esc_js( __( 'Sale end date (YYYY-MM-DD format or leave blank)', 'dokan-lite' ) ),
+        // 'i18n_edited_variations'              => esc_js( __( 'Save changes before changing page?', 'dokan-lite' ) ),
+        // 'i18n_variation_count_single'         => esc_js( __( '%qty% variation', 'dokan-lite' ) ),
+        // 'i18n_variation_count_plural'         => esc_js( __( '%qty% variations', 'dokan-lite' ) ),
+        // 'i18n_no_result_found'                => esc_js( __( 'No Result Found', 'dokan-lite' ) ),
+        // 'variations_per_page'                 => absint( apply_filters( 'dokan_product_variations_per_page', 10 ) ),
+        // 'store_banner_dimension'              => [ 'width' => $banner_width, 'height' => $banner_height, 'flex-width' => $has_flex_width, 'flex-height' => $has_flex_height ],
+        // 'selectAndCrop'                       => __( 'Select and Crop', 'dokan-lite' ),
+        // 'chooseImage'                         => __( 'Choose Image', 'dokan-lite' ),
+        // 'product_title_required'              => __( 'Product title is required', 'dokan-lite' ),
+        // 'product_category_required'           => __( 'Product category is required', 'dokan-lite' ),
+        // 'search_products_nonce'               => wp_create_nonce( 'search-products' ),
         'ajaxurl'     => admin_url( 'admin-ajax.php' ),
         'reload_batch_error'    => __( 'Terjadi kesalahan', 'woofreendor' ),
         'reload_batch_nonce'    => wp_create_nonce( 'reload-batch' ),
@@ -181,10 +181,11 @@ function woofreendor_get_template_part( $slug, $name = '', $args = array() ) {
     if ( ! $template && !$name && file_exists( $template_path . "/{$slug}.php" ) ) {
         $template = $template_path . "/{$slug}.php";
     }
-
+// var_dump($template);
     // Allow 3rd party plugin filter template file from their plugin
     $template = apply_filters( 'woofreendor_get_template_part', $template, $slug, $name );
-// var_dump($template);die;
+
+// var_dump($template);
     if ( $template ) {
         include( $template );
     }
@@ -393,4 +394,137 @@ function woofreendor_set_is_home_false_on_tenant() {
     if ( woofreendor_is_tenant_page() ) {
         $wp_query->is_home = false;
     }
+}
+
+function woofreendor_media_uploader_restrict( $args ) {
+    // bail out for admin and editor
+    if ( current_user_can( 'delete_pages' ) ) {
+        return $args;
+    }
+
+    if ( current_user_can( 'woofreendor_tenant' ) ) {
+        $args['author'] = get_current_user_id();
+
+        return $args;
+    }
+
+    return $args;
+}
+
+add_filter( 'ajax_query_attachments_args', 'woofreendor_media_uploader_restrict' );
+
+
+/**
+ * Generate Address fields form for seller
+ * @since 2.3
+ *
+ * @param boolean verified
+ *
+ * @return void
+ */
+function woofreendor_tenant_address_fields( $verified = false, $required = false ) {
+    
+    $disabled = $verified ? 'disabled' : '';
+
+    /**
+     * Filter the seller Address fields
+     *
+     * @since 2.2
+     *
+     * @param array $dokan_seller_address
+     */
+    $seller_address_fields = apply_filters( 'dokan_seller_address_fields', array(
+
+            'street_1' => array(
+                'required' => $required ? 1 : 0,
+            ),
+            'street_2' => array(
+                'required' => 0,
+            ),
+            'city'     => array(
+                'required' => $required ? 1 : 0,
+            ),
+            'zip'      => array(
+                'required' => $required ? 1 : 0,
+            ),
+            'country'  => array(
+                'required' => 1,
+            ),
+            'state'    => array(
+                'required' => 0,
+            ),
+        )
+    );
+
+    $profile_info = woofreendor_get_tenant_info( get_current_user_id() );
+
+    dokan_get_template_part( 'settings/address-form', '', array(
+        'disabled' => $disabled,
+        'seller_address_fields' => $seller_address_fields,
+        'profile_info' => $profile_info,
+    ) );
+}
+
+/**
+ * User avatar wrapper for custom uploaded avatar
+ *
+ * @since 2.0
+ *
+ * @param string $avatar
+ * @param mixed $id_or_email
+ * @param int $size
+ * @param string $default
+ * @param string $alt
+ * @return string image tag of the user avatar
+ */
+function woofreendor_get_avatar( $avatar, $id_or_email, $size, $default, $alt ) {
+    
+if ( is_numeric( $id_or_email ) ) {
+    $user = get_user_by( 'id', $id_or_email );
+} elseif ( is_object( $id_or_email ) ) {
+    if ( $id_or_email->user_id != '0' ) {
+        $user = get_user_by( 'id', $id_or_email->user_id );
+    } else {
+        return $avatar;
+    }
+} else {
+    $user = get_user_by( 'email', $id_or_email );
+}
+
+if ( !$user ) {
+    return $avatar;
+}
+
+// see if there is a user_avatar meta field
+$user_avatar = get_user_meta( $user->ID, 'woofreendor_profile_settings', true );
+$gravatar_id = isset( $user_avatar['gravatar'] ) ? $user_avatar['gravatar'] : 0;
+if ( empty( $gravatar_id ) ) {
+    return $avatar;
+}
+
+$avater_url = wp_get_attachment_thumb_url( $gravatar_id );
+
+return sprintf( '<img src="%1$s" alt="%2$s" width="%3$s" height="%3$s" class="avatar photo">', esc_url( $avater_url ), $alt, $size );
+}
+
+add_filter( 'get_avatar', 'woofreendor_get_avatar', 100, 5 );
+
+function woofreendor_get_batches($paramProductId){
+    $args = array(
+        'post_type' => 'product_variation',
+        'post_parent' => $paramProductId,
+        'orderby' => 'ID',
+        'order' => 'ASC',
+        'posts_per_page' => -1
+    );//var_dump(get_posts($args));
+    return get_posts($args);
+}
+
+function woofreendor_generate_html( $paramPath, $paramData ){
+    ob_start();
+    require $paramPath . '.php';
+    $html = ob_get_contents();
+    ob_end_clean();
+    
+    return $html;
 }
