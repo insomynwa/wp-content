@@ -11,7 +11,7 @@
 ?>
 <div class="dokan-dashboard-wrap">
     <?php
-// var_dump("template-dashboard.. dashboard.php");
+        // var_dump("template-dashboard.. dashboard.php");
         /**
          *  woofreendor_dashboard_content_before hook
          *
@@ -47,7 +47,7 @@
                  *
                  *  @since 2.4
                  */
-                //do_action( 'woofreendor_dashboard_before_widgets' );
+                // do_action( 'woofreendor_dashboard_before_widgets' );
             ?>
 
             <div class="dokan-w6 dokan-dash-left">
@@ -63,7 +63,7 @@
                      *
                      *  @since 2.4
                      */
-                    //do_action( 'dokan_dashboard_left_widgets' );
+                    do_action( 'woofreendor_dashboard_left_widgets' );
                 ?>
 
             </div> <!-- .col-md-6 -->

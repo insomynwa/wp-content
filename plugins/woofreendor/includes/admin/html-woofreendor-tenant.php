@@ -44,7 +44,7 @@
                         $info = woofreendor_get_tenant_info( $user->ID );
                         $url = woofreendor_get_tenant_url($user->ID);
                         $edit_link = esc_url( add_query_arg( 'wp_http_referer', urlencode( wp_unslash( $_SERVER['REQUEST_URI'] ) ), get_edit_user_link( $user->ID ) ) );
-                        $outlet_counts = woofreendor_count_outlet_by_tenant( $user->ID );
+                        $outlet_counts = woofreendor_count_outlets( $user->ID );
                         ?>
                         <tr class="<?php echo ($count % 2 == 0) ? 'alternate' : 'odd'; ?> ">
                             <th class="check-column">

@@ -201,7 +201,7 @@ final class Woofreendor{
         add_filter( 'dokan_set_template_path', array( $this, 'load_woofreendor_templates' ), 10, 3 );
 
         add_filter( 'body_class', array( $this, 'add_dashboard_template_class' ), 99 );
-        add_filter( 'wp_title', array( $this, 'wp_title' ), 20, 2 );
+        add_filter( 'pre_get_document_title', array( $this, 'wp_title' ), 99999, 2 );
     }
 
     function init_ajax(){
@@ -229,9 +229,9 @@ final class Woofreendor{
         return $template_path;
     }
 
-    public function wp_title( $title, $sep ) {
-        global $paged, $page;
-
+    public function wp_title(  ) {
+        // global $paged, $page;
+        // var_dump($paged);
         if ( is_feed() ) {
             return $title;
         }
@@ -246,6 +246,21 @@ final class Woofreendor{
             // Add a page number if necessary.
             if ( $paged >= 2 || $page >= 2 ) {
                 $title = "$title $sep " . sprintf( __( 'Page %s', 'woofreendor' ), max( $paged, $page ) );
+            }
+
+            return $title;
+        }
+
+        if ( dokan_is_store_page() ) {
+            $site_title = get_bloginfo( 'name' );
+            $store_user = get_userdata( get_query_var( 'author' ) );
+            $store_info = dokan_get_store_info( $store_user->ID );
+            $store_name = esc_html( $store_info['store_name'] );
+            $title      = "$store_name $sep $site_title";
+
+            // Add a page number if necessary.
+            if ( $paged >= 2 || $page >= 2 ) {
+                $title = "$title $sep " . sprintf( __( 'Page %s', 'dokan-lite' ), max( $paged, $page ) );
             }
 
             return $title;

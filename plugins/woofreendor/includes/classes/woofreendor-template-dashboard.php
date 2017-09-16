@@ -22,9 +22,10 @@ class Woofreendor_Template_Dashboard {
      */
     function __construct() {
 
-        // $this->user_id        = get_current_user_id();
+        $this->user_id        = get_current_user_id();
         // $this->orders_count   = $this->get_orders_count();
         // $this->post_counts    = $this->get_post_counts();
+        $this->outlet_counts    = $this->get_outlet_counts();
         // $this->comment_counts = $this->get_comment_counts();
         // $this->pageviews      = $this->get_pageviews();
         // $this->earning        = $this->get_earning();
@@ -32,6 +33,9 @@ class Woofreendor_Template_Dashboard {
 
         add_action( 'dokan_get_dashboard_nav', array($this, 'mod_dashboard_nav') );
         add_filter( 'dokan_get_dashboard_settings_nav', array( $this, 'mod_load_settings_menu' ), 10 );
+
+        
+        add_action( 'woofreendor_dashboard_left_widgets', array( $this, 'get_outlets_widgets' ), 10 );
 
         // add_action( 'woofreendor_dashboard_content_inside_before', array( $this, 'show_tenant_dashboard_notice' ), 10 );
         // add_action( 'dokan_dashboard_left_widgets', array( $this, 'get_big_counter_widgets' ), 10 );
@@ -225,13 +229,13 @@ class Woofreendor_Template_Dashboard {
      *
      * @return void
      */
-    // public function get_products_widgets() {
-    //     dokan_get_template_part( 'dashboard/products-widget', '', array(
-    //             'post_counts'=> $this->post_counts,
-    //             'products_url'=> woofreendor_get_navigation_url('products'),
-    //         )
-    //     );
-    // }
+    public function get_outlets_widgets() {
+        woofreendor_get_template_part( 'dashboard/outlets-widget', '', array(
+                'outlet_counts'=> $this->outlet_counts,
+                'outlets_url'=> woofreendor_get_navigation_url('outlets'),
+            )
+        );
+    }
 
     /**
      * Get sales report chart widget in dashboard
@@ -262,9 +266,9 @@ class Woofreendor_Template_Dashboard {
      *
      * @return integer
      */
-    // public function get_post_counts() {
-    //     return dokan_count_posts( 'product', $this->user_id );
-    // }
+    public function get_outlet_counts() {
+        return woofreendor_count_outlets( $this->user_id );
+    }
 
     /**
      * Get Comments Count
