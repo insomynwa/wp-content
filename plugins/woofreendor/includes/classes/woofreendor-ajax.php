@@ -22,6 +22,9 @@ class Woofreendor_Ajax{
         $settings = Woofreendor_Template_Settings::init();
         add_action( 'wp_ajax_woofreendor_settings', array( $settings, 'tenant_setting_ajax' ) );
 
+        add_action( 'wp_ajax_woofreendor_tenant_listing_search', array($this, 'tenant_listing_search') );
+        add_action( 'wp_ajax_nopriv_woofreendor_tenant_listing_search', array($this, 'tenant_listing_search') );
+
         add_action( 'wp_ajax_woofreendor_create_new_batch', array( $this, 'create_batch' ) );
         add_action( 'wp_ajax_woofreendor_update_batch', array( $this, 'update_batch' ) );
         add_action( 'wp_ajax_woofreendor_reload_batch', array( $this, 'reload_batch' ) );
@@ -49,7 +52,7 @@ class Woofreendor_Ajax{
         if ( is_int( $response ) ) {
             wp_send_json_success( $response );
         } else {
-            wp_send_json_error( __( 'Something wrong, please try again later', 'dokan-lite' ) );
+            wp_send_json_error( __( 'Something wrong, please try again later', 'woofreendor' ) );
         }
     }
 
@@ -71,7 +74,7 @@ class Woofreendor_Ajax{
         if ( is_int( $response ) ) {
             wp_send_json_success( $response );
         } else {
-            wp_send_json_error( __( 'Something wrong, please try again later', 'dokan-lite' ) );
+            wp_send_json_error( __( 'Something wrong, please try again later', 'woofreendor' ) );
         }
     }
 
@@ -93,7 +96,7 @@ class Woofreendor_Ajax{
         if ( $response ) {
             wp_send_json_success( $response );
         } else {
-            wp_send_json_error( __( 'Something wrong, please try again later', 'dokan-lite' ) );
+            wp_send_json_error( __( 'Something wrong, please try again later', 'woofreendor' ) );
         }
     }
 
@@ -129,7 +132,7 @@ class Woofreendor_Ajax{
         if ( is_int( $response ) ) {
             wp_send_json_success( $response );
         } else {
-            wp_send_json_error( __( 'Something wrong, please try again later', 'dokan-lite' ) );
+            wp_send_json_error( __( 'Something wrong, please try again later', 'woofreendor' ) );
         }
     }
 
@@ -151,7 +154,7 @@ class Woofreendor_Ajax{
         if ( is_int( $response ) ) {
             wp_send_json_success( $response );
         } else {
-            wp_send_json_error( __( 'Something wrong, please try again later', 'dokan-lite' ) );
+            wp_send_json_error( __( 'Something wrong, please try again later', 'woofreendor' ) );
         }
     }
 
@@ -173,8 +176,64 @@ class Woofreendor_Ajax{
         if ( $response ) {
             wp_send_json_success( $response );
         } else {
-            wp_send_json_error( __( 'Something wrong, please try again later', 'dokan-lite' ) );
+            wp_send_json_error( __( 'Something wrong, please try again later', 'woofreendor' ) );
         }
+    }
+    
+    /**
+     * Search seller listing
+     *
+     * @return void
+     */
+    public function tenant_listing_search() {
+        if ( ! isset( $_REQUEST['_wpnonce'] ) || ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'woofreendor-tenant-listing-search' ) ) {
+            wp_send_json_error( __( 'Error: Nonce verification failed', 'woofreendor' ) );
+        }
+
+        $paged  = 1;
+        $limit  = 10;
+        $offset = ( $paged - 1 ) * $limit;
+
+        $tenant_args = array(
+            'number' => $limit,
+            'offset' => $offset
+        );
+
+        $search_term = isset( $_REQUEST['search_term'] ) ? sanitize_text_field( $_REQUEST['search_term'] ) : '';
+        $pagination_base = isset( $_REQUEST['pagination_base'] ) ? sanitize_text_field( $_REQUEST['pagination_base'] ) : '';
+        $per_row = isset( $_REQUEST['per_row'] ) ? sanitize_text_field( $_REQUEST['per_row'] ) : '3';
+
+        if ( '' != $search_term ) {
+
+            $tenant_args['meta_query'] = array(
+
+                array(
+                    'key'     => 'woofreendor_tenant_name',
+                    'value'   => $search_term,
+                    'compare' => 'LIKE'
+                )
+
+            );
+        }
+
+        $tenants = woofreendor_get_tenants( $tenant_args );
+
+        $template_args = apply_filters( 'dokan_store_list_args', array(
+            'tenants'         => $tenants,
+            'limit'           => $limit,
+            'paged'           => $paged,
+            'image_size'      => 'medium',
+            'search'          => 'yes',
+            'pagination_base' => $pagination_base,
+            'per_row'         => $per_row,
+            'search_query'    => $search_term,
+        ) );
+
+        ob_start();
+        woofreendor_get_template_part( 'tenant-lists-loop', false, $template_args );
+        $content = ob_get_clean();
+
+        wp_send_json_success( $content );
     }
 
 }

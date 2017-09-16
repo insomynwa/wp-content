@@ -59,7 +59,7 @@
             var form = $('.dokan-seller-search-form');
             var xhr;
             var timer = null;
-
+            
             form.on('keyup', '#search', function() {
                 var self = $(this),
                     data = {

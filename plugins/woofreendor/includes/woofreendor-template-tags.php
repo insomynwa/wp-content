@@ -105,7 +105,7 @@ function woofreendor_tenants() {
         'per_page' => 10,
         'search'   => 'yes',
         'per_row'  => 3,
-    ) ), $atts );
+    ) ), $attr );
     $paged   = max( 1, get_query_var( 'paged' ) );
     $limit   = $attr['per_page'];
     $offset  = ( $paged - 1 ) * $limit;
@@ -120,15 +120,11 @@ function woofreendor_tenants() {
         $search_term = isset( $_GET['woofreendor_tenant_search'] ) ? sanitize_text_field( $_GET['woofreendor_tenant_search'] ) : '';
         if ( '' != $search_term ) {
 
-            $tenant_args['meta_query'] = array(
-                 array(
-                    'key'     => 'woofreendor_tenant_name',
-                    'value'   => $search_term,
-                    'compare' => 'LIKE'
-                )
-            );
+            $tenant_args['meta_key'] = 'woofreendor_tenant_name';
+            $tenant_args['meta_value'] = $search_term;
         }
     }
+    // var_dump($paged);
 
     $tenants = woofreendor_get_tenants( apply_filters( 'woofreendor_tenant_listing_args', $tenant_args ) );
 

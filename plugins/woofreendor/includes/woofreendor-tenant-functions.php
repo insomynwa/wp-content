@@ -14,7 +14,7 @@ function woofreendor_get_tenants( $args = array() ) {
 
     $user_query = new WP_User_Query( $args );
     $sellers    = $user_query->get_results();
-
+    // var_dump($args);
     return array( 'users' => $sellers, 'count' => $user_query->total_users );
 }
 

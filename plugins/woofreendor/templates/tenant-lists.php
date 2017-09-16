@@ -8,14 +8,14 @@
         $search_query = isset( $_GET['woofreendor_tenant_search'] ) ? sanitize_text_field( $_GET['woofreendor_tenant_search'] ) : '';
 
         if ( ! empty( $search_query ) ) {
-            printf( '<h2>' . __( 'Search Results for: %s', 'dokan-lite' ) . '</h2>', $search_query );
+            printf( '<h2>' . __( 'Search Results for: %s', 'woofreendor' ) . '</h2>', $search_query );
         }
     ?>
 
         <form role="search" method="get" class="dokan-seller-search-form" action="">
-            <input type="search" id="search" class="search-field dokan-seller-search" placeholder="<?php esc_attr_e( 'Search Tenant &hellip;', 'dokan-lite' ); ?>" value="<?php echo esc_attr( $search_query ); ?>" name="woofreendor_tenant_search" title="<?php esc_attr_e( 'Search seller &hellip;', 'dokan-lite' ); ?>" />
+            <input type="search" id="search" class="search-field dokan-seller-search" placeholder="<?php esc_attr_e( 'Search Tenant &hellip;', 'woofreendor' ); ?>" value="<?php echo esc_attr( $search_query ); ?>" name="woofreendor_tenant_search" title="<?php esc_attr_e( 'Search outlet &hellip;', 'woofreendor' ); ?>" />
             <input type="hidden" id="pagination_base" name="pagination_base" value="<?php echo $pagination_base ?>" />
-            <input type="hidden" id="nonce" name="nonce" value="<?php echo wp_create_nonce( 'dokan-seller-listing-search' ); ?>" />
+            <input type="hidden" id="nonce" name="nonce" value="<?php echo wp_create_nonce( 'woofreendor-tenant-listing-search' ); ?>" />
             <div class="dokan-overlay" style="display: none;"><span class="dokan-ajax-loader"></span></div>
         </form>
 
@@ -66,10 +66,10 @@
                         search_term: self.val(),
                         pagination_base: form.find('#pagination_base').val(),
                         per_row: '<?php echo $per_row; ?>',
-                        action: 'dokan_seller_listing_search',
+                        action: 'woofreendor_tenant_listing_search',
                         _wpnonce: form.find('#nonce').val()
                     };
-
+                // console.log(data);
                 if (timer) {
                     clearTimeout(timer);
                 }

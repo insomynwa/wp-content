@@ -8,7 +8,7 @@
                     $banner_id  = isset( $tenant_info['banner'] ) ? $tenant_info['banner'] : 0;
                     $tenant_name = isset( $tenant_info['tenant_name'] ) ? esc_html( $tenant_info['tenant_name'] ) : __( 'N/A', 'woofreendor' );
                     $tenant_url  = woofreendor_get_tenant_url( $tenant->ID );
-                    $store_address  = woofreendor_get_tenant_short_address( $tenant->ID );
+                    $tenant_address  = woofreendor_get_tenant_short_address( $tenant->ID );
                     $banner_url = ( $banner_id ) ? wp_get_attachment_image_src( $banner_id, $image_size ) : DOKAN_PLUGIN_ASSEST . '/images/default-store-banner.png';
                     ?>
 
@@ -21,8 +21,8 @@
                                         <div class="store-data">
                                             <h2><a href="<?php echo $tenant_url; ?>"><?php echo $tenant_name; ?></a></h2>
 
-                                            <?php if ( $store_address ): ?>
-                                                <p class="store-address"><?php echo $store_address; ?></p>
+                                            <?php if ( $tenant_address ): ?>
+                                                <p class="store-address"><?php echo $tenant_address; ?></p>
                                             <?php endif ?>
 
                                             <?php if ( !empty( $tenant_info['phone'] ) ) { ?>

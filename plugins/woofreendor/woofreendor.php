@@ -310,6 +310,7 @@ final class Woofreendor{
             || ( get_query_var( 'edit' ) && is_singular( 'tenant' ) )
             || ( get_query_var( 'edit' ) && is_singular( 'outlet' ) ) )
             || dokan_is_store_page()
+            || woofreendor_is_tenant_page()
             || dokan_is_store_review_page()
             || is_account_page()
         ) {
