@@ -33,7 +33,7 @@
              *
              *  @since 2.4
              */
-            do_action( 'dokan_settings_content_inside_before' );
+            // do_action( 'dokan_settings_content_inside_before' );
         ?>
         <article class="dokan-settings-area">
 
@@ -45,7 +45,7 @@
                  *
                  * @since 2.4
                  */
-                do_action( 'dokan_settings_content_area_header' );
+                do_action( 'woofreendor_settings_content_area_header' );
 
 
                 /**
@@ -53,7 +53,7 @@
                  *
                  * @hooked render_settings_content_hook
                  */
-                do_action( 'dokan_settings_content' );
+                do_action( 'woofreendor_settings_content' );
             ?>
 
             <!--settings updated content ends-->

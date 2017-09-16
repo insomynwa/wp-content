@@ -1610,12 +1610,12 @@ jQuery(function($) {
             settings.frame.on('select', settings.onSelect, settings);
             settings.frame.on('cropped', settings.onCropped, settings);
             settings.frame.on('skippedcrop', settings.onSkippedCrop, settings);
-            console.log(settings);
+            //console.log(settings);
             settings.frame.open();
 
         },
 
-        calculateImageSelectOptionsProfile: function(attachment, controller) {
+        calculateImageSelectOptionsProfile: function(attachment, controller) {//console.log(attachment);
             var xInit = 150,
                 yInit = 150,
                 flexWidth = !! parseInt(dokan.store_banner_dimension['flex-width'], 10),
@@ -1745,7 +1745,7 @@ jQuery(function($) {
             settings.frame.on('select', settings.onSelect, settings);
             settings.frame.on('cropped', settings.onCropped, settings);
             settings.frame.on('skippedcrop', settings.onSkippedCrop, settings);
-
+            
             settings.frame.open();
 
         },

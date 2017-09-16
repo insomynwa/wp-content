@@ -143,7 +143,7 @@ class Dokan_Template_Settings {
      */
     public function render_settings_content() {
         global $wp;
-        
+        // var_dump($wp->query_vars);
         if ( isset( $wp->query_vars['settings'] ) && $wp->query_vars['settings'] == 'store' ) {
             $this->load_store_content();
         }
@@ -253,11 +253,11 @@ class Dokan_Template_Settings {
      * @return void
      */
     function validate() {
-
+        // var_dump("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
         if ( !isset( $_POST['dokan_update_profile'] ) ) {
             return false;
         }
-
+        // var_dump("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
         if ( !wp_verify_nonce( $_POST['_wpnonce'], 'dokan_settings_nonce' ) ) {
             wp_die( __( 'Are you cheating?', 'dokan-lite' ) );
         }

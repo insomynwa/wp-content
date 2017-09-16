@@ -150,7 +150,9 @@ function woofreendor_get_tenant_url( $user_id ) {
 
 function woofreendor_get_template_part( $slug, $name = '', $args = array() ) {
     $woofreendor = Woofreendor::init();
-
+// var_dump($slug);
+// var_dump($name);
+// var_dump($args);
     $defaults = array(
         'pro' => false
     );
@@ -165,14 +167,14 @@ function woofreendor_get_template_part( $slug, $name = '', $args = array() ) {
 
     // Look in yourtheme/dokan/slug-name.php and yourtheme/dokan/slug.php
     $template = locate_template( array( $woofreendor->template_path() . "{$slug}-{$name}.php", $woofreendor->template_path() . "{$slug}.php" ) );
-
+// var_dump($template);
     /**
      * Change template directory path filter
      *
      * @since 2.5.3
      */
     $template_path = apply_filters( 'woofreendor_set_template_path', $woofreendor->plugin_path() . '/templates', $template, $args );
-
+    // var_dump($template_path);
     // Get default slug-name.php
     if ( ! $template && $name && file_exists( $template_path . "/{$slug}-{$name}.php" ) ) {
         $template = $template_path . "/{$slug}-{$name}.php";

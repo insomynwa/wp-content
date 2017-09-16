@@ -7,27 +7,30 @@
 ?>
 <?php
 
-    $gravatar       = isset( $tenant_profile['gravatar'] ) ? absint( $tenant_profile['gravatar'] ) : 0;
-    $banner         = isset( $tenant_profile['banner'] ) ? absint( $tenant_profile['banner'] ) : 0;
-    $tenantname      = isset( $tenant_profile['tenant_name'] ) ? esc_attr( $tenant_profile['tenant_name'] ) : '';
-    $tenant_opp      = isset( $tenant_profile['tenant_opp'] ) ? esc_attr( $tenant_profile['tenant_opp'] ) : '';
-    $phone          = isset( $tenant_profile['phone'] ) ? esc_attr( $tenant_profile['phone'] ) : '';
-    $show_email     = isset( $tenant_profile['show_email'] ) ? esc_attr( $tenant_profile['show_email'] ) : 'no';
-    $show_more_ptab = isset( $tenant_profile['show_more_ptab'] ) ? esc_attr( $tenant_profile['show_more_ptab'] ) : 'yes';
+    $gravatar       = isset( $profile_info['gravatar'] ) ? absint( $profile_info['gravatar'] ) : 0;
+    $banner         = isset( $profile_info['banner'] ) ? absint( $profile_info['banner'] ) : 0;
+    $storename      = isset( $profile_info['tenant_name'] ) ? esc_attr( $profile_info['tenant_name'] ) : '';
+    $store_ppp      = isset( $profile_info['tenant_opp'] ) ? esc_attr( $profile_info['tenant_opp'] ) : '';
+    $phone          = isset( $profile_info['phone'] ) ? esc_attr( $profile_info['phone'] ) : '';
+    $show_email     = isset( $profile_info['show_email'] ) ? esc_attr( $profile_info['show_email'] ) : 'no';
+    $show_more_ptab = isset( $profile_info['show_more_ptab'] ) ? esc_attr( $profile_info['show_more_ptab'] ) : 'yes';
 
-    $address         = isset( $tenant_profile['address'] ) ? $tenant_profile['address'] : '';
-    $address_street1 = isset( $tenant_profile['address']['street_1'] ) ? $tenant_profile['address']['street_1'] : '';
-    $address_street2 = isset( $tenant_profile['address']['street_2'] ) ? $tenant_profile['address']['street_2'] : '';
-    $address_city    = isset( $tenant_profile['address']['city'] ) ? $tenant_profile['address']['city'] : '';
-    $address_zip     = isset( $tenant_profile['address']['zip'] ) ? $tenant_profile['address']['zip'] : '';
-    $address_country = isset( $tenant_profile['address']['country'] ) ? $tenant_profile['address']['country'] : '';
-    $address_state   = isset( $tenant_profile['address']['state'] ) ? $tenant_profile['address']['state'] : '';
+    $address         = isset( $profile_info['address'] ) ? $profile_info['address'] : '';
+    $address_street1 = isset( $profile_info['address']['street_1'] ) ? $profile_info['address']['street_1'] : '';
+    $address_street2 = isset( $profile_info['address']['street_2'] ) ? $profile_info['address']['street_2'] : '';
+    $address_city    = isset( $profile_info['address']['city'] ) ? $profile_info['address']['city'] : '';
+    $address_zip     = isset( $profile_info['address']['zip'] ) ? $profile_info['address']['zip'] : '';
+    $address_country = isset( $profile_info['address']['country'] ) ? $profile_info['address']['country'] : '';
+    $address_state   = isset( $profile_info['address']['state'] ) ? $profile_info['address']['state'] : '';
 
-    $map_location   = isset( $tenant_profile['location'] ) ? esc_attr( $tenant_profile['location'] ) : '';
-    $map_address    = isset( $tenant_profile['find_address'] ) ? esc_attr( $tenant_profile['find_address'] ) : '';
+    $map_location   = isset( $profile_info['location'] ) ? esc_attr( $profile_info['location'] ) : '';
+    $map_address    = isset( $profile_info['find_address'] ) ? esc_attr( $profile_info['find_address'] ) : '';
+    $dokan_category = isset( $profile_info['dokan_category'] ) ? $profile_info['dokan_category'] : '';
+    $enable_tnc     = isset( $profile_info['enable_tnc'] ) ? $profile_info['enable_tnc'] : '';
+    $store_tnc      = isset( $profile_info['store_tnc'] ) ? $profile_info['store_tnc'] : '' ;
 
     if ( is_wp_error( $validate ) ) {
-        $tenantname    = $_POST['woofreendor_tenant_name'];
+        $storename    = $_POST['dokan_store_name'];
         $map_location = $_POST['location'];
         $map_address  = $_POST['find_address'];
 
@@ -42,11 +45,11 @@
     $dokan_appearance = dokan_get_option( 'store_header_template', 'dokan_appearance', 'default' );
 
 ?>
-<?php do_action( 'dokan_settings_before_form', $current_tenant, $tenant_profile ); ?>
+<?php do_action( 'dokan_settings_before_form', $current_user, $profile_info ); ?>
 
     <form method="post" id="tenant-form"  action="" class="dokan-form-horizontal">
 
-        <?php wp_nonce_field( 'woofreendor_tenant_settings_nonce' ); ?>
+        <?php wp_nonce_field( 'dokan_store_settings_nonce' ); ?>
 
             <div class="dokan-banner">
 
@@ -61,7 +64,7 @@
                 <div class="button-area<?php echo $banner ? ' dokan-hide' : ''; ?>">
                     <i class="fa fa-cloud-upload"></i>
 
-                    <a href="#" class="woofreendor-upload-banner dokan-btn dokan-btn-info dokan-theme"><?php _e( 'Upload banner', 'woofreendor' ); ?></a>
+                    <a href="#" class="woofreendor-upload-banner dokan-btn dokan-btn-info dokan-theme"><?php _e( 'Upload banner', 'dokan-lite' ); ?></a>
                     <p class="help-block">
                         <?php
                         /**
@@ -74,7 +77,7 @@
                         $banner_height = ! empty( $general_settings['store_banner_height'] ) ? $general_settings['store_banner_height'] : 300;
 
                         $help_text = sprintf(
-                            __('Upload a banner for your store. Banner size is (%sx%s) pixels.', 'woofreendor' ),
+                            __('Upload a banner for your store. Banner size is (%sx%s) pixels.', 'dokan-lite' ),
                             $banner_width, $banner_height
                         );
 
@@ -84,10 +87,10 @@
                 </div>
             </div> <!-- .dokan-banner -->
 
-            <?php do_action( 'dokan_settings_after_banner', $current_tenant, $tenant_profile ); ?>
+            <?php do_action( 'dokan_settings_after_banner', $current_user, $profile_info ); ?>
 
         <div class="dokan-form-group">
-            <label class="dokan-w3 dokan-control-label" for="dokan_gravatar"><?php _e( 'Profile Picture', 'woofreendor' ); ?></label>
+            <label class="dokan-w3 dokan-control-label" for="dokan_gravatar"><?php _e( 'Profile Picture', 'dokan-lite' ); ?></label>
 
             <div class="dokan-w5 dokan-gravatar">
                 <div class="dokan-left gravatar-wrap<?php echo $gravatar ? '' : ' dokan-hide'; ?>">
@@ -97,24 +100,24 @@
                     <a class="dokan-close dokan-remove-gravatar-image">&times;</a>
                 </div>
                 <div class="gravatar-button-area<?php echo $gravatar ? ' dokan-hide' : ''; ?>">
-                    <a href="#" class="woofreendor-upload-photo dokan-btn dokan-btn-default"><i class="fa fa-cloud-upload"></i> <?php _e( 'Upload Photo', 'woofreendor' ); ?></a>
+                    <a href="#" class="woofreendor-upload-photo dokan-btn dokan-btn-default"><i class="fa fa-cloud-upload"></i> <?php _e( 'Upload Photo', 'dokan-lite' ); ?></a>
                 </div>
             </div>
         </div>
 
         <div class="dokan-form-group">
-            <label class="dokan-w3 dokan-control-label" for="woofreendor_tenant_name"><?php _e( 'Tenant Name', 'woofreendor' ); ?></label>
+            <label class="dokan-w3 dokan-control-label" for="dokan_store_name"><?php _e( 'Store Name', 'dokan-lite' ); ?></label>
 
             <div class="dokan-w5 dokan-text-left">
-                <input id="woofreendor_tenant_name" required value="<?php echo $tenantname; ?>" name="woofreendor_tenant_name" placeholder="<?php _e( 'tenant name', 'woofreendor'); ?>" class="dokan-form-control" type="text">
+                <input id="dokan_store_name" required value="<?php echo $storename; ?>" name="dokan_store_name" placeholder="<?php _e( 'store name', 'dokan-lite'); ?>" class="dokan-form-control" type="text">
             </div>
         </div>
 
         <div class="dokan-form-group">
-            <label class="dokan-w3 dokan-control-label" for="woofreendor_tenant_opp"><?php _e( 'Outlet Per Page', 'woofreendor' ); ?></label>
+            <label class="dokan-w3 dokan-control-label" for="dokan_store_ppp"><?php _e( 'Store Product Per Page', 'dokan-lite' ); ?></label>
 
             <div class="dokan-w5 dokan-text-left">
-                <input id="woofreendor_tenant_opp" value="<?php echo $tenant_opp; ?>" name="woofreendor_tenant_opp" placeholder="10" class="dokan-form-control" type="number">
+                <input id="dokan_store_ppp" value="<?php echo $store_ppp; ?>" name="dokan_store_ppp" placeholder="10" class="dokan-form-control" type="number">
             </div>
         </div>
          <!--address-->
@@ -122,8 +125,8 @@
         <?php
         $verified = false;
 
-        if ( isset( $tenant_profile['dokan_verification']['info']['dokan_address']['v_status'] ) ) {
-            if ( $tenant_profile['dokan_verification']['info']['dokan_address']['v_status'] == 'approved' ){
+        if ( isset( $profile_info['dokan_verification']['info']['store_address']['v_status'] ) ) {
+            if ( $profile_info['dokan_verification']['info']['store_address']['v_status'] == 'approved' ){
                 $verified = true;
             }
         }
@@ -134,31 +137,31 @@
         <!--address-->
 
         <div class="dokan-form-group">
-            <label class="dokan-w3 dokan-control-label" for="setting_phone"><?php _e( 'Phone No', 'woofreendor' ); ?></label>
+            <label class="dokan-w3 dokan-control-label" for="setting_phone"><?php _e( 'Phone No', 'dokan-lite' ); ?></label>
             <div class="dokan-w5 dokan-text-left">
-                <input id="setting_phone" value="<?php echo $phone; ?>" name="setting_phone" placeholder="<?php _e( '+123456..', 'woofreendor' ); ?>" class="dokan-form-control input-md" type="text">
+                <input id="setting_phone" value="<?php echo $phone; ?>" name="setting_phone" placeholder="<?php _e( '+123456..', 'dokan-lite' ); ?>" class="dokan-form-control input-md" type="text">
             </div>
         </div>
 
         <div class="dokan-form-group">
-            <label class="dokan-w3 dokan-control-label"><?php _e( 'Email', 'woofreendor' ); ?></label>
+            <label class="dokan-w3 dokan-control-label"><?php _e( 'Email', 'dokan-lite' ); ?></label>
             <div class="dokan-w5 dokan-text-left">
                 <div class="checkbox">
                     <label>
                         <input type="hidden" name="setting_show_email" value="no">
-                        <input type="checkbox" name="setting_show_email" value="yes"<?php checked( $show_email, 'yes' ); ?>> <?php _e( 'Show email address in store', 'woofreendor' ); ?>
+                        <input type="checkbox" name="setting_show_email" value="yes"<?php checked( $show_email, 'yes' ); ?>> <?php _e( 'Show email address in store', 'dokan-lite' ); ?>
                     </label>
                 </div>
             </div>
         </div>
 
         <div class="dokan-form-group">
-            <label class="dokan-w3 dokan-control-label"><?php _e( 'More product', 'woofreendor' ); ?></label>
+            <label class="dokan-w3 dokan-control-label"><?php _e( 'More product', 'dokan-lite' ); ?></label>
             <div class="dokan-w5 dokan-text-left">
                 <div class="checkbox">
                     <label>
                         <input type="hidden" name="setting_show_more_ptab" value="no">
-                        <input type="checkbox" name="setting_show_more_ptab" value="yes"<?php checked( $show_more_ptab, 'yes' ); ?>> <?php _e( 'Enable tab on product single page view', 'woofreendor' ); ?>
+                        <input type="checkbox" name="setting_show_more_ptab" value="yes"<?php checked( $show_more_ptab, 'yes' ); ?>> <?php _e( 'Enable tab on product single page view', 'dokan-lite' ); ?>
                     </label>
                 </div>
             </div>
@@ -166,15 +169,15 @@
 
 
         <div class="dokan-form-group">
-            <label class="dokan-w3 dokan-control-label" for="setting_map"><?php _e( 'Map', 'woofreendor' ); ?></label>
+            <label class="dokan-w3 dokan-control-label" for="setting_map"><?php _e( 'Map', 'dokan-lite' ); ?></label>
 
             <div class="dokan-w6 dokan-text-left">
                 <input id="dokan-map-lat" type="hidden" name="location" value="<?php echo $map_location; ?>" size="30" />
 
                 <div class="dokan-map-wrap">
                     <div class="dokan-map-search-bar">
-                        <input id="dokan-map-add" type="text" class="dokan-map-search" value="<?php echo $map_address; ?>" name="find_address" placeholder="<?php _e( 'Type an address to find', 'woofreendor' ); ?>" size="30" />
-                        <a href="#" class="dokan-map-find-btn" id="dokan-location-find-btn" type="button"><?php _e( 'Find Address', 'woofreendor' ); ?></a>
+                        <input id="dokan-map-add" type="text" class="dokan-map-search" value="<?php echo $map_address; ?>" name="find_address" placeholder="<?php _e( 'Type an address to find', 'dokan-lite' ); ?>" size="30" />
+                        <a href="#" class="dokan-map-find-btn" id="dokan-location-find-btn" type="button"><?php _e( 'Find Address', 'dokan-lite' ); ?></a>
                     </div>
 
                     <div class="dokan-google-map" id="dokan-map"></div>
@@ -182,18 +185,50 @@
             </div> <!-- col.md-4 -->
         </div> <!-- .dokan-form-group -->
 
+        <!--terms and conditions enable or not -->
+        <?php
+        $tnc_enable = dokan_get_option( 'seller_enable_terms_and_conditions', 'dokan_general', 'off' );
+        if ( $tnc_enable == 'on' ) :
+            ?>
+            <div class="dokan-form-group">
+                <label class="dokan-w3 dokan-control-label"><?php _e( 'Terms and Conditions', 'dokan-lite' ); ?></label>
+                <div class="dokan-w5 dokan-text-left dokan_tock_check">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" id="dokan_store_tnc_enable" value="on" <?php echo $enable_tnc == 'on' ? 'checked':'' ; ?> name="dokan_store_tnc_enable" ><?php _e( 'Show terms and conditions in store page', 'dokan-lite' ); ?>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="dokan-form-group" id="dokan_tnc_text">
+                <label class="dokan-w3 dokan-control-label" for="dokan_store_tnc"><?php _e( 'TOC Details', 'dokan-lite' ); ?></label>
+                <div class="dokan-w8 dokan-text-left">
+                    <?php
+                        $settings = array(
+                            'editor_height' => 200,
+                            'media_buttons' => false,
+                            'teeny'         => true,
+                            'quicktags'     => false
+                        );
+                        wp_editor( $store_tnc, 'dokan_store_tnc', $settings );
+                    ?>
+                </div>
+            </div>
 
-        <?php do_action( 'dokan_settings_form_bottom', $current_tenant, $tenant_profile ); ?>
+        <?php endif;?>
+
+
+        <?php do_action( 'dokan_settings_form_bottom', $current_user, $profile_info ); ?>
 
         <div class="dokan-form-group">
 
             <div class="dokan-w4 ajax_prev dokan-text-left" style="margin-left:24%;">
-                <input type="submit" name="woofreendor_update_tenant_settings" class="dokan-btn dokan-btn-danger dokan-btn-theme" value="<?php esc_attr_e( 'Update Settings', 'woofreendor' ); ?>">
+                <input type="submit" name="dokan_update_store_settings" class="dokan-btn dokan-btn-danger dokan-btn-theme" value="<?php esc_attr_e( 'Update Settings', 'dokan-lite' ); ?>">
             </div>
         </div>
     </form>
 
-    <?php do_action( 'dokan_settings_after_form', $current_tenant, $tenant_profile ); ?>
+    <?php do_action( 'dokan_settings_after_form', $current_user, $profile_info ); ?>
 
 <style>
     .dokan-settings-content .dokan-settings-area .dokan-banner {

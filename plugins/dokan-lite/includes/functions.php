@@ -651,7 +651,7 @@ function dokan_get_template_part( $slug, $name = '', $args = array() ) {
     $defaults = array(
         'pro' => false
     );
-
+// var_dump("FUUUUUUUUUUUUUUUUUU");
     $args = wp_parse_args( $args, $defaults );
 
     if ( $args && is_array( $args ) ) {

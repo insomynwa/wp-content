@@ -13,9 +13,9 @@ class Woofreendor_Template_Main {
      * @since 2.4
      */
     function __construct() {
-        remove_action( 'dokan_dashboard_content_before', array( Dokan_Template_Main::init(), 'get_dashboard_side_navigation' ), 10 );
-        add_action( 'dokan_dashboard_content_before', array( $this, 'get_dashboard_side_navigation' ), 10 );
+        // remove_action( 'dokan_dashboard_content_before', array( Dokan_Template_Main::init(), 'get_dashboard_side_navigation' ), 10 );
         add_action( 'woofreendor_dashboard_content_before', array( $this, 'get_dashboard_side_navigation' ), 10 );
+        // add_action( 'woofreendor_dashboard_content_before', array( $this, 'get_dashboard_side_navigation' ), 10 );
     }
 
     /**
@@ -43,7 +43,7 @@ class Woofreendor_Template_Main {
     public function get_dashboard_side_navigation() {
     	global $wp;
     	$request = $wp->request;
-        //var_dump($request);
+        // var_dump($request);
     	$active = explode('/', $request );
     	unset( $active[0] );
 
@@ -58,7 +58,7 @@ class Woofreendor_Template_Main {
                 $active_menu = 'outlets';
             }
     	} else {
-    		$active_menu = 'dashboard';
+    		$active_menu = 'tenant-dashboard';
     	}
 
     	woofreendor_get_template_part( 'global/dashboard-nav', '', array( 'active_menu' => apply_filters( 'dokan_dashboard_nav_active', $active_menu, $request, $active ) ) );

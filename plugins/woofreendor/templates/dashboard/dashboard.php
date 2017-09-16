@@ -11,15 +11,15 @@
 ?>
 <div class="dokan-dashboard-wrap">
     <?php
-
+// var_dump("template-dashboard.. dashboard.php");
         /**
-         *  dokan_dashboard_content_before hook
+         *  woofreendor_dashboard_content_before hook
          *
-         *  @hooked get_dashboard_side_navigation
+         *  @hooked get_dashboard_side_navigation in woofreendor-template-main.php
          *
          *  @since 2.4
          */
-        do_action( 'dokan_dashboard_content_before' );
+        do_action( 'woofreendor_dashboard_content_before' );
     ?>
 
     <div class="dokan-dashboard-content">
@@ -33,7 +33,7 @@
              *
              *  @since 2.4
              */
-            do_action( 'woofreendor_dashboard_content_inside_before' );
+            // do_action( 'woofreendor_dashboard_content_inside_before' );
         ?>
 
         <article class="dashboard-content-area">
@@ -91,7 +91,7 @@
              *
              *  @since 2.4
              */
-            do_action( 'dokan_dashboard_content_inside_after' );
+            // do_action( 'dokan_dashboard_content_inside_after' );
         ?>
 
 

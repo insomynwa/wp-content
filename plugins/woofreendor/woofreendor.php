@@ -300,6 +300,9 @@ final class Woofreendor{
         ) {
             //$dokan = WeDevs_Dokan::init();
             $this->woofreendor_dashboard_scripts();
+            if ( isset( $wp->query_vars['settings'] ) == 'tenant' ) {
+                wp_enqueue_script( 'wc-country-select' );
+            }
 
             // wp_enqueue_style( 'dokan-pro-style' );
             wp_enqueue_style( 'woofreendor-style', WOOFREENDOR_PLUGIN_ASSEST . '/css/style.css', false, time(), 'all' );
@@ -348,6 +351,7 @@ final class Woofreendor{
         ){
             $paramDefaultArgs = true;
         }
+        // var_dump($paramDefaultArgs);die;
         return $paramDefaultArgs;
     }
 

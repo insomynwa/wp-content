@@ -418,7 +418,7 @@
         $(element).closest('.form-group').removeClass('has-error');
     };
 
-    // var api = wp.customize;
+    var api = wp.customize;
 
     var Woofreendor_Settings = {
         init: function() {
@@ -504,16 +504,18 @@
                 w = attachment.width,
                 h = attachment.height;
             this.setImageFromURL(url, attachment.id, w, h);
+            // console.log(this.frame.states.models);
             // this.frame.setState('cropper');
         },
 
-        /* onCropped: function(croppedImage) {
-            var url = croppedImage.url,
+        onCropped: function(croppedImage) {
+            // console.log(croppedImage);
+            /* var url = croppedImage.url,
                 attachmentId = croppedImage.attachment_id,
                 w = croppedImage.width,
-                h = croppedImage.height;
-            this.setImageFromURL(url, attachmentId, w, h);
-        }, */
+                h = croppedImage.height; */
+            //this.setImageFromURL(url, attachmentId, w, h);
+        },
 
         /* onSkippedCrop: function(selection) {
             var url = selection.get('url'),
@@ -583,7 +585,7 @@
 
         },
 
-        /* calculateImageSelectOptionsProfile: function(attachment, controller) {
+        calculateImageSelectOptionsProfile: function(attachment, controller) {
             var xInit = 150,
                 yInit = 150,
                 flexWidth = !! parseInt(dokan.store_banner_dimension['flex-width'], 10),
@@ -605,7 +607,7 @@
             });
 
             controller.set( 'canSkipCrop', ! this.headerImage.shouldBeCropped() );
-
+            // console.log(this.headerImage);
             ratio = xInit / yInit;
             xImg = realWidth;
             yImg = realHeight;
@@ -642,7 +644,7 @@
             }
 
             return imgSelectOptions;
-        }, */
+        },
 
         /* simpleImageUpload : function(e) {
             e.preventDefault();
@@ -691,13 +693,13 @@
             settings.frame = wp.media({
                 multiple: false,
                 button: {
-                    text: 'Select Photo',//dokan.selectAndCrop,
+                    text: 'Select',//dokan.selectAndCrop,
                     close: true//false
                 },
                 title: 'Select Photo'
                 /* states: [
                     new wp.media.controller.Library({
-                        title:     dokan.chooseImage,
+                        title:     'Select Photo',
                         library:   wp.media.query({ type: 'image' }),
                         multiple:  false,
                         date:      false,
@@ -706,15 +708,15 @@
                         suggestedHeight: 150
                     }),
                     new wp.media.controller.Cropper({
-                        imgSelectOptions: settings.calculateImageSelectOptionsProfile
+                        imgSelectOptions: settings.calculateImageSelectOptionsProfile,
                     })
                 ] */
             });
 
             settings.frame.on('select', settings.onSelect, settings);
-            /* settings.frame.on('cropped', settings.onCropped, settings);
-            settings.frame.on('skippedcrop', settings.onSkippedCrop, settings); */
-            // console.log(settings);
+            // settings.frame.on('cropped', settings.onCropped, settings);
+            // settings.frame.on('skippedcrop', settings.onSkippedCrop, settings);
+            // console.log(settings.frame);
             settings.frame.open();
 
         },

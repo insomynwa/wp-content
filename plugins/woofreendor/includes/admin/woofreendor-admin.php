@@ -62,8 +62,8 @@ class Woofreendor_Admin{
 		if ( !is_admin())
 			return;
 
-		$tenant = get_role('shop_manager');
-		// var_dump($tenant->capabilities);
+		$tenant = get_role('seller');
+		var_dump($tenant->capabilities);
 		/*global $submenu, $menu, $pagenow;
 
 		//	var_dump(get_taxonomy('product_cat'));die;

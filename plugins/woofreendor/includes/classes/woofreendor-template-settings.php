@@ -22,18 +22,24 @@ class Woofreendor_Template_Settings {
      * @return void
      */
     public function __construct() {
-        $this->current_tenant = get_current_user_id();
-        $this->tenant_profile = woofreendor_get_tenant_info( get_current_user_id() );
+        
+        // add_action( 'dokan_settings_content_inside_before', array( $this, 'show_enable_seller_message' ) );
+        // add_action( 'dokan_settings_content_area_header', array( $this, 'render_settings_header' ), 10 );
+        // add_action( 'dokan_settings_content_area_header', array( $this, 'render_settings_help' ), 15 );
+        // add_action( 'dokan_settings_content_area_header', array( $this, 'render_settings_load_progressbar' ), 20 );
+        // add_action( 'dokan_settings_content_area_header', array( $this, 'render_settings_store_errors' ), 25 );
+        // add_action( 'dokan_settings_content', array( $this, 'render_settings_content' ), 10 );
 
         // add_filter( 'dokan_get_dashboard_settings_nav', array( $this, 'load_settings_menu' ), 10 );
-        add_filter( 'dokan_dashboard_settings_heading_title', array( $this, 'load_settings_header' ), 10, 2 );
+        // add_filter( 'woofreendor_settings_content_area_header', array( $this, 'render_settings_header' ), 10, 2 );
         // add_filter( 'dokan_dashboard_settings_helper_text', array( $this, 'load_settings_helper_text' ), 10, 2 );
 
         // add_action( 'dokan_ajax_settings_response', array( $this, 'add_progressbar_in_settings_save_response' ), 10 );
         // add_action( 'dokan_settings_load_ajax_response', array( $this, 'render_pro_settings_load_progressbar' ), 25 );
         // add_action( 'dokan_settings_render_profile_progressbar', array( $this, 'load_settings_progressbar' ), 10, 2 );
         // add_action( 'dokan_settings_content_area_header', array( $this, 'render_shipping_status_message' ), 25 );
-        add_action( 'dokan_render_settings_content', array( $this, 'load_settings_content' ), 10 );
+        add_action( 'woofreendor_settings_content_area_header', array( $this, 'render_settings_header' ), 10 );
+        add_action( 'woofreendor_settings_content', array( $this, 'render_settings_content' ), 10 );
         // add_action( 'dokan_settings_form_bottom', array( $this, 'add_discount_option' ), 10, 2 );
         // add_action( 'dokan_store_profile_saved', array( $this, 'save_store_discount_data' ), 10, 2 );
     }
@@ -65,9 +71,10 @@ class Woofreendor_Template_Settings {
      *
      * @return void
      */
-    public function load_settings_content( $query_vars ) {
-
-        if ( isset( $query_vars['settings'] ) && $query_vars['settings'] == 'tenant' ) {
+    public function render_settings_content( ) {
+        global $wp;
+        // var_dump($query_vars);
+        if ( isset( $wp->query_vars['settings'] ) && $wp->query_vars['settings'] == 'tenant' ) {
             $this->load_tenant_content();
         }
     }
@@ -80,12 +87,14 @@ class Woofreendor_Template_Settings {
      * @return void
      */
     public function load_tenant_content() {
-
+        $validate = $this->validate();
+        $current_tenant = get_current_user_id();
+        $tenant_profile = woofreendor_get_tenant_info( get_current_user_id() );
         // var_dump(get_user_meta( $this->current_tenant, 'woofreendor_profile_settings', true ));
         woofreendor_get_template_part( 'settings/tenant-form', '', array(
-            'pro'           => true,
-            'current_tenant'  => $this->current_tenant,
-            'tenant_profile'  => $this->tenant_profile,
+            'current_user'  => $current_tenant,
+            'profile_info'  => $tenant_profile,
+            'validate'        => $validate
         ) );
     }
     
@@ -102,11 +111,11 @@ class Woofreendor_Template_Settings {
             wp_send_json_error( __( 'Are you cheating?', 'woofreendor' ) );
         }
 
-        $_POST['woofreendor_update_profile'] = '';
+        $_POST['dokan_update_profile'] = '';
 
         switch( $_POST['form_id'] ) {
             case 'tenant-form':
-                if ( !wp_verify_nonce( $_POST['_wpnonce'], 'woofreendor_tenant_settings_nonce' ) ) {
+                if ( !wp_verify_nonce( $_POST['_wpnonce'], 'dokan_store_settings_nonce' ) ) {
                     wp_send_json_error( __( 'Are you cheating?', 'woofreendor' ) );
                 }
                 $ajax_validate =  $this->tenant_validate();
@@ -140,7 +149,7 @@ class Woofreendor_Template_Settings {
             return false;
         }
 
-        if ( !wp_verify_nonce( $_POST['_wpnonce'], 'woofreendor_tenant_settings_nonce' ) ) {
+        if ( !wp_verify_nonce( $_POST['_wpnonce'], 'dokan_store_settings_nonce' ) ) {
             wp_die( __( 'Are you cheating?', 'woofreendor' ) );
         }
 
@@ -166,8 +175,8 @@ class Woofreendor_Template_Settings {
      * @return void
      */
     function validate() {
-
-        if ( !isset( $_POST['woofreendor_update_profile'] ) ) {
+        
+        if ( !isset( $_POST['dokan_update_profile'] ) ) {
             return false;
         }
 
@@ -177,10 +186,24 @@ class Woofreendor_Template_Settings {
 
         $error = new WP_Error();
 
-        $tenant_name = sanitize_text_field( $_POST['woofreendor_tenant_name'] );
+        $dokan_name = sanitize_text_field( $_POST['woofreendor_tenant_name'] );
 
-        if ( empty( $tenant_name ) ) {
+        if ( empty( $dokan_name ) ) {
             $error->add( 'tenant_name', __( 'Tenant name required', 'woofreendor' ) );
+        }
+
+        // if ( isset( $_POST['setting_category'] ) ) {
+
+        //     if ( !is_array( $_POST['setting_category'] ) || !count( $_POST['setting_category'] ) ) {
+        //         $error->add( 'woofreendor_type', __( 'Tenant type required', 'woofreendor' ) );
+        //     }
+        // }
+
+        if ( !empty( $_POST['setting_paypal_email'] ) ) {
+            $email = filter_var( $_POST['setting_paypal_email'], FILTER_VALIDATE_EMAIL );
+            if ( empty( $email ) ) {
+                $error->add( 'woofreendor_email', __( 'Invalid email', 'woofreendor' ) );
+            }
         }
 
         /* Address Fields Validation */
@@ -219,12 +242,12 @@ class Woofreendor_Template_Settings {
         $existing_woofreendor_settings = get_user_meta( $tenant_id, 'woofreendor_profile_settings', true );
         $prev_woofreendor_settings     = ! empty( $existing_woofreendor_settings ) ? $existing_woofreendor_settings : array();
 
-        if ( wp_verify_nonce( $_POST['_wpnonce'], 'woofreendor_tenant_settings_nonce' ) ) {
+        if ( wp_verify_nonce( $_POST['_wpnonce'], 'dokan_store_settings_nonce' ) ) {
 
             //update store setttings info
             $woofreendor_settings = array(
-                'tenant_name'                   => sanitize_text_field( $_POST['woofreendor_tenant_name'] ),
-                'tenant_opp'                    => absint( $_POST['woofreendor_tenant_opp'] ),
+                'tenant_name'                   => sanitize_text_field( $_POST['dokan_store_name'] ),
+                'tenant_opp'                    => absint( $_POST['dokan_store_ppp'] ),
                 'address'                      => isset( $_POST['dokan_address'] ) ? $_POST['dokan_address'] : $prev_woofreendor_settings['address'],
                 'location'                     => sanitize_text_field( $_POST['location'] ),
                 'find_address'                 => sanitize_text_field( $_POST['find_address'] ),
@@ -402,12 +425,17 @@ class Woofreendor_Template_Settings {
      *
      * @return string
      */
-    public function load_settings_header( $header, $query_vars ) {
-        if ( $query_vars == 'tenant' ) {
-            $header = __( 'Tenant Profiles', 'woofreendor' );
+    public function render_settings_header(  ) {
+        global $wp;
+        if ( isset( $wp->query_vars['settings'] ) && $wp->query_vars['settings'] == 'tenant' ) {
+            $heading = __( 'Settings', 'woofreendor' );
+        } elseif ( isset( $wp->query_vars['settings'] ) && $wp->query_vars['settings'] == 'payment' ) {
+            //$heading = __( 'Payment Settings', 'woofreendor' );
+        } else {
+            //$heading = apply_filters( 'dokan_dashboard_settings_heading_title', __( 'Settings', 'woofreendor' ), $wp->query_vars['settings'] );
         }
 
-        return $header;
+        woofreendor_get_template_part( 'settings/header', '', array( 'heading' => $heading ) );
     }
 
     /**

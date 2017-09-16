@@ -63,7 +63,7 @@ class Woofreendor_Template_Shortcodes {
             dokan_get_template_part( 'withdraw/withdraw' );
             return ob_get_clean();
         }
-
+// var_dump($wp->query_vars);
         if ( woofreendor_is_user_tenant( get_current_user_id() ) && isset( $wp->query_vars['settings'] )) {
             //var_dump("FFFFFFFFFFFF");
             woofreendor_get_template_part('settings/tenant');
@@ -76,11 +76,23 @@ class Woofreendor_Template_Shortcodes {
         }
         
         if ( isset( $wp->query_vars['page'] ) ) {
-            dokan_get_template_part( 'dashboard/dashboard' );
+            
+            //var_dump($wp->query_vars['page']);
+            if(! woofreendor_is_user_tenant( get_current_user_id() )){
+                dokan_get_template_part( 'dashboard/dashboard' );
+            }else{
+                woofreendor_get_template_part( 'dashboard/dashboard' );
+            }
+            
             return ob_get_clean();
         }
         if ( isset( $wp->query_vars['edit-account'] ) ) {
-            dokan_get_template_part( 'dashboard/edit-account' );
+            if(! woofreendor_is_user_tenant( get_current_user_id() )){
+                dokan_get_template_part( 'dashboard/edit-account' );
+            }else{
+                woofreendor_get_template_part( 'dashboard/edit-account' );
+            }
+            
             return ob_get_clean();
         }
         
