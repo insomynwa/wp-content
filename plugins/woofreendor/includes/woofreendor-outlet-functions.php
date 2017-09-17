@@ -4,16 +4,18 @@ function woofreendor_save_outlet_ajax($paramPostData){
 
 	$post_tenant_id = sanitize_text_field( $paramPostData['tenant_id'] );
     // $post_binder_group = sanitize_text_field( $paramPostData['binder_group'] );
+    $post_name = sanitize_text_field( $paramPostData['outlet_name'] );
     $post_email = sanitize_text_field( $paramPostData['outlet_email'] );
     $post_password = sanitize_text_field( $paramPostData['outlet_password'] );
     $post_username = sanitize_text_field( $paramPostData['outlet_username'] );
 
     $isValidPost =
-        intval($post_tenant_id) > 0                &&
+        intval($post_tenant_id) > 0         &&
         // intval($post_binder_group) > 0            &&
-        $post_email != ""              &&
-        $post_password != ""                 &&
-        $post_username != ""
+        $post_email != ""                   &&
+        $post_password != ""                &&
+        $post_username != ""                && 
+        $post_name != ""
     ;
 
     if($isValidPost){
@@ -27,6 +29,9 @@ function woofreendor_save_outlet_ajax($paramPostData){
         }
         if(empty($post_password) || is_null($post_password)){
             $status = false;
+        }
+        if(empty($post_name) || is_null($post_name) ) {
+            $status == false;
         }
         if($status){
             if(username_exists($post_username)){
@@ -44,13 +49,16 @@ function woofreendor_save_outlet_ajax($paramPostData){
             if(strlen($post_password) < 5){
                 $status = false;
             }
+            if(strlen($post_name) < 6){
+                $status = false;
+            }
             if($status){
                 $outlet_data = array(
                     'user_login'    => $post_username,
                     'user_pass'     => $post_password,
                     'user_email'    => $post_email,
                     'role'          => 'seller',
-                    'display_name'  => ucfirst($post_username)
+                    'display_name'  => $post_name
                     );
 
                 $new_outlet_id = wp_insert_user($outlet_data);
@@ -77,6 +85,7 @@ function woofreendor_save_outlet_ajax($paramPostData){
 
 function woofreendor_update_outlet_ajax($paramPostData){
 
+    $name = sanitize_text_field($paramPostData['outlet_name']);
     $email = sanitize_text_field($paramPostData['outlet_email']);
     $password = sanitize_text_field($paramPostData['outlet_password']);
     $outlet_id = sanitize_text_field($paramPostData['outlet_id']);
@@ -91,6 +100,10 @@ function woofreendor_update_outlet_ajax($paramPostData){
     $outlet_data['ID'] = $outlet_id;
 
     $status_dif = false;
+    if(!empty($name) && !is_null($name) && !(strlen($name) < 6)){
+        $status_dif = true;
+        $outlet_data['display_name'] = $name;
+    }
     if(!empty($email) && !is_null($email) && !(strlen($email) < 6) && (!email_exists($email))){
         $status_dif = true;
         $outlet_data['user_email'] = $email;
@@ -103,6 +116,11 @@ function woofreendor_update_outlet_ajax($paramPostData){
     if($status_dif){
         $updated_outlet_id = wp_update_user($outlet_data);
         if($updated_outlet_id){
+            $info = get_user_meta( $updated_outlet_id, 'dokan_profile_settings', true );
+            $info = is_array( $info ) ? $info : array();
+            $info['store_name'] = $name;
+            update_user_meta( $updated_outlet_id, 'dokan_profile_settings', $info );
+            update_user_meta( $updated_outlet_id, 'dokan_store_name', $name );
             return intval($outlet_id);
         }
     }
@@ -132,6 +150,13 @@ function woofreendor_delete_outlet_ajax($paramPostData){
             foreach ($batches['batches'] as $batch) {
                 woofreendor_permanently_delete_product($batch->ID);
             }
+        }
+
+        $cache_key = 'woofreendor-count-outlets-' . $owner;
+        $counts = wp_cache_get( $cache_key, 'woofreendor' );
+
+        if(false !== $counts){
+            wp_cache_delete($cache_key,'woofreendor');
         }
         return true;
     }

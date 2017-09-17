@@ -14,9 +14,9 @@
 
             $( 'body' ).on( 'click', 'a#woofreendor-add-new-outlet-btn', this.actionOutletPopup );
             $( 'body' ).on( 'click', 'a.woofreendor_update_outlet', this.actionOutletPopup );
-            $( 'body' ).on( 'click', '#woofreendor-popup-outlet-footer input[type="submit"]', this.actionSubmitOutlet );
+            $( 'body' ).on( 'click', '#woofreendor-popup-outlet-footer-add input[type="submit"]', this.actionSubmitOutlet );
             $( 'body' ).on( 'click', 'a.woofreendor_delete_outlet', this.deleteOutletPopup );
-            $( 'body' ).on( 'click', '#woofreendor-popup-outlet-delete-footer input[type="submit"]', this.deleteOutlet );
+            $( 'body' ).on( 'click', '#woofreendor-popup-outlet-footer-delete input[type="submit"]', this.deleteOutlet );
         },
 
         actionOutletPopup: function(e){
@@ -41,26 +41,54 @@
         actionSubmitOutlet: function(e){
             e.preventDefault();
             var act = $( "input[name='outlet_action']").val();
+            
+            var self = $(this),
+                form = self.closest('form#woofreendor-add-update-popup-outlet-form');
+
+            var elem_error = form.find( 'span.woofreendor-popup-error' ),
+                elem_spinner = form.find( 'span.woofreendor-popup-spinner' ),
+                elem_button = form.find( '#woofreendor-popup-outlet-footer-add input[type="submit"]' ),
+                elem_in_name = form.find( 'input[name="outlet_name"]' ),
+                elem_in_username = form.find( 'input[name="outlet_username"]' );
+
+            if ( elem_in_name.val() == '' || (elem_in_name.val()).trim() == '') {
+                elem_in_name.val('');
+                elem_error.html( woofreendor.outlet_name_required );
+                elem_in_name.focus();
+                return;
+            }
+            if ( (elem_in_name.val()).trim().length < 6 ) {
+                elem_error.html( woofreendor.outlet_name_min_error );
+                elem_in_name.focus();
+                return;
+            }
+            if ( elem_in_username.val() == '' || (elem_in_username.val()).trim() == '') {
+                elem_in_username.val('');
+                elem_error.html( woofreendor.outlet_username_required );
+                elem_in_name.focus();
+                return;
+            }
+            if ( (elem_in_username.val()).trim().length < 6 ) {
+                elem_error.html( woofreendor.outlet_username_min_error );
+                elem_in_name.focus();
+                return;
+            }
+              
+            elem_error.html('');
+            elem_spinner.css( 'display', 'inline-block' );
+            elem_button.attr('disabled',true);
+          
+            var data_outlet = {
+                data: form.serialize(),
+                error_area: elem_error,
+                spinner_area: elem_spinner,
+                button: elem_button
+            };
+
             if(act=='create'){
-
-                var self = $(this),
-                    form = self.closest('form#woofreendor-add-update-popup-outlet-form'),
-                    btn_id = self.attr('data-btn_id');
-
-                form.find( 'span.woofreendor-show-popup-outlet-error' ).html('');
-                form.find( 'span.woofreendor-popup-outlet-spinner' ).css( 'display', 'inline-block' );
-
-                Woofreendor_Editor.createNewOutlet(form.serialize());
+                Woofreendor_Editor.createNewOutlet(data_outlet);
             }else if(act=='update'){
-
-                var self = $(this),
-                    form = self.closest('form#woofreendor-add-update-popup-outlet-form'),
-                    btn_id = self.attr('data-btn_id');
-
-                form.find( 'span.woofreendor-show-popup-outlet-error' ).html('');
-                form.find( 'span.woofreendor-popup-outlet-spinner' ).css( 'display', 'inline-block' );
-
-                Woofreendor_Editor.updateOutlet(form.serialize());
+                Woofreendor_Editor.updateOutlet(data_outlet);
             }
         },
 
@@ -112,6 +140,7 @@
                     open: function() {
                         if(data_outlet){
                             $( "h2.woofreendor_outlet_popup_title").html( 'Update - ' + data_outlet.displayname);
+                            $( "input[name='outlet_name']" ).val( data_outlet.displayname );
                             $( "input[name='outlet_username']" ).val( data_outlet.username ).attr('readonly','readonly');
                             $( "input[name='outlet_email']" ).val( data_outlet.email );
                             $( "input[name='outlet_id']" ).val( data_outlet.id );
@@ -228,15 +257,12 @@
             });
         },
 
-        createNewOutlet: function(data_new) {
-            // e.preventDefault();
-
+        createNewOutlet: function(paramData) {
             var data = {
                 action:   'woofreendor_create_new_outlet',
-                postdata: data_new,
+                postdata: paramData.data,
                 security : woofreendor.add_outlet_nonce
             };
-            //console.log(data);
 
             $.post( woofreendor.ajaxurl, data, function( resp ) {
                 
@@ -280,16 +306,14 @@
             });
         },
 
-        updateOutlet: function(data_new){
-            //e.preventDefault();
-
-
+        updateOutlet: function(paramData){
+            
             var data = {
                 action:   'woofreendor_update_outlet',
-                postdata: data_new,
+                postdata: paramData.data,
                 security : woofreendor.update_outlet_nonce
             };
-            // console.log(data);
+            
             $.post( woofreendor.ajaxurl, data, function( resp ) {
                 if ( resp.success ) {
                     $.magnificPopup.close();
@@ -337,8 +361,8 @@
                 form = self.closest('form#woofreendor-popup-delete-outlet-form');
 
             form.find( 'span.woofreendor-show-add-outlet-error' ).html('');
-            form.find( 'span.woofreendor-delete-outlet-spinner' ).css( 'display', 'inline-block' );
-            form.find( '.batch-container-delete-footer input[type="submit"]' ).attr('disabled',true);
+            form.find( 'span.woofreendor-popup-spinner' ).css( 'display', 'inline-block' );
+            form.find( '#woofreendor-popup-outlet-footer-delete input[type="submit"]' ).attr('disabled',true);
 
             var data = {
                 action:   'woofreendor_delete_outlet',
@@ -352,8 +376,8 @@
                     location.reload();
                 } else {
                     $( '.woofreendor-show-add-outlet-error' ).html( resp.data );
-                    form.find( 'span.woofreendor-delete-outlet-spinner' ).css( 'display', 'none' );
-                    form.find( '.batch-container-delete-footer input[type="submit"]' ).attr('disabled',false);
+                    form.find( 'span.woofreendor-popup-spinner' ).css( 'display', 'none' );
+                    form.find( '#woofreendor-popup-outlet-footer-delete input[type="submit"]' ).attr('disabled',false);
                 }
             });
         },
@@ -374,29 +398,22 @@
                 }
                 $( 'span.woofreendor-add-new-batch-spinner' ).css( 'display', 'none' );
             });    
-        },
+        }/* ,
 
-        inputValidate: function( e ) {
-            e.preventDefault();
-
-            if ( $( '#post_title' ).val().trim() == '' ) {
-                $( '#post_title' ).focus();
-                $( 'div.dokan-product-title-alert' ).removeClass('dokan-hide');
-                return;
-            }else{
-                $( 'div.dokan-product-title-alert' ).hide();
+        isValid: function( input_type, input_value){
+            var validation = {
+                status: false,
+                error: ''
+            };
+            switch( input_type){
+                case 'outlet_name':
+                    if( input_value == "" ) validation.error = woofreendor.outlet_name_required;
+                    else if( input_value < 6 ) validation.error = woofreendor.outlet_name_min_error;
+                    else validation.error = '';
+                    break;
             }
-
-            if ( $( 'select.product_cat' ).val() == -1 ) {
-                $( 'select.product_cat' ).focus();
-                $( 'div.dokan-product-cat-alert' ).removeClass('dokan-hide');
-                return;
-            }else{
-                $( 'div.dokan-product-cat-alert' ).hide();
-            }
-            $( 'input[type=submit]' ).attr( 'disabled', 'disabled' );
-            this.submit();
-        }
+            return validation;
+        } */
     };
 
     // On DOM ready

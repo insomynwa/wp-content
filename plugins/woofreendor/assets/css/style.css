@@ -1,3 +1,44 @@
+.woofreendor-popup h2 {
+  padding: 0px 20px 16px;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 0px;
+  font-size: 22px;
+  color: #5d5d5d;
+  margin-top: 15px;
+  position: absolute;
+  overflow: hidden;
+  width: 690px;
+  z-index: 999999;
+  background: #fff;
+  margin-top: 0px;
+  padding-top: 16px;
+  -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+.woofreendor-popup .woofreendor-popup-form-container {
+  padding: 80px 20px 20px;
+  margin-top: 30px;
+  height: 550px;
+  overflow-y: scroll;
+}
+
+.woofreendor-popup .woofreendor-popup-form-container-footer {
+  padding: 10px 20px;
+  border-top: 1px solid #eee;
+  text-align: right;
+}
+.woofreendor-popup .woofreendor-popup-form-container-footer .woofreendor-popup-spinner {
+  position: static;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+.woofreendor-popup .woofreendor-popup-form-container-footer .woofreendor-popup-error {
+  color: #d9534f;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
 .batch-container-footer ,.batch-container-delete-footer{
   padding: 10px 20px;
   border-top: 1px solid #eee;

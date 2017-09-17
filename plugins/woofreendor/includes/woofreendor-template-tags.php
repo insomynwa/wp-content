@@ -44,7 +44,7 @@ function woofreendor_get_dashboard_nav() {
         ),
         'outlets' => array(
             'title' => __( 'Outlets', 'woofreendor'),
-            'icon'  => '<i class="fa fa-briefcase"></i>',
+            'icon'  => '<i class="fa fa-university"></i>',
             'url'   => woofreendor_get_navigation_url( 'outlets' ),
             'pos'   => 30
         )
