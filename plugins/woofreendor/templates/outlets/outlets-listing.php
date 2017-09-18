@@ -72,6 +72,10 @@
                             // if($pagenum==1) $offset=0;
                             // else $offset = ($pagenum-1)*$no;
                             //$binder_group = woofreendor_get_binder_group( get_current_user_id());
+                            $paged       = isset( $_GET['pagenum'] ) ? absint( $_GET['pagenum'] ) : 1;
+                            $limit       = 10;
+                            $offset      = ( $paged - 1 ) * $limit;
+                            $count       = 0;
                             $args = array(
                                 'role' => 'seller', 
                                 'number' => $limit, 
@@ -82,10 +86,6 @@
                                 'meta_value'     => get_current_user_id()
                                 );
                             // var_dump(woofreendor_get_binder_group( get_current_user_id()));
-                            $paged       = isset( $_GET['pagenum'] ) ? absint( $_GET['pagenum'] ) : 1;
-                            $limit       = 10;
-                            $count       = 0;
-                            $offset      = ( $paged - 1 ) * $limit;
                             $user_search = new WP_User_Query( $args );
                             $outlets     = (array) $user_search->get_results();
 
@@ -94,8 +94,8 @@
                                 foreach ($outlets as $outlet) {
                                     ?>
                                 <tr>
-                                    <td>#</td>
-                                    <td><?php echo $outlet->display_name; ?>
+                                    <td><a href="<?php echo dokan_get_store_url( $outlet->ID ); ?>"><?php echo get_avatar($outlet->ID); ?></a></td>
+                                    <td><a href="<?php echo dokan_get_store_url( $outlet->ID ); ?>"><?php echo $outlet->display_name; ?></a>
                                         <input type="hidden" name="outlet_displayname_<?php echo $outlet->ID; ?>" value="<?php echo $outlet->display_name; ?>">
                                     </td>
                                     <td><?php echo $outlet->user_login; ?>
@@ -134,7 +134,7 @@
 
                     $user_count = $user_search->total_users;
                     $num_of_pages = ceil( $user_count / $limit );
-                    $total_outlet = $outlet_query->total_users;
+                    // $total_outlet = $outlet_query->total_users;
                     if ( $num_of_pages > 1 ) {
                         echo '<div class="pagination-wrap">';
                         $page_links = paginate_links( array(

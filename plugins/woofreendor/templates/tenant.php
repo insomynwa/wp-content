@@ -34,6 +34,7 @@ get_header( 'shop' );
 
                         <?php foreach ( $outlets['users'] as $outlet ): ?>
                             <?php
+                            $image_size = 'full';
                             $store_info = dokan_get_store_info( $outlet->ID );
                             $banner_id  = isset( $store_info['banner'] ) ? $store_info['banner'] : 0;
                             $store_name = isset( $store_info['store_name'] ) ? esc_html( $store_info['store_name'] ) : __( 'N/A', 'dokan-lite' );

@@ -230,8 +230,10 @@ final class Woofreendor{
     }
 
     public function wp_title(  ) {
-        // global $paged, $page;
+        global $paged, $page;
         // var_dump($paged);
+        $title = '';
+        $sep = "-";
         if ( is_feed() ) {
             return $title;
         }

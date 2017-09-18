@@ -100,12 +100,12 @@ function woofreendor_get_dashboard_nav() {
      */
     return $nav_urls;
 }
-function woofreendor_tenants() {
+function woofreendor_tenants($atts) {
     $attr = shortcode_atts( apply_filters( 'woofreendor_tenant_listing_per_page', array(
         'per_page' => 10,
         'search'   => 'yes',
         'per_row'  => 3,
-    ) ), $attr );
+    ) ), $atts );
     $paged   = max( 1, get_query_var( 'paged' ) );
     $limit   = $attr['per_page'];
     $offset  = ( $paged - 1 ) * $limit;
