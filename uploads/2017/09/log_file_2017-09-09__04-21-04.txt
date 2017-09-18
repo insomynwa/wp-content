@@ -1,0 +1,134 @@
+
+---Downloaded files---
+The import files for: Demo 1 were successfully downloaded!
+Initial max execution time = 300
+Files info:
+Site URL = http://localhost/dbsnet
+Data file = E:\xampp\htdocs\dbsnet/wp-content/themes/gon-cakeshop/demo-install/demo1/content.xml
+Widget file = E:\xampp\htdocs\dbsnet/wp-content/themes/gon-cakeshop/demo-install/demo1/widgets.json
+Customizer file = E:\xampp\htdocs\dbsnet/wp-content/themes/gon-cakeshop/demo-install/demo1/customizer.dat
+Redux files:
+not defined!
+
+------
+New AJAX call!
+
+
+------
+New AJAX call!
+
+
+------
+New AJAX call!
+
+
+------
+New AJAX call!
+
+
+------
+New AJAX call!
+
+
+------
+New AJAX call!
+
+
+------
+New AJAX call!
+
+
+------
+New AJAX call!
+
+
+------
+New AJAX call!
+
+
+------
+New AJAX call!
+
+
+------
+New AJAX call!
+
+
+------
+New AJAX call!
+
+
+------
+New AJAX call!
+
+
+------
+New AJAX call!
+
+
+------
+New AJAX call!
+
+
+------
+New AJAX call!
+
+
+------
+New AJAX call!
+
+
+------
+New AJAX call!
+
+
+------
+New AJAX call!
+
+
+------
+New AJAX call!
+
+
+------
+New AJAX call!
+
+
+---Importing widgets---
+Blog Sidebar : 
+
+Search - No Title - Imported
+Categories - Categories - Imported
+GonThemes: Recent posts - No Title - Imported
+Recent Comments - Recent Comments - Imported
+
+Category Sidebar : 
+
+WooCommerce product categories - Categories - Imported
+WooCommerce Price Filter - Filter by price - Imported
+WooCommerce layered nav - Color - Imported
+WooCommerce layered nav - Size - Imported
+
+Footer 1 : 
+
+Text - About Us - Imported
+
+Footer 2 : 
+
+Custom Menu - My Account - Imported
+
+Footer 3 : 
+
+Custom Menu - My Services - Imported
+
+Footer 4 : 
+
+Text - Newsletter - Imported
+
+
+
+---Importing customizer settings---
+Customizer settings import finished!
+
+---pt-ocdi/after_import---
+

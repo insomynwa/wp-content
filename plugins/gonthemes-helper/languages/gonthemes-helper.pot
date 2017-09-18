@@ -1,0 +1,1530 @@
+# Loco Gettext template
+msgid ""
+msgstr ""
+"Project-Id-Version: themes-helper\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-12-05 09:31+0700\n"
+"PO-Revision-Date: 2016-12-05 09:31+0700\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Revision-Date: Thu Apr 14 2016 15:45:46 GMT+0700 (SE Asia Standard "
+"Time)\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-KeywordsList: __;_e;_n;_nx;_ex;_x;esc_html__;esc_html_e;esc_attr__;"
+"esc_attr_e\n"
+"X-Generator: Poedit 1.7.7\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../shortcodes/functions.php:92
+msgid "user"
+msgstr ""
+
+#: ../shortcodes/functions.php:93
+msgid "people"
+msgstr ""
+
+#: ../shortcodes/functions.php:94
+msgid "plane"
+msgstr ""
+
+#: ../shortcodes/functions.php:95
+msgid "user-female"
+msgstr ""
+
+#: ../shortcodes/functions.php:96
+msgid "user-follow"
+msgstr ""
+
+#: ../shortcodes/functions.php:97
+msgid "user-following"
+msgstr ""
+
+#: ../shortcodes/functions.php:98
+msgid "user-unfollow"
+msgstr ""
+
+#: ../shortcodes/functions.php:99
+msgid "login"
+msgstr ""
+
+#: ../shortcodes/functions.php:100
+msgid "logout"
+msgstr ""
+
+#: ../shortcodes/functions.php:101
+msgid "emotsmile"
+msgstr ""
+
+#: ../shortcodes/functions.php:102
+msgid "phone"
+msgstr ""
+
+#: ../shortcodes/functions.php:103
+msgid "call-end"
+msgstr ""
+
+#: ../shortcodes/functions.php:104
+msgid "call-out"
+msgstr ""
+
+#: ../shortcodes/functions.php:105
+msgid "refresh"
+msgstr ""
+
+#: ../shortcodes/functions.php:106
+msgid "earphones-alt"
+msgstr ""
+
+#: ../shortcodes/functions.php:107
+msgid "present"
+msgstr ""
+
+#: ../shortcodes/functions.php:108
+msgid "location-pin"
+msgstr ""
+
+#: ../shortcodes/functions.php:109
+msgid "envelope-open"
+msgstr ""
+
+#: ../shortcodes/functions.php:160
+msgid "No filter"
+msgstr ""
+
+#: ../shortcodes/functions.php:180
+msgid "Sometimes, a picture is worth a thousand words."
+msgstr ""
+
+#: ../shortcodes/google-map/google-map.php:21
+msgid "Our Address"
+msgstr ""
+
+#: ../shortcodes/list-category/list-category.php:126
+#: ../shortcodes/post-category/post-category.php:105
+#: ../shortcodes/product-category/product-category.php:128
+#: ../shortcodes/product-category2/product-category2.php:136
+msgid "Prev"
+msgstr ""
+
+#: ../shortcodes/list-category/list-category.php:126
+#: ../shortcodes/post-category/post-category.php:105
+#: ../shortcodes/product-category/product-category.php:128
+#: ../shortcodes/product-category2/product-category2.php:136
+msgid "Next"
+msgstr ""
+
+#: ../shortcodes/list-post-video/list-post-video.php:82
+msgid "Play Video"
+msgstr ""
+
+#: ../shortcodes/list-product/list-product.php:108
+msgid "Quick View"
+msgstr ""
+
+#: ../shortcodes/product-category-sale/product-category-sale.php:115
+msgid "Hot"
+msgstr ""
+
+#: ../shortcodes/product-category-sale/product-category-sale.php:119
+#: ../shortcodes/product-category-sale/product-category-sale.php:121
+msgid "Sale"
+msgstr ""
+
+#: ../shortcodes/product-category/product-category.php:133
+msgid "Total"
+msgstr ""
+
+#: ../shortcodes/product-category/product-category.php:133
+msgid "Item"
+msgstr ""
+
+#: ../shortcodes/product-category/product-category.php:133
+msgid "Show All"
+msgstr ""
+
+#: ../shortcodes/vc-embed.php:19
+msgid "Icon library"
+msgstr ""
+
+#: ../shortcodes/vc-embed.php:21 ../shortcodes/vc-map.php:317
+msgid "Font Awesome"
+msgstr ""
+
+#: ../shortcodes/vc-embed.php:22
+msgid "Open Iconic"
+msgstr ""
+
+#: ../shortcodes/vc-embed.php:23 ../shortcodes/vc-map.php:319
+msgid "Typicons"
+msgstr ""
+
+#: ../shortcodes/vc-embed.php:24 ../shortcodes/vc-map.php:320
+msgid "Entypo"
+msgstr ""
+
+#: ../shortcodes/vc-embed.php:25 ../shortcodes/vc-map.php:321
+msgid "Linecons"
+msgstr ""
+
+#: ../shortcodes/vc-embed.php:26 ../shortcodes/vc-map.php:322
+msgid "Simple Line Icons"
+msgstr ""
+
+#: ../shortcodes/vc-embed.php:30
+msgid "Select icon library."
+msgstr ""
+
+#: ../shortcodes/vc-embed.php:34 ../shortcodes/vc-embed.php:51
+#: ../shortcodes/vc-embed.php:67 ../shortcodes/vc-embed.php:83
+#: ../shortcodes/vc-embed.php:98 ../shortcodes/vc-embed.php:114
+#: ../shortcodes/vc-map.php:357 ../shortcodes/vc-map.php:374
+#: ../shortcodes/vc-map.php:392 ../shortcodes/vc-map.php:410
+#: ../shortcodes/vc-map.php:428 ../shortcodes/vc-map.php:446
+msgid "Icon"
+msgstr ""
+
+#: ../shortcodes/vc-embed.php:47 ../shortcodes/vc-embed.php:63
+#: ../shortcodes/vc-embed.php:79 ../shortcodes/vc-embed.php:110
+#: ../shortcodes/vc-embed.php:126
+msgid "Select icon from library."
+msgstr ""
+
+#: ../shortcodes/vc-embed.php:130 ../shortcodes/vc-map.php:489
+msgid "Icon color"
+msgstr ""
+
+#: ../shortcodes/vc-embed.php:132 ../shortcodes/vc-embed.php:138
+#: ../shortcodes/vc-embed.php:165
+msgid "Custom color"
+msgstr ""
+
+#: ../shortcodes/vc-embed.php:133
+msgid "Select icon color."
+msgstr ""
+
+#: ../shortcodes/vc-embed.php:140
+msgid "Select custom icon color."
+msgstr ""
+
+#: ../shortcodes/vc-embed.php:148
+msgid "Background shape"
+msgstr ""
+
+#: ../shortcodes/vc-embed.php:151
+#: ../woocommerce/classes/class-wc-swatches-product-attribute-images.php:79
+#: ../woocommerce/classes/class-wc-swatches-product-attribute-images.php:133
+msgid "None"
+msgstr ""
+
+#: ../shortcodes/vc-embed.php:152
+msgid "Circle"
+msgstr ""
+
+#: ../shortcodes/vc-embed.php:153
+msgid "Square"
+msgstr ""
+
+#: ../shortcodes/vc-embed.php:154
+msgid "Rounded"
+msgstr ""
+
+#: ../shortcodes/vc-embed.php:155
+msgid "Outline Circle"
+msgstr ""
+
+#: ../shortcodes/vc-embed.php:156
+msgid "Outline Square"
+msgstr ""
+
+#: ../shortcodes/vc-embed.php:157
+msgid "Outline Rounded"
+msgstr ""
+
+#: ../shortcodes/vc-embed.php:159
+msgid "Select background shape and style for icon."
+msgstr ""
+
+#: ../shortcodes/vc-embed.php:163 ../shortcodes/vc-map.php:534
+#: ../shortcodes/vc-map.php:1024 ../shortcodes/vc-map.php:1347
+msgid "Background color"
+msgstr ""
+
+#: ../shortcodes/vc-embed.php:167
+msgid "Select background color for icon."
+msgstr ""
+
+#: ../shortcodes/vc-embed.php:176
+msgid "Custom background color"
+msgstr ""
+
+#: ../shortcodes/vc-embed.php:178
+msgid "Select custom icon background color."
+msgstr ""
+
+#: ../shortcodes/vc-embed.php:186
+msgid "Size"
+msgstr ""
+
+#: ../shortcodes/vc-embed.php:190
+msgid "Icon size."
+msgstr ""
+
+#: ../shortcodes/vc-embed.php:194
+msgid "Icon alignment"
+msgstr ""
+
+#: ../shortcodes/vc-embed.php:197
+msgid "Left"
+msgstr ""
+
+#: ../shortcodes/vc-embed.php:198
+msgid "Right"
+msgstr ""
+
+#: ../shortcodes/vc-embed.php:199
+msgid "Center"
+msgstr ""
+
+#: ../shortcodes/vc-embed.php:201
+msgid "Select icon alignment."
+msgstr ""
+
+#: ../shortcodes/vc-embed.php:205
+msgid "URL (Link)"
+msgstr ""
+
+#: ../shortcodes/vc-embed.php:207
+msgid "Add link to icon."
+msgstr ""
+
+#: ../shortcodes/vc-embed.php:212 ../shortcodes/vc-embed.php:281
+msgid "Extra class name"
+msgstr ""
+
+#: ../shortcodes/vc-embed.php:214
+msgid ""
+"Style particular content element differently - add a class name and refer to "
+"it in custom CSS."
+msgstr ""
+
+#: ../shortcodes/vc-embed.php:218
+msgid "CSS box"
+msgstr ""
+
+#: ../shortcodes/vc-embed.php:220
+msgid "Design Options"
+msgstr ""
+
+#: ../shortcodes/vc-embed.php:244 ../shortcodes/vc-map.php:17
+#: ../shortcodes/vc-map.php:117 ../shortcodes/vc-map.php:608
+#: ../shortcodes/vc-map.php:2030
+msgid "Title"
+msgstr ""
+
+#: ../shortcodes/vc-embed.php:245
+msgid "Enter section title (Note: you can leave it empty)."
+msgstr ""
+
+#: ../shortcodes/vc-embed.php:253
+msgid "Section ID"
+msgstr ""
+
+#: ../shortcodes/vc-embed.php:254
+#, php-format
+msgid ""
+"Enter section ID (Note: make sure it is unique and valid according to <a "
+"href=\"%s\" target=\"_blank\">w3c specification</a>)."
+msgstr ""
+
+#: ../shortcodes/vc-embed.php:259
+msgid "Add icon?"
+msgstr ""
+
+#: ../shortcodes/vc-embed.php:260
+msgid "Add icon next to section title."
+msgstr ""
+
+#: ../shortcodes/vc-embed.php:266
+msgid "Before title"
+msgstr ""
+
+#: ../shortcodes/vc-embed.php:267
+msgid "After title"
+msgstr ""
+
+#: ../shortcodes/vc-embed.php:273
+msgid "Icon position"
+msgstr ""
+
+#: ../shortcodes/vc-embed.php:274
+msgid "Select icon position."
+msgstr ""
+
+#: ../shortcodes/vc-embed.php:283
+msgid ""
+"If you wish to style particular content element differently, then use this "
+"field to add a class name and then refer to it in your css file."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:14
+msgid "Date"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:15
+msgid "ID"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:16
+msgid "Author"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:18
+msgid "Modified"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:19
+msgid "Random"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:20
+msgid "Comment count"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:21
+msgid "Menu order"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:26
+msgid "Descending"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:27
+msgid "Ascending"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:31
+msgid "Top rated products"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:32
+msgid "Best Selling products"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:33
+msgid "Featured products"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:50
+msgid "All Category"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:93
+msgid "Icon Box"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:95 ../shortcodes/vc-map.php:586
+#: ../shortcodes/vc-map.php:1076 ../shortcodes/vc-map.php:1143
+#: ../shortcodes/vc-map.php:1399 ../shortcodes/vc-map.php:1463
+#: ../shortcodes/vc-map.php:1568 ../shortcodes/vc-map.php:1727
+#: ../shortcodes/vc-map.php:1887 ../shortcodes/vc-map.php:2022
+#: ../shortcodes/vc-map.php:2091 ../shortcodes/vc-map.php:2229
+#: ../shortcodes/vc-map.php:2373
+msgid "Themes Helper"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:96
+msgid "Display icon box with image or icon."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:103 ../shortcodes/vc-map.php:594
+msgid "Layout"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:112 ../shortcodes/vc-map.php:603
+msgid "Choose the layout you want to display."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:120
+msgid "This is an icon box."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:121
+msgid "Provide the title for this icon box."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:127 ../shortcodes/vc-map.php:618
+msgid "Use custom or default title?"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:130 ../shortcodes/vc-map.php:238
+#: ../shortcodes/vc-map.php:621 ../shortcodes/vc-map.php:738
+#: ../shortcodes/vc-map.php:854
+msgid "Default"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:131 ../shortcodes/vc-map.php:239
+#: ../shortcodes/vc-map.php:622 ../shortcodes/vc-map.php:739
+#: ../shortcodes/vc-map.php:855
+msgid "Custom"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:133 ../shortcodes/vc-map.php:624
+#: ../shortcodes/vc-map.php:741
+msgid ""
+"If you select default you will use default title which customized in "
+"typography."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:139 ../shortcodes/vc-map.php:630
+#: ../shortcodes/vc-map.php:747
+msgid "Heading element"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:148 ../shortcodes/vc-map.php:639
+msgid "Choose heading type of the title."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:158 ../shortcodes/vc-map.php:657
+msgid "Title color "
+msgstr ""
+
+#: ../shortcodes/vc-map.php:161 ../shortcodes/vc-map.php:660
+msgid "Select the title color."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:171 ../shortcodes/vc-map.php:670
+msgid "Title size "
+msgstr ""
+
+#: ../shortcodes/vc-map.php:176 ../shortcodes/vc-map.php:675
+msgid "Select the title size."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:187 ../shortcodes/vc-map.php:686
+msgid "Title weight "
+msgstr ""
+
+#: ../shortcodes/vc-map.php:190 ../shortcodes/vc-map.php:689
+#: ../shortcodes/vc-map.php:805
+msgid "Choose the title font weight"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:191 ../shortcodes/vc-map.php:279
+#: ../shortcodes/vc-map.php:690 ../shortcodes/vc-map.php:806
+#: ../shortcodes/vc-map.php:898
+msgid "Lighter"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:192 ../shortcodes/vc-map.php:280
+#: ../shortcodes/vc-map.php:691 ../shortcodes/vc-map.php:807
+#: ../shortcodes/vc-map.php:895
+msgid "Normal"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:193 ../shortcodes/vc-map.php:281
+#: ../shortcodes/vc-map.php:692 ../shortcodes/vc-map.php:808
+msgid "Medium"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:194 ../shortcodes/vc-map.php:282
+#: ../shortcodes/vc-map.php:693 ../shortcodes/vc-map.php:809
+msgid "SemiBold"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:195 ../shortcodes/vc-map.php:283
+#: ../shortcodes/vc-map.php:694 ../shortcodes/vc-map.php:810
+#: ../shortcodes/vc-map.php:896
+msgid "Bold"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:197 ../shortcodes/vc-map.php:696
+msgid "Select the title weight."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:207 ../shortcodes/vc-map.php:706
+msgid "Title style "
+msgstr ""
+
+#: ../shortcodes/vc-map.php:210 ../shortcodes/vc-map.php:709
+#: ../shortcodes/vc-map.php:825
+msgid "Choose the title font style"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:211 ../shortcodes/vc-map.php:299
+#: ../shortcodes/vc-map.php:710 ../shortcodes/vc-map.php:826
+#: ../shortcodes/vc-map.php:914
+msgid "Italic"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:212 ../shortcodes/vc-map.php:300
+#: ../shortcodes/vc-map.php:711 ../shortcodes/vc-map.php:827
+#: ../shortcodes/vc-map.php:915
+msgid "Oblique"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:213 ../shortcodes/vc-map.php:301
+#: ../shortcodes/vc-map.php:712 ../shortcodes/vc-map.php:828
+#: ../shortcodes/vc-map.php:916
+msgid "Initial"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:214 ../shortcodes/vc-map.php:302
+#: ../shortcodes/vc-map.php:713 ../shortcodes/vc-map.php:829
+#: ../shortcodes/vc-map.php:917
+msgid "Inherit"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:216 ../shortcodes/vc-map.php:715
+msgid "Select the title style."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:226 ../shortcodes/vc-map.php:842
+#: ../shortcodes/vc-map.php:1171
+msgid "Description"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:229 ../shortcodes/vc-map.php:845
+#: ../shortcodes/vc-map.php:1174
+msgid "Provide the description for this icon box."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:235 ../shortcodes/vc-map.php:851
+msgid "Use custom or default description?"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:241 ../shortcodes/vc-map.php:857
+msgid ""
+"If you select default you will use default description which customized in "
+"typography."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:247 ../shortcodes/vc-map.php:863
+msgid "Description color "
+msgstr ""
+
+#: ../shortcodes/vc-map.php:250 ../shortcodes/vc-map.php:866
+msgid "Select the description color."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:260 ../shortcodes/vc-map.php:876
+msgid "Description size "
+msgstr ""
+
+#: ../shortcodes/vc-map.php:265 ../shortcodes/vc-map.php:881
+msgid "Select the description size."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:275 ../shortcodes/vc-map.php:891
+msgid "Description weight "
+msgstr ""
+
+#: ../shortcodes/vc-map.php:278 ../shortcodes/vc-map.php:894
+msgid "Choose the description font weight"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:285 ../shortcodes/vc-map.php:900
+msgid "Select the description weight."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:295 ../shortcodes/vc-map.php:910
+msgid "Description style "
+msgstr ""
+
+#: ../shortcodes/vc-map.php:298 ../shortcodes/vc-map.php:913
+msgid "Choose the description font style"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:304 ../shortcodes/vc-map.php:919
+msgid "Select the description style."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:313
+msgid "Icon type"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:315
+msgid "Choose icon type"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:316
+msgid "Single Image"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:318
+msgid "Openiconic"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:326
+msgid "Select icon type."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:331 ../shortcodes/vc-map.php:928
+#: ../shortcodes/vc-map.php:1179
+msgid "Choose image"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:335 ../shortcodes/vc-map.php:932
+#: ../shortcodes/vc-map.php:1183
+msgid "Upload the custom image icon."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:344 ../shortcodes/vc-map.php:937
+#: ../shortcodes/vc-map.php:1104 ../shortcodes/vc-map.php:1188
+msgid "Image size"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:347 ../shortcodes/vc-map.php:940
+#: ../shortcodes/vc-map.php:1107 ../shortcodes/vc-map.php:1191
+msgid ""
+"Enter image size. Example: \"thumbnail\", \"medium\", \"large\", \"full\" or "
+"other sizes defined by current theme. Alternatively enter image size in "
+"pixels: 200x100 (Width x Height). Leave empty to use \"thumbnail\" size."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:368
+msgid "FontAwesome library."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:386
+msgid "Openiconic library."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:404
+msgid "Typicons library."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:422
+msgid "Entypo library."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:440
+msgid "Linecons library."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:458
+msgid "Simple Line Icons library."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:464
+msgid "Icon link"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:467
+msgid "Enter the link for icon."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:474
+msgid "Icon size"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:480
+msgid "Select the icon size."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:492
+msgid "Select the icon color."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:501 ../shortcodes/vc-map.php:954
+msgid "Display the button?"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:504 ../shortcodes/vc-map.php:957
+msgid "Tick it to display the button."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:509 ../shortcodes/vc-map.php:962
+msgid "Button link"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:512 ../shortcodes/vc-map.php:965
+msgid "Write the button link"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:522 ../shortcodes/vc-map.php:975
+msgid "Button value"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:525 ../shortcodes/vc-map.php:978
+msgid "Write the button value"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:537 ../shortcodes/vc-map.php:1027
+#: ../shortcodes/vc-map.php:1350
+msgid "Select the background color."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:543 ../shortcodes/vc-map.php:1033
+#: ../shortcodes/vc-map.php:1356
+msgid "Text alignment"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:546 ../shortcodes/vc-map.php:1036
+#: ../shortcodes/vc-map.php:1359
+msgid "Choose the text alignment"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:547 ../shortcodes/vc-map.php:1037
+#: ../shortcodes/vc-map.php:1360
+msgid "Text at left"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:548 ../shortcodes/vc-map.php:1038
+#: ../shortcodes/vc-map.php:1361
+msgid "Text at center"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:549 ../shortcodes/vc-map.php:1039
+#: ../shortcodes/vc-map.php:1362
+msgid "Text at right"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:556 ../shortcodes/vc-map.php:1046
+#: ../shortcodes/vc-map.php:1113 ../shortcodes/vc-map.php:1369
+#: ../shortcodes/vc-map.php:1538
+msgid "Animation"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:559 ../shortcodes/vc-map.php:1049
+#: ../shortcodes/vc-map.php:1116 ../shortcodes/vc-map.php:1372
+#: ../shortcodes/vc-map.php:1541
+msgid "No"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:560 ../shortcodes/vc-map.php:1050
+#: ../shortcodes/vc-map.php:1117 ../shortcodes/vc-map.php:1373
+#: ../shortcodes/vc-map.php:1542
+msgid "Top to bottom"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:561 ../shortcodes/vc-map.php:1051
+#: ../shortcodes/vc-map.php:1118 ../shortcodes/vc-map.php:1374
+#: ../shortcodes/vc-map.php:1543
+msgid "Bottom to top"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:562 ../shortcodes/vc-map.php:1052
+#: ../shortcodes/vc-map.php:1119 ../shortcodes/vc-map.php:1375
+#: ../shortcodes/vc-map.php:1544
+msgid "Left to right"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:563 ../shortcodes/vc-map.php:1053
+#: ../shortcodes/vc-map.php:1120 ../shortcodes/vc-map.php:1376
+#: ../shortcodes/vc-map.php:1545
+msgid "Right to left"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:564 ../shortcodes/vc-map.php:1054
+#: ../shortcodes/vc-map.php:1121 ../shortcodes/vc-map.php:1377
+#: ../shortcodes/vc-map.php:1546
+msgid "Appear from center"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:566 ../shortcodes/vc-map.php:1056
+#: ../shortcodes/vc-map.php:1123 ../shortcodes/vc-map.php:1379
+#: ../shortcodes/vc-map.php:1548
+msgid ""
+"Select animation type if you want this element to be animated when it enters "
+"into the browsers viewport. Note: Works only in modern browsers."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:572 ../shortcodes/vc-map.php:1062
+#: ../shortcodes/vc-map.php:1129 ../shortcodes/vc-map.php:1385
+#: ../shortcodes/vc-map.php:1450 ../shortcodes/vc-map.php:1554
+#: ../shortcodes/vc-map.php:1714 ../shortcodes/vc-map.php:1874
+#: ../shortcodes/vc-map.php:2009 ../shortcodes/vc-map.php:2078
+#: ../shortcodes/vc-map.php:2216 ../shortcodes/vc-map.php:2360
+#: ../shortcodes/vc-map.php:2380
+msgid "Extra class"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:575 ../shortcodes/vc-map.php:1065
+#: ../shortcodes/vc-map.php:1132 ../shortcodes/vc-map.php:1388
+#: ../shortcodes/vc-map.php:1453 ../shortcodes/vc-map.php:1557
+#: ../shortcodes/vc-map.php:1717 ../shortcodes/vc-map.php:1877
+#: ../shortcodes/vc-map.php:2012 ../shortcodes/vc-map.php:2081
+#: ../shortcodes/vc-map.php:2219 ../shortcodes/vc-map.php:2363
+#: ../shortcodes/vc-map.php:2383
+msgid ""
+"Add extra class name that will be applied to the icon box, and you can use "
+"this class for your customizations."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:584
+msgid "Banner Box"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:587
+msgid "Display banner box with image."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:599
+msgid "Choose layout"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:600
+msgid "Image Left"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:601
+msgid "Image Right"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:611 ../shortcodes/vc-map.php:728
+msgid "This is an banner box."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:612
+msgid "Provide the title for this banner box."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:647 ../shortcodes/vc-map.php:764
+msgid "Margin"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:651
+msgid "Margin title for this banner box."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:725
+msgid "Sub Title"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:729
+msgid "Provide the sub title for this banner box."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:735
+msgid "Use custom or default subtitle?"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:756
+msgid "Choose heading type of the subtitle."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:768
+msgid "Margin subtitle for this banner box."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:774
+msgid "Subtitle color "
+msgstr ""
+
+#: ../shortcodes/vc-map.php:777
+msgid "Select the subtitle color."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:787
+msgid "Subtitle size "
+msgstr ""
+
+#: ../shortcodes/vc-map.php:792
+msgid "Select the subtitle size."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:802
+msgid "Subtitle weight "
+msgstr ""
+
+#: ../shortcodes/vc-map.php:812
+msgid "Select the subtitle weight."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:822
+msgid "Subtitle style "
+msgstr ""
+
+#: ../shortcodes/vc-map.php:831
+msgid "Select the subtitle style."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:897
+msgid "Bolder"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:945 ../shortcodes/vc-map.php:1196
+msgid "Image link"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:948 ../shortcodes/vc-map.php:1199
+msgid "Enter the link for img."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:987
+msgid "Background Button"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:990
+msgid "Select the background button color."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:999
+msgid "Color Button"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1002
+msgid "Select the button color."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1011
+msgid "Border Button Color"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1014
+msgid "Select the border button color."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1074
+msgid "Images"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1077
+msgid "Display images gallery."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1085
+msgid "Choose images"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1089
+msgid "Choose images from media library."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1095
+msgid "Number of columns"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1141
+msgid "Our Team"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1144
+msgid "Display our team."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1152 ../shortcodes/vc-map.php:1155
+msgid "Name"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1156
+msgid "Provide the nem for team member."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1161 ../shortcodes/vc-map.php:1164
+msgid "Job"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1165
+msgid "Provide the job for your team."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1205
+msgid "Display the icon?"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1208
+msgid "Tick it to display the icon."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1213
+msgid "Facebook link"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1216
+msgid "Write the Facebook link"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1224
+msgid "Twitter link"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1227
+msgid "Write the Twitter link"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1235
+msgid "Google+ link"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1238
+msgid "Write the Google+ link"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1246
+msgid "Linkedin link"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1249
+msgid "Write the Linkedin link"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1257
+msgid "Instagram link"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1260
+msgid "Write the Instagram link"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1268
+msgid "Pinterest link"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1271
+msgid "Write the Pinterest link"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1279
+msgid "Behance link"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1282
+msgid "Write the Behance link"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1290
+msgid "Tumblr link"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1293
+msgid "Write the Tumblr link"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1301
+msgid "Dribbble link"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1304
+msgid "Write the Dribbble link"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1312
+msgid "Youtube link"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1315
+msgid "Write the Youtube link"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1323
+msgid "Vimeo link"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1326
+msgid "Write the Vimeo link"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1334
+msgid "RSS link"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1337
+msgid "Write the RSS link"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1396
+msgid "Counter Box"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1400
+msgid "Display counter box."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1406
+msgid "Circle color"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1409
+msgid "Select the circle box background color"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1417
+msgid "Number"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1419
+msgid "Enter number in box to count."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1424
+msgid "Number color"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1427
+msgid "Select the number color"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1432
+msgid "Text"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1436
+msgid "Short text in counter box."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1441
+msgid "Text color"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1444
+msgid "Select the text color"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1461
+msgid "Google Map"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1464
+msgid "Display Google map."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1471
+msgid "Map center"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1475
+msgid ""
+"The name of a place, town, city, or even a country. Can be an exact address "
+"too."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1482
+msgid "Height"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1487
+msgid "Height of the map."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1493
+msgid "Zoom level"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1498
+msgid "A value from 0 (the world) to 21 (street level)."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1503
+msgid "Marker"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1506
+msgid "Show marker at map center."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1511
+msgid "Choose marker icon"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1515
+msgid "Replaces the default map marker with your own image."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1521
+msgid "Scroll to zoom"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1524
+msgid "Allow scrolling over the map to zoom in or out."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1529
+msgid "Draggable"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1532
+msgid "Allow dragging the map to move it around."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1566
+msgid "Carousel Product Category"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1569
+msgid "Display Product Category."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1575 ../shortcodes/vc-map.php:1734
+#: ../shortcodes/vc-map.php:1892 ../shortcodes/vc-map.php:2036
+#: ../shortcodes/vc-map.php:2108 ../shortcodes/vc-map.php:2236
+msgid "Per page"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1579 ../shortcodes/vc-map.php:1738
+#: ../shortcodes/vc-map.php:1896 ../shortcodes/vc-map.php:2040
+#: ../shortcodes/vc-map.php:2240
+msgid "How much items per page to show"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1583 ../shortcodes/vc-map.php:1742
+#: ../shortcodes/vc-map.php:1900 ../shortcodes/vc-map.php:2116
+#: ../shortcodes/vc-map.php:2244
+msgid "Columns"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1587 ../shortcodes/vc-map.php:1746
+#: ../shortcodes/vc-map.php:1904 ../shortcodes/vc-map.php:2120
+#: ../shortcodes/vc-map.php:2248
+msgid "How much columns grid"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1591 ../shortcodes/vc-map.php:1758
+#: ../shortcodes/vc-map.php:1908 ../shortcodes/vc-map.php:2044
+#: ../shortcodes/vc-map.php:2252
+msgid "Order by"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1595 ../shortcodes/vc-map.php:1762
+#: ../shortcodes/vc-map.php:1912 ../shortcodes/vc-map.php:2048
+#: ../shortcodes/vc-map.php:2256
+#, php-format
+msgid "Select how to sort retrieved products. More at %s."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1599 ../shortcodes/vc-map.php:1766
+#: ../shortcodes/vc-map.php:1916 ../shortcodes/vc-map.php:2052
+#: ../shortcodes/vc-map.php:2260
+msgid "Sort order"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1603 ../shortcodes/vc-map.php:1770
+#: ../shortcodes/vc-map.php:1920 ../shortcodes/vc-map.php:2056
+#: ../shortcodes/vc-map.php:2264
+#, php-format
+msgid "Designates the ascending or descending order. More at %s."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1607 ../shortcodes/vc-map.php:1774
+#: ../shortcodes/vc-map.php:2060
+msgid "Meta key"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1611 ../shortcodes/vc-map.php:1778
+#: ../shortcodes/vc-map.php:2064
+msgid "Chose type product category list"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1615 ../shortcodes/vc-map.php:1782
+#: ../shortcodes/vc-map.php:1924 ../shortcodes/vc-map.php:2068
+#: ../shortcodes/vc-map.php:2268
+msgid "Category"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1619 ../shortcodes/vc-map.php:1786
+#: ../shortcodes/vc-map.php:1928 ../shortcodes/vc-map.php:2072
+#: ../shortcodes/vc-map.php:2272
+msgid "Product category list"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1623
+msgid "Link Show All"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1630 ../shortcodes/vc-map.php:1790
+#: ../shortcodes/vc-map.php:1932 ../shortcodes/vc-map.php:2132
+#: ../shortcodes/vc-map.php:2276
+msgid "Responsive Items Desktop"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1637 ../shortcodes/vc-map.php:1797
+#: ../shortcodes/vc-map.php:1939 ../shortcodes/vc-map.php:2139
+#: ../shortcodes/vc-map.php:2283
+msgid "Responsive Items Desktop Small"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1644 ../shortcodes/vc-map.php:1804
+#: ../shortcodes/vc-map.php:1946 ../shortcodes/vc-map.php:2146
+#: ../shortcodes/vc-map.php:2290
+msgid "Responsive Items Tablet"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1651 ../shortcodes/vc-map.php:1811
+#: ../shortcodes/vc-map.php:1953 ../shortcodes/vc-map.php:2153
+#: ../shortcodes/vc-map.php:2297
+msgid "Responsive Items Tablet Small"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1658 ../shortcodes/vc-map.php:1818
+#: ../shortcodes/vc-map.php:1960 ../shortcodes/vc-map.php:2160
+#: ../shortcodes/vc-map.php:2304
+msgid "Responsive Items Mobile"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1665 ../shortcodes/vc-map.php:1825
+#: ../shortcodes/vc-map.php:1967 ../shortcodes/vc-map.php:2167
+#: ../shortcodes/vc-map.php:2311
+msgid "AutoPlay"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1669 ../shortcodes/vc-map.php:1679
+#: ../shortcodes/vc-map.php:1690 ../shortcodes/vc-map.php:1699
+#: ../shortcodes/vc-map.php:1829 ../shortcodes/vc-map.php:1839
+#: ../shortcodes/vc-map.php:1850 ../shortcodes/vc-map.php:1859
+#: ../shortcodes/vc-map.php:1971 ../shortcodes/vc-map.php:1981
+#: ../shortcodes/vc-map.php:1991 ../shortcodes/vc-map.php:2002
+#: ../shortcodes/vc-map.php:2102 ../shortcodes/vc-map.php:2171
+#: ../shortcodes/vc-map.php:2181 ../shortcodes/vc-map.php:2192
+#: ../shortcodes/vc-map.php:2201 ../shortcodes/vc-map.php:2315
+#: ../shortcodes/vc-map.php:2325 ../shortcodes/vc-map.php:2336
+#: ../shortcodes/vc-map.php:2345
+msgid "False"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1670 ../shortcodes/vc-map.php:1680
+#: ../shortcodes/vc-map.php:1689 ../shortcodes/vc-map.php:1700
+#: ../shortcodes/vc-map.php:1830 ../shortcodes/vc-map.php:1840
+#: ../shortcodes/vc-map.php:1849 ../shortcodes/vc-map.php:1860
+#: ../shortcodes/vc-map.php:1972 ../shortcodes/vc-map.php:1982
+#: ../shortcodes/vc-map.php:1992 ../shortcodes/vc-map.php:2001
+#: ../shortcodes/vc-map.php:2103 ../shortcodes/vc-map.php:2172
+#: ../shortcodes/vc-map.php:2182 ../shortcodes/vc-map.php:2191
+#: ../shortcodes/vc-map.php:2202 ../shortcodes/vc-map.php:2316
+#: ../shortcodes/vc-map.php:2326 ../shortcodes/vc-map.php:2335
+#: ../shortcodes/vc-map.php:2346
+msgid "True"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1675 ../shortcodes/vc-map.php:1835
+#: ../shortcodes/vc-map.php:1977 ../shortcodes/vc-map.php:2177
+#: ../shortcodes/vc-map.php:2321
+msgid "Mouse Drag"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1685 ../shortcodes/vc-map.php:1845
+#: ../shortcodes/vc-map.php:1987 ../shortcodes/vc-map.php:2187
+#: ../shortcodes/vc-map.php:2331
+msgid "Navigation"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1695 ../shortcodes/vc-map.php:1855
+#: ../shortcodes/vc-map.php:1997 ../shortcodes/vc-map.php:2197
+#: ../shortcodes/vc-map.php:2341
+msgid "Pagination"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1705 ../shortcodes/vc-map.php:1865
+#: ../shortcodes/vc-map.php:2207 ../shortcodes/vc-map.php:2351
+msgid "Left OffSet"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1725
+msgid "Carousel Product Multi Row"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1728
+msgid "Display Product Category Multi Row."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1750 ../shortcodes/vc-map.php:2124
+msgid "Rows"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1754 ../shortcodes/vc-map.php:2128
+msgid "How much rows grid"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1885
+msgid "Carousel Product Sale"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:1888
+msgid "Display Carousel Product Sale."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:2020
+msgid "List Product"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:2023
+msgid "Display Product List."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:2089
+msgid "List Category"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:2092
+msgid "Display list Category."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:2098
+msgid "Show SubCategory"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:2112
+msgid "How much category per page to show"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:2227
+msgid "Carousel Post Category"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:2230
+msgid "Display Post Category."
+msgstr ""
+
+#: ../shortcodes/vc-map.php:2371
+msgid "List Post Video"
+msgstr ""
+
+#: ../shortcodes/vc-map.php:2374
+msgid "Display List Post Video."
+msgstr ""
+
+#: ../woocommerce/classes/class-admin-setting.php:11
+msgid "Color and Image Swatches"
+msgstr ""
+
+#: ../woocommerce/classes/class-admin-setting.php:58
+msgid "Color and Image Swatches  - Plugin Options"
+msgstr ""
+
+#: ../woocommerce/classes/class-admin-setting.php:62
+msgid "General settings"
+msgstr ""
+
+#: ../woocommerce/classes/class-admin-setting.php:70
+msgid "Enable Color and Image Swatches"
+msgstr ""
+
+#: ../woocommerce/classes/class-wc-swatches-product-attribute-images.php:77
+#: ../woocommerce/classes/class-wc-swatches-product-attribute-images.php:131
+msgid "Swatch Type"
+msgstr ""
+
+#: ../woocommerce/classes/class-wc-swatches-product-attribute-images.php:80
+#: ../woocommerce/classes/class-wc-swatches-product-attribute-images.php:134
+#: ../woocommerce/classes/class-wc-swatches-product-attribute-images.php:154
+msgid "Color"
+msgstr ""
+
+#: ../woocommerce/classes/class-wc-swatches-product-attribute-images.php:98
+msgid "Color:"
+msgstr ""
+
+#: ../woocommerce/classes/class-wc-swatches-product-attribute-images.php:129
+msgid "Type"
+msgstr ""
+
+#: ../woocommerce/classes/class-wc-swatches-product-attribute-images.php:202
+msgid "Thumbnail"
+msgstr ""
+
+#: ../woocommerce/templates/single-product/variable.php:43
+msgid "Choose an option"
+msgstr ""
+
+#: ../woocommerce/templates/single-product/variable.php:90
+msgid "Please select"
+msgstr ""
+
+#: ../woocommerce/templates/single-product/variable.php:123
+msgid "Clear selection"
+msgstr ""
