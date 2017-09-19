@@ -37,6 +37,7 @@ class Woofreendor_Template_Products {
         add_action( 'woofreendor_batches_row', array( $this, 'woofreendor_render_batches_row' ), 10 );
         add_action( 'dokan_product_content_inside_area_after', array( $this, 'product_content_inside_area_after' ) );
         add_filter( 'dokan_product_types', array( $this, 'set_default_product_types' ) );
+
     }
 
     /**

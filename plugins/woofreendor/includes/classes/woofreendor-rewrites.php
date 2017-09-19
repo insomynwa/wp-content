@@ -17,6 +17,9 @@ class Woofreendor_Rewrites {
         $this->custom_tenant_url = dokan_get_option( 'custom_tenant_url', 'woofreendor_general', 'tenant' );
 
         add_action( 'init', array( $this, 'register_rule' ) );
+        
+        remove_filter( 'template_include', array( Dokan_Rewrites::init(), 'store_template' ) );
+        add_filter( 'template_include', array( $this, 'store_template' ) );
 
         add_filter( 'template_include', array( $this, 'tenant_template' ) );
         add_filter( 'template_include', array( $this,  'product_edit_template' ),999 );
@@ -44,6 +47,40 @@ class Woofreendor_Rewrites {
         }
 
         return $instance;
+    }
+    
+    /**
+     * Include store template
+     *
+     * @param type  $template
+     *
+     * @return string
+     */
+    function store_template( $template ) {
+
+        $store_name = get_query_var( Dokan_Rewrites::init()->custom_store_url );
+
+        if ( ! $this->is_woo_installed() ) {
+            return $template;
+        }
+
+        if ( !empty( $store_name ) ) {
+            $store_user = get_user_by( 'slug', $store_name );
+
+            // no user found
+            if ( ! $store_user ) {
+                return get_404_template();
+            }
+
+            // check if the user is seller
+            if ( ! dokan_is_user_seller( $store_user->ID ) ) {
+                return get_404_template();
+            }
+
+            return woofreendor_locate_template( 'store.php' );
+        }
+
+        return $template;
     }
 
     /**

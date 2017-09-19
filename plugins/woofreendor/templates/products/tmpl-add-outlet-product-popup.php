@@ -20,6 +20,7 @@
                 <div class="content-half-part dokan-feat-image-content">
                     <div class="dokan-feat-image-upload">
                         <div class="image-wrap">
+                            <input type="hidden" name="feat_image_id" class="dokan-feat-image-id" value="<?php echo $feat_image_id; ?>">
                             <img id="woofreendor_tenant_product_img_popup" height="" width="" src="" alt="">
                         </div>
                     </div>
@@ -65,10 +66,11 @@
             $("input#dokan-create-new-product-btn").attr('disabled',true);
             $.get( woofreendor.ajaxurl, data_product, function( resp ) {
                 if ( resp.success ) {
-                    // console.log(resp.data.term);
+                    //console.log(resp.data.image_id);
                     $("input[name='product_parent']").val(resp.data.product.ID);
                     $("input[name='post_title']").val(resp.data.product.post_title);
-                    $("img#woofreendor_tenant_product_img_popup").attr('src',resp.data.image);
+                    $("input[name='feat_image_id']").val(resp.data.image_id);
+                    $("img#woofreendor_tenant_product_img_popup").attr('src',resp.data.image_url);
                     $("textarea.post_excerpt").val(resp.data.product.post_excerpt).attr('readonly',true);
                     $("input[name='product_cat']").val(resp.data.term);
                     $("input#dokan-create-new-product-btn").attr('disabled',false);

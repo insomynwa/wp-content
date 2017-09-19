@@ -208,7 +208,7 @@ if ( ! $from_shortcode ) {
                                     $wrap_class        = ' dokan-hide';
                                     $instruction_class = '';
                                     $feat_image_id     = 0;
-
+                                    // var_dump(has_post_thumbnail( $product_parent ));
                                     if ( has_post_thumbnail( $product_parent ) ) {
                                         $wrap_class        = '';
                                         $instruction_class = ' dokan-hide';
@@ -218,6 +218,7 @@ if ( ! $from_shortcode ) {
                                     ?>
 
                                     <div class="image-wrap">
+                                        <input type="hidden" name="feat_image_id" class="dokan-feat-image-id" value="<?php echo $feat_image_id; ?>">
                                         <?php if ( $feat_image_id ) { ?>
                                             <?php echo get_the_post_thumbnail( $product_parent, apply_filters( 'single_product_large_thumbnail_size', 'shop_single' ), array( 'height' => '', 'width' => '' ) ); ?>
                                         <?php } else { ?>
@@ -225,6 +226,36 @@ if ( ! $from_shortcode ) {
                                         <?php } ?>
                                     </div>
                                 </div><!-- .dokan-feat-image-upload -->
+                                <div class="dokan-product-gallery">
+                                    <div class="dokan-side-body" id="dokan-product-images">
+                                        <div id="product_images_container">
+                                            <ul class="product_images dokan-clearfix">
+                                                <?php
+                                                $product_images = get_post_meta( $product_parent, '_product_image_gallery', true );
+                                                $gallery = explode( ',', $product_images );
+
+                                                if ( $gallery ) {
+                                                    foreach ($gallery as $image_id) {
+                                                        if ( empty( $image_id ) ) {
+                                                            continue;
+                                                        }
+
+                                                        $attachment_image = wp_get_attachment_image_src( $image_id, 'thumbnail' );
+                                                        ?>
+                                                        <li class="image" data-attachment_id="<?php echo $image_id; ?>">
+                                                            <img src="<?php echo $attachment_image[0]; ?>" alt="">
+                                                            <a href="#" class="action-delete" title="<?php esc_attr_e( 'Delete image', 'dokan-lite' ); ?>">&times;</a>
+                                                        </li>
+                                                        <?php
+                                                    }
+                                                }
+                                                ?>
+                                            </ul>
+
+                                            <input type="hidden" id="product_image_gallery" name="product_image_gallery" value="<?php echo esc_attr( $product_images ); ?>">
+                                        </div>
+                                    </div>
+                                </div> <!-- .product-gallery -->
                             </div><!-- .content-half-part -->
                         </div><!-- .dokan-form-top-area -->
 

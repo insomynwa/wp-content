@@ -48,7 +48,8 @@ function woofreendor_get_tenant_products( $paramTenantId ){
 
 function woofreendor_get_product_data( $paramProductId ){
     $product = get_post($paramProductId);
-    $product_image = wp_get_attachment_image_src( get_post_thumbnail_id($product->ID), 'full' )[0];
+    $product_image = get_post_thumbnail_id($product->ID);
+    $product_image_url = wp_get_attachment_image_src( $product_image, 'full' )[0];
     $product_term = wp_get_post_terms( $paramProductId, 'product_cat', array( 'fields' => 'ids') )[0];
-    return array( 'product' => $product, 'image' => $product_image, 'term' => $product_term);
+    return array( 'product' => $product, 'image_url' => $product_image_url, 'term' => $product_term, 'image_id' => $product_image);
 }

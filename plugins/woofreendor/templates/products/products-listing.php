@@ -133,19 +133,11 @@
                                     }
                                     $view_class = ($post->post_status == 'pending' ) ? 'dokan-hide' : '';
                                     $product = wc_get_product( $post->ID );
-                                    if(! woofreendor_is_user_tenant( get_current_user_id() )){
-                                        $product_parent = get_post_meta( $post->ID, 'product_parent', true);
-                                        $parent_product = wc_get_product( $product_parent );
-                                    }
                                     
                                     ?>
                                     <tr<?php echo $tr_class; ?>>
                                     <td data-title="<?php _e( 'Gambar', 'woofreendor' ); ?>">
-                                        <?php if(woofreendor_is_user_tenant( get_current_user_id() )): ?>
                                         <a href="<?php echo dokan_edit_product_url( $post->ID ); ?>"><?php echo $product->get_image(); ?></a>
-                                        <?php else: ?>
-                                        <a href="<?php echo dokan_edit_product_url( $post->ID ); ?>"><?php echo $parent_product->get_image(); ?></a>
-                                        <?php endif; ?>
                                     </td>
                                     <td data-title="<?php _e( 'Nama', 'woofreendor' ); ?>">
                                         <p><a href="<?php echo dokan_edit_product_url( $post->ID ); ?>"><?php echo $product->get_title(); ?></a></p>
