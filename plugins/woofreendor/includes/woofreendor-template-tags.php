@@ -42,6 +42,12 @@ function woofreendor_get_dashboard_nav() {
             'url'   => woofreendor_get_navigation_url(),
             'pos'   => 10
         ),
+        'products' => array(
+            'title' => __( 'Products', 'dokan-lite'),
+            'icon'  => '<i class="fa fa-briefcase"></i>',
+            'url'   => woofreendor_get_navigation_url( 'products' ),
+            'pos'   => 20
+        ),
         'outlets' => array(
             'title' => __( 'Outlets', 'woofreendor'),
             'icon'  => '<i class="fa fa-university"></i>',

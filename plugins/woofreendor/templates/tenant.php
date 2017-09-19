@@ -15,7 +15,44 @@ get_header( 'shop' );
 ?>
     <?php do_action( 'woocommerce_before_main_content' ); ?>
 
-    <?php get_sidebar( 'store' ); ?>
+    <?php if ( dokan_get_option( 'enable_theme_store_sidebar', 'dokan_general', 'off' ) == 'off' ) { ?>
+        <div id="dokan-secondary" class="dokan-clearfix dokan-w3 dokan-store-sidebar" role="complementary" style="margin-right:3%;">
+            <div class="dokan-widget-area widget-collapse">
+                 <?php do_action( 'dokan_sidebar_store_before', $tenant_user, $tenant_info ); ?>
+                <?php //var_dump(dynamic_sidebar( 'sidebar-store' ));
+                if ( ! dynamic_sidebar( 'sidebar-store' ) ) {
+                    // var_dump('a');
+                    $args = array(
+                        'before_widget' => '<aside class="widget">',
+                        'after_widget'  => '</aside>',
+                        'before_title'  => '<h3 class="widget-title">',
+                        'after_title'   => '</h3>',
+                    );
+                    
+                    // if ( class_exists( 'Dokan_Store_Location' ) ) {
+                        // the_widget( 'Dokan_Store_Category_Menu', array( 'title' => __( 'Store Category', 'woofreendor' ) ), $args );
+
+                        // if ( dokan_get_option( 'store_map', 'dokan_general', 'on' ) == 'on'  && !empty( $map_location ) ) {
+                            // the_widget( 'Woofreendor_Tenant_Location', array( 'title' => __( 'Tenant Location', 'woofreendor' ) ), $args );
+                        // }
+
+                        // if ( dokan_get_option( 'contact_seller', 'dokan_general', 'on' ) == 'on' ) {
+                            // the_widget( 'Woofreendor_Tenant_Contact_Form', array( 'title' => __( 'Contact Tenant', 'woofreendor' ) ), $args );
+                        // }
+                    // }
+
+                }
+                // var_dump('b');
+                ?>
+
+                <?php do_action( 'dokan_sidebar_store_after', $tenant_user, $tenant_info ); ?>
+            </div>
+        </div><!-- #secondary .widget-area -->
+    <?php
+    } else {
+        get_sidebar( 'store' );
+    }
+    ?>
 
     <div id="dokan-primary" class="dokan-single-store dokan-w8">
         <div id="dokan-content" class="store-page-wrap woocommerce" role="main">
@@ -37,7 +74,7 @@ get_header( 'shop' );
                             $image_size = 'full';
                             $store_info = dokan_get_store_info( $outlet->ID );
                             $banner_id  = isset( $store_info['banner'] ) ? $store_info['banner'] : 0;
-                            $store_name = isset( $store_info['store_name'] ) ? esc_html( $store_info['store_name'] ) : __( 'N/A', 'dokan-lite' );
+                            $store_name = isset( $store_info['store_name'] ) ? esc_html( $store_info['store_name'] ) : __( 'N/A', 'woofreendor' );
                             $store_url  = dokan_get_store_url( $outlet->ID );
                             $store_address  = dokan_get_seller_short_address( $outlet->ID );
                             $seller_rating  = dokan_get_seller_rating( $outlet->ID );
@@ -52,7 +89,7 @@ get_header( 'shop' );
                                             <div class="store-data-container">
                                                 <div class="featured-favourite">
                                                     <?php if ( ! empty( $featured_seller ) && 'yes' == $featured_seller ): ?>
-                                                        <div class="featured-label"><?php _e( 'Featured', 'dokan-lite' ); ?></div>
+                                                        <div class="featured-label"><?php _e( 'Featured', 'woofreendor' ); ?></div>
                                                     <?php endif ?>
 
                                                     <?php do_action( 'dokan_seller_listing_after_featured', $outlet, $store_info ); ?>
@@ -62,7 +99,7 @@ get_header( 'shop' );
                                                     <h2><a href="<?php echo $store_url; ?>"><?php echo $store_name; ?></a></h2>
 
                                                     <?php if ( !empty( $seller_rating['count'] ) ): ?>
-                                                        <div class="star-rating dokan-seller-rating" title="<?php echo sprintf( __( 'Rated %s out of 5', 'dokan-lite' ), $seller_rating['rating'] ) ?>">
+                                                        <div class="star-rating dokan-seller-rating" title="<?php echo sprintf( __( 'Rated %s out of 5', 'woofreendor' ), $seller_rating['rating'] ) ?>">
                                                             <span style="width: <?php echo ( ( $seller_rating['rating']/5 ) * 100 - 1 ); ?>%">
                                                                 <strong class="rating"><?php echo $seller_rating['rating']; ?></strong> out of 5
                                                             </span>
@@ -89,7 +126,7 @@ get_header( 'shop' );
                                         <div class="seller-avatar">
                                             <?php echo get_avatar( $outlet->ID, 150 ); ?>
                                         </div>
-                                        <a href="<?php echo $store_url; ?>" class="dokan-btn dokan-btn-theme"><?php _e( 'Visit Store', 'dokan-lite' ); ?></a>
+                                        <a href="<?php echo $store_url; ?>" class="dokan-btn dokan-btn-theme"><?php _e( 'Visit Store', 'woofreendor' ); ?></a>
 
                                         <?php do_action( 'dokan_seller_listing_footer_content', $outlet, $store_info ); ?>
                                     </div>

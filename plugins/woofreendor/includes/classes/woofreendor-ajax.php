@@ -33,6 +33,8 @@ class Woofreendor_Ajax{
         add_action( 'wp_ajax_woofreendor_create_new_outlet', array( $this, 'create_outlet' ) );
         add_action( 'wp_ajax_woofreendor_update_outlet', array( $this, 'update_outlet' ) );
         add_action( 'wp_ajax_woofreendor_delete_outlet', array( $this, 'delete_outlet' ) );
+
+        add_action( 'wp_ajax_woofreendor_get_product_data', array( $this, 'product_data' ) );
     }
 
     public function create_batch() { 
@@ -234,6 +236,20 @@ class Woofreendor_Ajax{
         $content = ob_get_clean();
 
         wp_send_json_success( $content );
+    }
+    
+    public function product_data() {
+        check_ajax_referer( 'data-product', 'security' );
+
+        if ( ! current_user_can( 'dokandar' ) ) {
+            die(-1);
+        }
+
+        $product_id = intval( $_GET['product'] );
+
+        $response = woofreendor_get_product_data($product_id);
+        //var_dump($response);
+        wp_send_json_success( $response );
     }
 
 }

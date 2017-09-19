@@ -31,6 +31,8 @@ class Woofreendor_Template_Products {
         add_action( 'dokan_render_product_edit_template', array( $this, 'load_product_edit_template' ), 11 );
         add_action( 'dokan_render_new_product_template', array( $this, 'render_new_product_template' ), 10 );
         add_action( 'dokan_after_listing_product', array( $this, 'load_add_new_product_popup' ), 10 );
+        add_action( 'dokan_new_product_added', array( $this, 'load_add_new_product_meta' ),10,2);
+        
 
         add_action( 'woofreendor_batches_row', array( $this, 'woofreendor_render_batches_row' ), 10 );
         add_action( 'dokan_product_content_inside_area_after', array( $this, 'product_content_inside_area_after' ) );
@@ -62,8 +64,12 @@ class Woofreendor_Template_Products {
      * @return void
      */
     public function render_new_product_template( $query_vars ) {
-        if ( isset( $query_vars['new-product'] ) && !WeDevs_Dokan::init()->is_pro_exists() ) {
-            woofreendor_get_template_part( 'products/new-product' );
+        if ( isset( $query_vars['new-product'] ) ) {
+            // if(woofreendor_is_user_tenant(get_current_user_id())) {
+                woofreendor_get_template_part( 'products/new-product' );
+            // }else{
+                // woofreendor_get_template_part( 'products/new-product-outlet' );
+            // }
         }
     }
 
@@ -75,7 +81,12 @@ class Woofreendor_Template_Products {
      * @return void
      */
     function load_product_edit_template() {
-        woofreendor_get_template_part( 'products/new-product-single' );
+        if(woofreendor_is_user_tenant(get_current_user_id())) {
+            woofreendor_get_template_part( 'products/new-product-single' );
+        }else{
+            woofreendor_get_template_part( 'products/new-product-outlet' );
+        }
+        
     }
 
     /**
@@ -92,7 +103,12 @@ class Woofreendor_Template_Products {
     }
 
     function load_add_new_product_popup() {
-        woofreendor_get_template_part( 'products/tmpl-add-product-popup' );
+        if(woofreendor_is_user_tenant( get_current_user_id() ) ) {
+            woofreendor_get_template_part( 'products/tmpl-add-product-popup' );
+        }else{
+            woofreendor_get_template_part( 'products/tmpl-add-outlet-product-popup' );
+        }
+        
     }
 
     function woofreendor_render_batches_row($paramProductId ){
@@ -113,6 +129,13 @@ class Woofreendor_Template_Products {
         );
 
         return $paramProductTypes;
+    }
+
+    function load_add_new_product_meta( $paramProductId, $paramProductData){
+        // var_dump($paramProductData['product_parent']);
+        if ( isset( $paramProductData['product_parent'] ) ) {
+            update_post_meta( $paramProductId, 'product_parent', $paramProductData['product_parent'] );
+        }
     }
 
 }

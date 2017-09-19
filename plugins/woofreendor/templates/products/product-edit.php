@@ -112,8 +112,7 @@ if ( ! $from_shortcode ) {
                     <?php } ?>
                 </h1>
             </header>
-
-            <?php if ( dokan_is_seller_enabled( get_current_user_id() ) ) { ?>
+            <?php if ( dokan_is_seller_enabled( get_current_user_id() ) || woofreendor_is_user_tenant( get_current_user_id() ) ) { ?>
 
                 <form class="dokan-form-container" role="form" method="post">
                     <?php wp_nonce_field( 'dokan_edit_product', 'dokan_edit_product_nonce' ); ?>

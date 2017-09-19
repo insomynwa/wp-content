@@ -1,0 +1,8 @@
+Front-End:
+- remove radio in registration form
+- create tenant widget
+Tenant Dashboard:
+- tenant can create product (as parent product)
+- remove element
+Outet Dashboard:
+- create product (as child product ; copy from tenant product)

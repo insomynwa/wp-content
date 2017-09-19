@@ -56,11 +56,15 @@ class Woofreendor_Rewrites {
      * @return array $crumbs
      */
     public function tenant_page_breadcrumb( $crumbs ){
+        // var_dump(get_query_vars)
         if (  woofreendor_is_tenant_page() ) {
             $author      = get_query_var( $this->custom_tenant_url );
             $seller_info = get_user_by( 'slug', $author );
-            //$crumbs[1]   = array( ucwords($this->custom_tenant_url) , site_url().'/'.$this->custom_tenant_url );
-            //$crumbs[2]   = array( $author, woofreendor_get_tenant_url( $seller_info->data->ID ) );
+            // var_dump($seller_info->data);
+            // $crumbs[1]   = array( ucwords($this->custom_tenant_url) , site_url().'/'.$this->custom_tenant_url );
+            $crumbs[1]   = array( __( 'Tenants', 'woofreendor') , site_url().'/tenant-listing' );
+            // $crumbs[2]   = array( $author, woofreendor_get_tenant_url( $seller_info->data->ID ) );
+            $crumbs[2]   = array( $seller_info->data->display_name, woofreendor_get_tenant_url( $seller_info->data->ID ) );
         }
 
         return $crumbs;
@@ -183,7 +187,12 @@ class Woofreendor_Rewrites {
             return $template;
         }
 
-        $edit_product_url = woofreendor_locate_template( 'products/new-product-single.php' );
+        if(woofreendor_is_user_tenant(get_current_user_id())){
+            $edit_product_url = woofreendor_locate_template( 'products/new-product-single.php' );
+        }else{
+            $edit_product_url = woofreendor_locate_template( 'products/new-product-outlet.php' );
+        }
+        
 
         return apply_filters( 'woofreendor_get_product_edit_template', $edit_product_url );
     }

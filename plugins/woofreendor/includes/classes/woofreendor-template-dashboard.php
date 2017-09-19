@@ -1,6 +1,6 @@
 <?php
 /**
- * Dokan Template Dashboard Class
+ * Woofreendor Template Dashboard Class
  *
  * @author weDves
  */
@@ -115,7 +115,7 @@ class Woofreendor_Template_Dashboard {
             $paramUrls = $this->mod_link_url( $paramUrls, $mod_link_url);
 
             // var_dump($paramUrls['settings']['url']);
-            $rem_url = array( 'products', 'orders', 'withdraw');
+            $rem_url = array( 'orders', 'withdraw');
             $paramUrls = $this->remove_tenant_nav( $paramUrls, $rem_url);
         }
         else {

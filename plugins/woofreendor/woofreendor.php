@@ -150,6 +150,8 @@ final class Woofreendor{
         require_once WOOFREENDOR_INC . 'woofreendor-functions.php';
         require_once WOOFREENDOR_INC . 'woofreendor-template-utility.php';
         require_once WOOFREENDOR_INC . 'admin/woofreendor-setup-wizard.php';
+        require_once WOOFREENDOR_INC . 'widgets/tenant-contact.php';
+        require_once WOOFREENDOR_INC . 'widgets/tenant-location.php';
     }
 
     function instantiate_class(){
@@ -186,6 +188,8 @@ final class Woofreendor{
         add_action( 'dokan_enqueue_admin_dashboard_script', array( $this, 'admin_dashboad_enqueue_scripts' ) );
 
         add_action( 'template_redirect', array( $this, 'redirect_if_not_logged_tenant' ), 11 );
+
+        remove_action( 'woocommerce_register_form', 'dokan_seller_reg_form_fields' );
 
         // add_action( 'wp_enqueue_scripts', array( $this, 'scripts' ) );
         // remove_filter( 'dokan_localized_args', array( WeDevs_Dokan::init(), 'conditional_localized_args' ) );
@@ -303,6 +307,9 @@ final class Woofreendor{
     }
 
     public function enqueue_scripts() {
+        global $wp;
+        // var_dump($wp->query_vars);
+        // var_dump(woofreendor_is_tenant_page());
         if ( ( woofreendor_is_tenant_dashboard()
             || ( get_query_var( 'edit' ) && is_singular( 'tenant' ) )
             || ( get_query_var( 'edit' ) && is_singular( 'product' ) )
@@ -312,16 +319,33 @@ final class Woofreendor{
             || ( get_query_var( 'edit' ) && is_singular( 'tenant' ) )
             || ( get_query_var( 'edit' ) && is_singular( 'outlet' ) ) )
             || dokan_is_store_page()
-            || woofreendor_is_tenant_page()
+            // || woofreendor_is_tenant_page()
             || dokan_is_store_review_page()
             || is_account_page()
         ) {
-            //$dokan = WeDevs_Dokan::init();
+
             $this->woofreendor_dashboard_scripts();
             if ( isset( $wp->query_vars['settings'] ) == 'tenant' ) {
                 wp_enqueue_script( 'wc-country-select' );
             }
+            // $dokan = WeDevs_Dokan::init();
+            // if ( DOKAN_LOAD_STYLE ) {
+            //     wp_enqueue_style( 'dokan-select2-css' );
+            // // }
 
+            // // if ( DOKAN_LOAD_SCRIPTS ) {
+
+            //     $dokan->load_form_validate_script();
+            //     $dokan->load_gmap_script();
+
+            //     wp_enqueue_script( 'jquery-ui-sortable' );
+                // wp_enqueue_script( 'jquery-ui-datepicker' );
+            //     wp_enqueue_script( 'dokan-tooltip' );
+            //     wp_enqueue_script( 'dokan-chosen' );
+            //     wp_enqueue_script( 'dokan-form-validate' );
+            //     wp_enqueue_script( 'dokan-script' );
+            //     wp_enqueue_script( 'dokan-select2-js' );
+            // }
             // wp_enqueue_style( 'dokan-pro-style' );
             wp_enqueue_style( 'woofreendor-style', WOOFREENDOR_PLUGIN_ASSEST . '/css/style.css', false, time(), 'all' );
 
@@ -344,7 +368,26 @@ final class Woofreendor{
             // wp_enqueue_script( 'woofreendor-script', WOOFREENDOR_PLUGIN_ASSEST . '/js/woofreendor-script.js', array( 'jquery', 'dokan-script' ), null, true );
         }
 
+        if ( woofreendor_is_tenant_page() ) {
+            $dokan = WeDevs_Dokan::init();
+            if ( DOKAN_LOAD_STYLE ) {
+                wp_enqueue_style( 'dokan-select2-css' );
+            }
 
+            if ( DOKAN_LOAD_SCRIPTS ) {
+
+                $dokan->load_form_validate_script();
+                $dokan->load_gmap_script();
+
+                wp_enqueue_script( 'jquery-ui-sortable' );
+                wp_enqueue_script( 'jquery-ui-datepicker' );
+                wp_enqueue_script( 'dokan-tooltip' );
+                wp_enqueue_script( 'dokan-chosen' );
+                wp_enqueue_script( 'dokan-form-validate' );
+                wp_enqueue_script( 'dokan-script' );
+                wp_enqueue_script( 'dokan-select2-js' );
+            }
+        }
         //Load in Single product pages only
         // if ( is_singular( 'product' ) && !get_query_var( 'edit' ) ) {
         //     wp_enqueue_script( 'dokan-product-shipping' );
@@ -354,7 +397,8 @@ final class Woofreendor{
     public function force_load_extra_args( $paramDefaultArgs){
         
         if( woofreendor_is_tenant_dashboard()
-        || ( get_query_var( 'edit' ) && is_singular( 'tenant' ) )
+        || woofreendor_is_tenant_page()
+        // || ( get_query_var( 'edit' ) && is_singular( 'tenant' ) )
         || ( get_query_var( 'edit' ) && is_singular( 'outlet' ) )
         ){
             $paramDefaultArgs = true;
@@ -364,7 +408,7 @@ final class Woofreendor{
 
     public function force_load_scripts($paramDefaultArgs){
         if( woofreendor_is_tenant_dashboard()
-        || ( get_query_var( 'edit' ) && is_singular( 'tenant' ) )
+        // || ( get_query_var( 'edit' ) && is_singular( 'tenant' ) )
         || ( get_query_var( 'edit' ) && is_singular( 'outlet' ) )
         ){
             $paramDefaultArgs = true;

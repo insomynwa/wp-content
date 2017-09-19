@@ -8,7 +8,7 @@ foreach($batches as $batch){
     $meta_batch_stock = get_post_meta( $batch->ID, '_stock', true );
     $meta_batch_price = get_post_meta( $batch->ID, '_regular_price', true );
 ?>
-<tr<?php echo $tr_class; ?> id="batch_row_<?php echo $batch->ID; ?>">
+<tr<?php if(isset($tr_class)) echo $tr_class; ?> id="batch_row_<?php echo $batch->ID; ?>">
     <td>
         <h4><?php _e( '#' . $batch->ID, 'dokan-lite'); ?></h4>
     </td>

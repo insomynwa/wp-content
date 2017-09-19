@@ -15,6 +15,7 @@ function woofreendor_locatize_data() {
         'add_outlet_nonce'      => wp_create_nonce( 'add-outlet' ),
         'update_outlet_nonce'   => wp_create_nonce( 'update-outlet' ),
         'delete_outlet_nonce'   => wp_create_nonce( 'delete-outlet' ),
+        'product_data_nonce'   => wp_create_nonce( 'data-product' ),
         'outlet_name_required'      => __( 'Nama outlet belum diisi', 'woofreendor' ),
         'outlet_name_min_error'     => __( 'Nama outlet minimal 6 karakter', 'woofreendor' ),
         'outlet_username_required'  => __( 'Username outlet belum diisi', 'woofreendor' ),
@@ -241,7 +242,7 @@ function woofreendor_get_tenant_tabs( $tenant_id ) {
 
     // if ( isset($store_info['enable_tnc']) && $store_info['enable_tnc'] == 'on' && $tnc_enable == 'on' ) {
     //     $tabs['terms_and_conditions'] = array(
-    //         'title' => __( 'Terms and Conditions', 'dokan-lite' ),
+    //         'title' => __( 'Terms and Conditions', 'woofreendor' ),
     //         'url'   => dokan_get_toc_url( $tenant_id )
     //     );
     // }
@@ -488,3 +489,5 @@ function woofreendor_generate_html( $paramPath, $paramData ){
     
     return $html;
 }
+
+register_sidebar( array( 'name' => __( 'Woofreendor Tenant Sidebar', 'woofreendor' ), 'id' => 'sidebar-tenant' ) );

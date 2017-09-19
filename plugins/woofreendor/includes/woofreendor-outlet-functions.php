@@ -158,6 +158,14 @@ function woofreendor_delete_outlet_ajax($paramPostData){
         if(false !== $counts){
             wp_cache_delete($cache_key,'woofreendor');
         }
+        
+        $cache_del_key = 'woofreendor-owner-id-outlet-' . $post_outlet_id;
+        $outlet_tenant = wp_cache_get( $cache_del_key, 'woofreendor' );
+
+        if(false !== $outlet_tenant){
+            wp_cache_delete($cache_del_key,'woofreendor');
+        }
+
         return true;
     }
     
@@ -252,5 +260,31 @@ function woofreendor_count_outlets($paramTenantId){
     }
 
     return $counts;
+}
+
+/**
+ * Get Outlet Owner
+ *
+ * @param int Outlet ID
+ * @return int Tenant ID
+ */
+function woofreendor_get_outlet_owner_id( $paramOutletId ) {
+    global $wpdb;
+
+    $cache_key = 'woofreendor-owner-id-outlet-' . $paramOutletId;
+    $owner_id = wp_cache_get( $cache_key, 'woofreendor' );
+
+    if( false === $owner_id ){
+        $query = 
+            "SELECT um.meta_value FROM {$wpdb->usermeta} um 
+            WHERE um.meta_key = %s 
+            AND um.user_id = %d";
+        $results = $wpdb->get_var( $wpdb->prepare( $query, 'tenant_id', $paramOutletId ));
+
+        $owner_id = $results;
+        wp_cache_set( $cache_key, $owner_id, 'woofreendor' );
+    }
+
+    return $owner_id;
 }
 

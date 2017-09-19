@@ -44,120 +44,31 @@
                     </div>
 
                     <div class="dokan-clearfix">
-                        <!-- <div class="dokan-form-group dokan-clearfix dokan-price-container"> -->
-                            <!-- <div class="content-half-part"> -->
-                                <!-- <label for="_regular_price" class="form-label"><?php //_e( 'Price', 'dokan-lite' ); ?></label>
+                        <input type="hidden" class="dokan-form-control" name="_regular_price" value="0">
+                        <input type="hidden" class="dokan-form-control" name="_sale_price" value="0">
+                        <div class="dokan-form-group" dokan-clearfix >
+                            <?php
+                            $product_cat = -1;
+                            $category_args =  array(
+                                'show_option_none' => __( '- Pilih kategori -', 'dokan-lite' ),
+                                'hierarchical'     => 1,
+                                'hide_empty'       => 0,
+                                'name'             => 'product_cat',
+                                'id'               => 'product_cat',
+                                'taxonomy'         => 'product_cat',
+                                'title_li'         => '',
+                                'class'            => 'product_cat dokan-form-control',
+                                'exclude'          => '',
+                                'selected'         => $product_cat,
+                            );
 
-                                <div class="dokan-input-group">
-                                    <span class="dokan-input-group-addon"><?php //echo get_woocommerce_currency_symbol(); ?></span>
-                                    <input type="number" class="dokan-form-control" name="_regular_price" placeholder="0.00" min="0" step="any">
-                                </div> -->
-                                <input type="hidden" class="dokan-form-control" name="_regular_price" value="0">
-                                <input type="hidden" class="dokan-form-control" name="_sale_price" value="0">
-                                <?php if ( dokan_get_option( 'product_category_style', 'dokan_selling', 'single' ) == 'single' ): ?>
-                                <div class="dokan-form-group" dokan-clearfix >
-                                    <?php
-                                    $product_cat = -1;
-                                    $category_args =  array(
-                                        'show_option_none' => __( '- Pilih kategori -', 'dokan-lite' ),
-                                        'hierarchical'     => 1,
-                                        'hide_empty'       => 0,
-                                        'name'             => 'product_cat',
-                                        'id'               => 'product_cat',
-                                        'taxonomy'         => 'product_cat',
-                                        'title_li'         => '',
-                                        'class'            => 'product_cat dokan-form-control dokan-select2',
-                                        'exclude'          => '',
-                                        'selected'         => $product_cat,
-                                    );
-
-                                    wp_dropdown_categories( apply_filters( 'dokan_product_cat_dropdown_args', $category_args ) );
-                                ?>
-                                </div>
-                            <?php elseif ( dokan_get_option( 'product_category_style', 'dokan_selling', 'single' ) == 'multiple' ): ?>
-                                <div class="dokan-form-group">
-                                    <?php
-                                    $term = array();
-                                    include_once DOKAN_LIB_DIR.'/class.taxonomy-walker.php';
-                                    $drop_down_category = wp_dropdown_categories(  apply_filters( 'dokan_product_cat_dropdown_args', array(
-                                        'show_option_none' => __( '', 'dokan-lite' ),
-                                        'hierarchical'     => 1,
-                                        'hide_empty'       => 0,
-                                        'name'             => 'product_cat[]',
-                                        'id'               => 'product_cat',
-                                        'taxonomy'         => 'product_cat',
-                                        'title_li'         => '',
-                                        'class'            => 'product_cat dokan-form-control dokan-select2',
-                                        'exclude'          => '',
-                                        'selected'         => $term,
-                                        'echo'             => 0,
-                                        'walker'           => new DokanTaxonomyWalker()
-                                    ) ) );
-
-                                    echo str_replace( '<select', '<select data-placeholder="'.__( 'Pilih Kategori Produk', 'dokan-lite' ).'" multiple="multiple" ', $drop_down_category );
-                                    ?>
-                                </div>
-                            <?php endif; ?>
-                            <!-- </div> -->
-
-                            <!-- <div class="content-half-part sale-price">
-                                <label for="_sale_price" class="form-label">
-                                    <?php //_e( 'Discounted Price', 'dokan-lite' ); ?>
-                                    <a href="#" class="sale_schedule"><?php //_e( 'Schedule', 'dokan-lite' ); ?></a>
-                                    <a href="#" class="cancel_sale_schedule dokan-hide"><?php //_e( 'Cancel', 'dokan-lite' ); ?></a>
-                                </label>
-
-                                <div class="dokan-input-group">
-                                    <span class="dokan-input-group-addon"><?php //echo get_woocommerce_currency_symbol(); ?></span>
-                                    <input type="number" class="dokan-form-control" name="_sale_price" placeholder="0.00" min="0" step="any">
-                                </div>
-
-                            </div> -->
-                        <!-- </div> -->
-
-                        <!-- <div class="dokan-hide sale-schedule-container sale_price_dates_fields dokan-clearfix dokan-form-group">
-                            <div class="content-half-part from">
-                                <div class="dokan-input-group">
-                                    <span class="dokan-input-group-addon"><?php //_e( 'From', 'dokan-lite' ); ?></span>
-                                    <input type="text" name="_sale_price_dates_from" class="dokan-form-control datepicker sale_price_dates_from" value="" maxlength="10" pattern="[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])" placeholder="<?php //_e( 'YYYY-MM-DD', 'dokan-lite' ); ?>">
-                                </div>
-                            </div>
-
-                            <div class="content-half-part to">
-                                <div class="dokan-input-group">
-                                    <span class="dokan-input-group-addon"><?php //_e( 'To', 'dokan-lite' ); ?></span>
-                                    <input type="text" name="_sale_price_dates_to" class="dokan-form-control datepicker sale_price_dates_to" value="" maxlength="10" pattern="[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])" placeholder="<?php //_e( 'YYYY-MM-DD', 'dokan-lite' ); ?>">
-                                </div>
-                            </div>
-                        </div> --><!-- .sale-schedule-container -->
+                            wp_dropdown_categories( apply_filters( 'dokan_product_cat_dropdown_args', $category_args ) );
+                        ?>
+                        </div>
                     </div>
                 </div>
                 <div class="dokan-clearfix"></div>
                 <div class="product-full-container">
-                            
-
-                    <!-- <div class="dokan-form-group"> -->
-                        <?php
-                        // require_once DOKAN_LIB_DIR.'/class.taxonomy-walker.php';
-                        // $drop_down_tags = wp_dropdown_categories( array(
-                        //     'show_option_none' => __( '', 'dokan-lite' ),
-                        //     'hierarchical'     => 1,
-                        //     'hide_empty'       => 0,
-                        //     'name'             => 'product_tag[]',
-                        //     'id'               => 'product_tag',
-                        //     'taxonomy'         => 'product_tag',
-                        //     'title_li'         => '',
-                        //     'class'            => 'product_tags dokan-form-control dokan-select2',
-                        //     'exclude'          => '',
-                        //     'selected'         => array(),
-                        //     'echo'             => 0,
-                        //     'walker'           => new DokanTaxonomyWalker()
-                        // ) );
-
-                        // echo str_replace( '<select', '<select data-placeholder="'.__( 'Select product tags', 'dokan-lite' ).'" multiple="multiple" ', $drop_down_tags );
-                        ?>
-                    <!-- </div> -->
-
                     <div class="dokan-form-group">
                         <textarea name="post_excerpt" id="" class="dokan-form-control" rows="5" placeholder="<?php _e( 'Masukkan deskripsi singkat produk' , 'dokan-lite' ) ?>"></textarea>
                     </div>

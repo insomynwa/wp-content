@@ -158,7 +158,7 @@ $classes[] = ' item-col col-xs-6 col-sm-'.$colwidth ;?>
 						</div>
 					<?php } ?>
 					<?php /* variable product */
-					if($product->children){
+					if($product->get_children){
 						$vsale_end = array();
 						
 						foreach($product->children as $pvariable){
