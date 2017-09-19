@@ -491,3 +491,14 @@ function woofreendor_generate_html( $paramPath, $paramData ){
 }
 
 register_sidebar( array( 'name' => __( 'Woofreendor Tenant Sidebar', 'woofreendor' ), 'id' => 'sidebar-tenant' ) );
+
+function woofreendor_get_page_url( $page, $context = 'woofreendor' ) {
+    
+        if ( $context == 'woocommerce' ) {
+            $page_id = wc_get_page_id( $page );
+        } else {
+            $page_id = dokan_get_option( $page, 'woofreendor_pages' );
+        }
+    
+        return apply_filters( 'dokan_get_page_url', get_permalink( $page_id ), $page_id, $context );
+    }

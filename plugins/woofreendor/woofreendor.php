@@ -172,7 +172,7 @@ final class Woofreendor{
             Woofreendor_Tenants::init();
             Woofreendor_Outlets::init();
             Woofreendor_Template_Settings::init();
-            //Dokan_Template_Orders::init();
+            Woofreendor_Woocommerce::init();
             //Dokan_Template_Withdraw::init();
             Woofreendor_Template_Shortcodes::init();
             //Dokan_Template_Settings::init();

@@ -25,7 +25,7 @@
              *
              *  @since 2.4
              */
-            do_action( 'dokan_dashboard_content_inside_before' );
+            //do_action( 'dokan_dashboard_content_inside_before' );
             do_action( 'dokan_before_listing_product' );
             ?>
 
