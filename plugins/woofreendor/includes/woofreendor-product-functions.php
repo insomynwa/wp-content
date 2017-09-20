@@ -53,3 +53,45 @@ function woofreendor_get_product_data( $paramProductId ){
     $product_term = wp_get_post_terms( $paramProductId, 'product_cat', array( 'fields' => 'ids') )[0];
     return array( 'product' => $product, 'image_url' => $product_image_url, 'term' => $product_term, 'image_id' => $product_image);
 }
+
+/**
+ * Get Best Selling Product
+ *
+ * @param int number of product to show
+ * @return array Parent Product ID and Total Sales
+ */
+function woofreendor_get_best_selling_products($limit){
+    global $wpdb;
+    
+    // $cache_key = 'woofreendor-count-outlets-' . $paramTenantId;
+    // $counts = wp_cache_get( $cache_key, 'woofreendor' );
+
+    // if ( false === $counts ) {
+        $query =
+        "SELECT pm3.parent, SUM(pm3.total) as total_sales FROM (
+            SELECT pm2.meta_value as parent, pm1.meta_value as total FROM (
+                SELECT post_id, meta_value FROM {$wpdb->postmeta}
+                WHERE meta_key IN (%s) AND
+                    post_id IN (
+                        SELECT post_id FROM {$wpdb->postmeta}
+                        WHERE meta_key IN (%s)
+                    )
+                ) pm1
+            LEFT JOIN (
+                SELECT post_id, meta_value FROM {$wpdb->postmeta}
+                WHERE meta_key IN (%s)
+                ) pm2
+            ON pm1.post_id = pm2.post_id
+        ) pm3
+        GROUP BY pm3.parent
+        ORDER BY pm3.total DESC
+        LIMIT %d";
+        $results = $wpdb->get_results( $wpdb->prepare( $query, "total_sales", 'product_parent', 'product_parent' , $limit), ARRAY_A);
+        return $results;
+        // $counts['total'] = $results;
+        // $counts = (object) $counts;
+        // wp_cache_set( $cache_key, $counts, 'woofreendor' );
+    // }
+
+    // return $counts;
+}

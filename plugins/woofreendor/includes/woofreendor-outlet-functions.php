@@ -200,33 +200,12 @@ function woofreendor_enable_outlet($paramOutletId, $paramTenantId){
     update_user_meta( $paramOutletId,'has_tenant', true);
 }
 
-/* function woofreendor_count_outlet_by_tenant( $paramTenantId ){
-    $args = array(
-            'role'       => 'seller',
-            'orderby'    => 'registered',
-            'order'      => 'ASC',
-            'meta_query' => array(
-                'relation'  => 'AND',
-                    array(
-                        'key'   => 'has_tenant',
-                        'value' => true,
-                        'compare'=> '='
-                        ),
-                    array(
-                        'key'   => 'tenant_id',
-                        'value' => $paramTenantId,
-                        'compare'=> '='
-                        )
-                    )
-                
-                );
-
-    $user_query = new WP_User_Query( $args );
-    $sellers    = $user_query->get_results();
-
-    return array( 'users' => $sellers, 'count' => $user_query->total_users );
-} */
-
+/**
+ * Count Tenant's outlet
+ *
+ * @param int Tenant Id
+ * @return int Number of outlet
+ */
 function woofreendor_count_outlets($paramTenantId){
     global $wpdb;
     
@@ -242,17 +221,6 @@ function woofreendor_count_outlets($paramTenantId){
                 ON um.user_id != %d 
                 WHERE um.meta_key = %s AND um.meta_value = %d ) outlet";
         $results = $wpdb->get_var( $wpdb->prepare( $query, $paramTenantId, 'tenant_id', $paramTenantId ));
-        // var_dump($num_outlets);
-
-        // $total = 0;
-        // foreach ( $results as $row ) {
-        //     if ( ! in_array( $row['post_status'], $post_status ) ) {
-        //         continue;
-        //     }
-
-        //     $counts[ $row['post_status'] ] = (int) $row['num_posts'];
-        //     $total += (int) $row['num_posts'];
-        // }
 
         $counts['total'] = $results;
         $counts = (object) $counts;
