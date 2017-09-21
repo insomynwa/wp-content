@@ -23,7 +23,7 @@ class Woofreendor_Rewrites {
 
         add_filter( 'template_include', array( $this, 'tenant_template' ) );
         add_filter( 'template_include', array( $this,  'product_edit_template' ),999 );
-        // add_filter( 'template_include', array( $this,  'tenant_toc_template' ) );
+        add_filter( 'template_include', array( $this,  'tenant_tenant_outlets_template' ) );
 
         add_filter( 'query_vars', array( $this, 'register_query_var' ) );
         add_filter( 'pre_get_posts', array( $this, 'tenant_query_filter' ) );
@@ -150,12 +150,12 @@ class Woofreendor_Rewrites {
             'top' );
 
         add_rewrite_rule( 
-            $this->custom_tenant_url.'/([^/]+)/toc?$', 
-            'index.php?'.$this->custom_tenant_url.'=$matches[1]&toc=true', 
+            $this->custom_tenant_url.'/([^/]+)/outlets?$', 
+            'index.php?'.$this->custom_tenant_url.'=$matches[1]&outlets=true', 
             'top' );
         add_rewrite_rule( 
-            $this->custom_tenant_url.'/([^/]+)/toc/page/?([0-9]{1,})/?$', 
-            'index.php?'.$this->custom_tenant_url.'=$matches[1]&paged=$matches[2]&toc=true', 
+            $this->custom_tenant_url.'/([^/]+)/outlets/page/?([0-9]{1,})/?$', 
+            'index.php?'.$this->custom_tenant_url.'=$matches[1]&paged=$matches[2]&outlets=true', 
             'top' );
     }
 
@@ -269,5 +269,27 @@ class Woofreendor_Rewrites {
                 );
             }
         }
+    }
+
+    /**
+     * Returns the tenant outlets template
+     *
+     * @since 2.3
+     *
+     * @param string $template
+     *
+     * @return string
+     */
+    function tenant_tenant_outlets_template( $template ) {
+        
+        if ( ! $this->is_woo_installed() ) {
+            return $template;
+        }
+        if ( get_query_var( 'outlets' ) ) {
+            return woofreendor_locate_template( 'tenant-outlets.php' );
+        }
+
+        return $template;
+
     }
 }

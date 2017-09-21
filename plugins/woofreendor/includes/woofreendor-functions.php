@@ -16,6 +16,7 @@ function woofreendor_locatize_data() {
         'update_outlet_nonce'   => wp_create_nonce( 'update-outlet' ),
         'delete_outlet_nonce'   => wp_create_nonce( 'delete-outlet' ),
         'product_data_nonce'   => wp_create_nonce( 'data-product' ),
+        'product_detail_nonce'   => wp_create_nonce( 'detail-product' ),
         'outlet_name_required'      => __( 'Nama outlet belum diisi', 'woofreendor' ),
         'outlet_name_min_error'     => __( 'Nama outlet minimal 6 karakter', 'woofreendor' ),
         'outlet_username_required'  => __( 'Username outlet belum diisi', 'woofreendor' ),
@@ -231,21 +232,15 @@ function woofreendor_get_navigation_url( $name = '' ) {
 function woofreendor_get_tenant_tabs( $tenant_id ) {
 
     $tabs = array(
+        'products' => array(
+            'title' => __( 'Products', 'woofreendor' ),
+            'url'   => woofreendor_get_tenant_url($tenant_id)
+        ),
         'outlets' => array(
             'title' => __( 'Outlets', 'woofreendor' ),
-            'url'   => woofreendor_get_tenant_url( $tenant_id )
+            'url'   => woofreendor_get_tenant_outlet_url($tenant_id)
         ),
     );
-
-    $store_info = woofreendor_get_tenant_info( $tenant_id );
-    // $tnc_enable = dokan_get_option( 'seller_enable_terms_and_conditions', 'dokan_general', 'off' );
-
-    // if ( isset($store_info['enable_tnc']) && $store_info['enable_tnc'] == 'on' && $tnc_enable == 'on' ) {
-    //     $tabs['terms_and_conditions'] = array(
-    //         'title' => __( 'Terms and Conditions', 'woofreendor' ),
-    //         'url'   => dokan_get_toc_url( $tenant_id )
-    //     );
-    // }
 
     return apply_filters( 'woofreendor_tenant_tabs', $tabs, $tenant_id );
 }
@@ -494,11 +489,26 @@ register_sidebar( array( 'name' => __( 'Woofreendor Tenant Sidebar', 'woofreendo
 
 function woofreendor_get_page_url( $page, $context = 'woofreendor' ) {
     
-        if ( $context == 'woocommerce' ) {
-            $page_id = wc_get_page_id( $page );
-        } else {
-            $page_id = dokan_get_option( $page, 'woofreendor_pages' );
-        }
-    
-        return apply_filters( 'dokan_get_page_url', get_permalink( $page_id ), $page_id, $context );
+    if ( $context == 'woocommerce' ) {
+        $page_id = wc_get_page_id( $page );
+    } else {
+        $page_id = dokan_get_option( $page, 'woofreendor_pages' );
     }
+
+    return apply_filters( 'dokan_get_page_url', get_permalink( $page_id ), $page_id, $context );
+}
+
+/**
+ * Get tenant-outlets page
+ *
+ * @since 2.3
+ *
+ * @param $store_id
+ * @param $store_info
+ *
+ * @return string
+ */
+function woofreendor_get_tenant_outlet_url( $tenant_id ) {
+    $userstore = woofreendor_get_tenant_url( $tenant_id );
+    return apply_filters( 'dokan_get_toc_url', $userstore ."outlets" );
+}

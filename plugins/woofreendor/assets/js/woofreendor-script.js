@@ -826,3 +826,70 @@
     });
     
 })(jQuery);
+
+(function($){
+    Woofreendor_General = {
+        init: function(){
+            $('body').on('click','a.woofreendor_detail_product', this.addProductDetailPopup);
+        },
+
+        addProductDetailPopup:function(e){
+            e.preventDefault();
+            var product_id = $(this).attr('data-product_id');
+            var data_product = {
+                product: product_id,
+                action: 'woofreendor_get_product_detail',
+                security: woofreendor.product_detail_nonce
+            };
+            
+            $.get( woofreendor.ajaxurl, data_product, function( resp ) {
+                // console.log(resp);
+                if ( resp.success ) {
+                    var data_product = {
+                        title: resp.data.product.post_title,
+                        image: resp.data.image_url,
+                        cat: resp.data.term.name,
+                        desc: resp.data.product.post_content,
+                        child: resp.data.child_product
+                    };
+                    Woofreendor_General.showProductDetailPopup(data_product);
+                } else {
+                    
+                }
+                
+            });
+        },
+
+        showProductDetailPopup: function(data_product){
+            var productTemplate = wp.template( 'woofreendor-detail-product-popup' );
+            $.magnificPopup.open({
+                fixedContentPos: true,
+                items: {
+                    src: productTemplate().trim(),
+                    type: 'inline'
+                },
+                callbacks: {
+                    open: function() {
+                        console.log(Object.keys(data_product.child).length);
+                        $("#wf_product_det_title>span").text(data_product.title);
+                        $("#wf_product_det_image").attr( 'src', data_product.image);
+                        $("#wf_product_det_desc").text(data_product.desc);
+                        $("#wf_product_det_cat").text(data_product.cat);
+                        var num_child = Object.keys(data_product.child).length;
+                        for(var i=0; i<num_child; i++){
+                            var tbody = '<li>' + 
+                            '<a href="'+ data_product.child[i].product_url + '">' + data_product.child[i].outlet + '</a>' +
+                            '</li>';
+                            $("#wf_product_det_outlet").append(tbody);
+                        }
+                    },
+                    close: function() {
+                    }
+                }
+            });
+        }
+    };
+    $(function(){
+        Woofreendor_General.init();
+    });
+})(jQuery);

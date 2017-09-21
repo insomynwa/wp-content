@@ -180,10 +180,12 @@ if ( ! $from_shortcode ) {
                                 <input type="hidden" id="_sale_price" name="_sale_price">
                                 <input type="hidden" id="product_tag" name="product_tag[]">
                                 <input type="hidden" id="_stock" name="_stock" value="0">
+                                <input type="hidden" id="_sku" name="_sku" value="">
+                                <input type="hidden" id="_stock_status" name="_stock_status" value="">
                                 <input type="hidden" id="_sold_individually" name="_sold_individually" value="yes">
-                                <?php if( ! woofreendor_is_user_tenant( get_current_user_id()) ): ?>
+                                <?php //if( ! woofreendor_is_user_tenant( get_current_user_id()) ): ?>
                                 <input type="hidden" id="post_status" name="post_status" value="publish">
-                                <?php endif; ?>
+                                <?php //endif; ?>
                                 <input type="hidden" id="_visibility" name="_visibility" value="visible">
 
                                 <?php if ( dokan_get_option( 'product_category_style', 'dokan_selling', 'single' ) == 'single' ): ?>
@@ -245,7 +247,12 @@ if ( ! $from_shortcode ) {
                                     <div class="image-wrap<?php echo $wrap_class; ?>">
                                         <a class="close dokan-remove-feat-image">&times;</a>
                                         <?php if ( $feat_image_id ) { ?>
-                                            <?php echo get_the_post_thumbnail( $post_id, apply_filters( 'single_product_large_thumbnail_size', 'shop_single' ), array( 'height' => '', 'width' => '' ) ); ?>
+                                            <?php
+                                            $product_image = get_post_thumbnail_id($post_id);
+                                            $image_url = wp_get_attachment_image_src( $product_image, 'shop_single' )[0];
+                                            ?>
+                                            <img height="" width="" src="<?php echo $image_url; ?>" alt="">
+                                            <?php //echo get_the_post_thumbnail( $post_id, apply_filters( 'single_product_large_thumbnail_size', 'shop_single' ), array( 'height' => '', 'width' => '' ) ); ?>
                                         <?php } else { ?>
                                             <img height="" width="" src="" alt="">
                                         <?php } ?>

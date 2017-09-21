@@ -16,7 +16,7 @@
   -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
 }
-.woofreendor-popup .woofreendor-popup-form-container {
+.woofreendor-popup .woofreendor-popup-form-container, .woofreendor-container-popup {
   padding: 80px 20px 20px;
   margin-top: 30px;
   height: 550px;

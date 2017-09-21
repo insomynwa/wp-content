@@ -58,124 +58,50 @@ get_header( 'shop' );
         <div id="dokan-content" class="store-page-wrap woocommerce" role="main">
 
             <?php woofreendor_get_template_part( 'tenant-header' ); ?>
-            <?php
-                $outlets = woofreendor_tenant_get_active_outlet( $tenant_user->ID );
-            ?>
-            <?php //do_action( 'dokan_store_profile_frame_after', $tenant_user, $tenant_info ); ?>
-            <?php if ( $outlets['count'] > 0 ) { ?>
+            <?php do_action( 'dokan_store_profile_frame_after', $tenant_user, $tenant_info ); ?>
 
-                <!-- <div class="seller-items"> -->
-                <div id="dokan-seller-listing-wrap">
-                    <div class="seller-listing-content">
-                    <ul class="dokan-seller-wrap">
+            <?php if ( have_posts() ) { ?>
 
-                        <?php foreach ( $outlets['users'] as $outlet ): ?>
-                            <?php
-                            $image_size = 'full';
-                            $store_info = dokan_get_store_info( $outlet->ID );
-                            $banner_id  = isset( $store_info['banner'] ) ? $store_info['banner'] : 0;
-                            $store_name = isset( $store_info['store_name'] ) ? esc_html( $store_info['store_name'] ) : __( 'N/A', 'woofreendor' );
-                            $store_url  = dokan_get_store_url( $outlet->ID );
-                            $store_address  = dokan_get_seller_short_address( $outlet->ID );
-                            $seller_rating  = dokan_get_seller_rating( $outlet->ID );
-                            $banner_url = ( $banner_id ) ? wp_get_attachment_image_src( $banner_id, $image_size ) : DOKAN_PLUGIN_ASSEST . '/images/default-store-banner.png';
-                            $featured_seller = get_user_meta( $outlet->ID, 'dokan_feature_seller', true );
-                            ?>
+                <div class="seller-items">
 
-                            <li class="dokan-single-seller woocommerce coloum-<?php echo $per_row; ?> <?php echo ( ! $banner_id ) ? 'no-banner-img' : ''; ?>">
-                                <div class="store-wrapper">
-                                    <div class="store-content">
-                                        <div class="store-info" style="background-image: url( '<?php echo is_array( $banner_url ) ? $banner_url[0] : $banner_url; ?>');">
-                                            <div class="store-data-container">
-                                                <div class="featured-favourite">
-                                                    <?php if ( ! empty( $featured_seller ) && 'yes' == $featured_seller ): ?>
-                                                        <div class="featured-label"><?php _e( 'Featured', 'woofreendor' ); ?></div>
-                                                    <?php endif ?>
+                    <?php woocommerce_product_loop_start(); ?>
 
-                                                    <?php do_action( 'dokan_seller_listing_after_featured', $outlet, $store_info ); ?>
-                                                </div>
+                        <?php while ( have_posts() ) : the_post(); ?>
 
-                                                <div class="store-data">
-                                                    <h2><a href="<?php echo $store_url; ?>"><?php echo $store_name; ?></a></h2>
+                            <?php woofreendor_get_template_part( 'products/content-product-tenant' ); ?>
 
-                                                    <?php if ( !empty( $seller_rating['count'] ) ): ?>
-                                                        <div class="star-rating dokan-seller-rating" title="<?php echo sprintf( __( 'Rated %s out of 5', 'woofreendor' ), $seller_rating['rating'] ) ?>">
-                                                            <span style="width: <?php echo ( ( $seller_rating['rating']/5 ) * 100 - 1 ); ?>%">
-                                                                <strong class="rating"><?php echo $seller_rating['rating']; ?></strong> out of 5
-                                                            </span>
-                                                        </div>
-                                                    <?php endif ?>
+                        <?php endwhile; // end of the loop. ?>
 
-                                                    <?php if ( $store_address ): ?>
-                                                        <p class="store-address"><?php echo $store_address; ?></p>
-                                                    <?php endif ?>
+                    <?php woocommerce_product_loop_end(); ?>
 
-                                                    <?php if ( !empty( $store_info['phone'] ) ) { ?>
-                                                        <p class="store-phone">
-                                                            <i class="fa fa-phone" aria-hidden="true"></i> <?php echo esc_html( $store_info['phone'] ); ?>
-                                                        </p>
-                                                    <?php } ?>
-
-                                                    <?php do_action( 'dokan_seller_listing_after_store_data', $outlet, $store_info ); ?>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="store-footer">
-                                        <div class="seller-avatar">
-                                            <?php echo get_avatar( $outlet->ID, 150 ); ?>
-                                        </div>
-                                        <a href="<?php echo $store_url; ?>" class="dokan-btn dokan-btn-theme"><?php _e( 'Visit Store', 'woofreendor' ); ?></a>
-
-                                        <?php do_action( 'dokan_seller_listing_footer_content', $outlet, $store_info ); ?>
-                                    </div>
+                </div><?php //echo woofreendor_is_tenant_page(); ?>
+                <script type="text/html" id="tmpl-woofreendor-detail-product-popup">
+                    <div id="" class="white-popup container">
+                        <h2 id="wf_product_det_title"><i class="fa fa-briefcase">&nbsp;</i>&nbsp;<span><?php _e( 'Title', 'dokan-lite' ); ?></span></h2>
+                        <div class="row">
+                            <div class="container col-md-6">
+                                <img id="wf_product_det_image" src="" alt="" class="img-responsive">
+                            </div>
+                            <div class="container col-md-6">
+                                <p id="wf_product_det_desc"></p>
+                                <p id="wf_product_det_cat"></p>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <?php _e('Beli Sekarang Di:','woofreendor'); ?>  <span class="caret"></span>
+                                    </button>
+                                    <ul id="wf_product_det_outlet" class="dropdown-menu"></ul>
                                 </div>
-                            </li>
-
-                        <?php endforeach; // end of the loop. ?>
-
-                    </ul>
+                            </div>
+                        </div>                  
                     </div>
-                    </div>
-
-                <!-- </div> -->
-
+                </script>
                 <?php dokan_content_nav( 'nav-below' ); ?>
 
             <?php } else { ?>
 
-                <p class="dokan-info"><?php _e( 'No outlets were found of this tenant!', 'woofreendor' ); ?></p>
+                <p class="dokan-info"><?php _e( 'No products were found of this vendor!', 'dokan-lite' ); ?></p>
 
             <?php } ?>
-            <?php
-            // $binder_group = woofreendor_get_binder_group( $tenant_user->ID);
-            // $args = array(
-            //     'role' => 'seller', 
-            //     // 'number' => $limit, 
-            //     // 'offset' => $offset,
-            //     'order'          => 'ASC',
-            //     'orderby'        => 'display_name',
-            //     'meta_key'       => 'tenant_id',
-            //     'meta_value'     => $tenant_user->ID
-            //     );
-            // $user_search = new WP_User_Query( $args );
-            // $outlets     = (array) $user_search->get_results();
-            
-            // $template_args = array(
-            //     'tenants'         => $outlets,
-            //     // 'limit'           => $limit,
-            //     // 'offset'          => $offset,
-            //     // 'paged'           => $paged,
-            //     // 'search_query'    => $search_query,
-            //     // 'pagination_base' => $pagination_base,
-            //     // 'per_row'         => $per_row,
-            //     // 'search_enabled'  => $search,
-            //     'image_size'      => $image_size,
-            // );
-
-            // echo woofreendor_get_template_part( 'tenant-lists-loop', false, $template_args );
-            ?>
         </div>
 
     </div><!-- .dokan-single-store -->

@@ -48,10 +48,53 @@ function woofreendor_get_tenant_products( $paramTenantId ){
 
 function woofreendor_get_product_data( $paramProductId ){
     $product = get_post($paramProductId);
+
     $product_image = get_post_thumbnail_id($product->ID);
     $product_image_url = wp_get_attachment_image_src( $product_image, 'full' )[0];
     $product_term = wp_get_post_terms( $paramProductId, 'product_cat', array( 'fields' => 'ids') )[0];
     return array( 'product' => $product, 'image_url' => $product_image_url, 'term' => $product_term, 'image_id' => $product_image);
+}
+
+function woofreendor_get_product_detail( $paramProductId) {
+    $product = get_post($paramProductId);
+    $product_image = get_post_thumbnail_id($paramProductId);
+    $image_url = wp_get_attachment_image_src( $product_image, 'full' )[0];
+    $term = wp_get_post_terms( $paramProductId, 'product_cat', array() )[0];
+    $child_products = woofreendor_get_child_products($paramProductId);
+    $child_product_data = array();
+    foreach($child_products as $cp){
+        $child_product_data[] = array(
+            'outlet' => get_the_author_meta('display_name', $cp->post_author), 
+            'product_url' => get_permalink( $cp->ID )
+        );
+    }
+
+    return array( 'product' => $product, 'image_url' => $image_url, 'term' => $term, 'child_product' => $child_product_data);
+}
+
+function woofreendor_get_child_products( $paramProductParentId){
+    $ch_args = array(
+        'post_type'	=> 'product',
+        'meta_key'	=> 'product_parent',
+        'meta_value'=> 5532,
+        'posts_per_page' => '-1',
+        'orderby'	=> 'post_author',
+        'order'		=> 'ASC'
+    );
+    return get_posts($ch_args);
+}
+
+function woofreendor_get_child_product_ids( $paramProductParentId){
+    $ch_args = array(
+        'fields'    => 'ids',
+        'post_type'	=> 'product',
+        'meta_key'	=> 'product_parent',
+        'meta_value'=> 5532,
+        'posts_per_page' => '-1',
+        'orderby'	=> 'post_author',
+        'order'		=> 'ASC'
+    );
+    return get_posts($ch_args);
 }
 
 /**

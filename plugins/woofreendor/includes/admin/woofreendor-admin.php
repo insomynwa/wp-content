@@ -65,6 +65,21 @@ class Woofreendor_Admin{
 		$limit = 5;
 		$my_debug = array();
 		// $my_debug = woofreendor_get_best_selling_products( $limit );
+		// $post = get_post(5562);
+		// $my_debug = $post;
+		/**----------------------------------*/
+		$ch_args = array(
+			'fields'	=> 'ids',
+			'post_type'	=> 'product',
+			'meta_key'	=> 'product_parent',
+			'meta_value'=> 5532,
+			'posts_per_page' => '-1',
+			'orderby'	=> 'post_author',
+			'order'		=> 'ASC'
+		);
+		$child_post = get_posts($ch_args);
+		$my_debug = $child_post;
+		/**----------------------------------*/
 		echo '<pre>';
 		print_r($my_debug);
 		echo '</pre>';

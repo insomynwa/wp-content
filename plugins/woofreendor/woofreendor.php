@@ -375,7 +375,8 @@ final class Woofreendor{
             }
 
             if ( DOKAN_LOAD_SCRIPTS ) {
-
+                
+                $woofreendor_loc = woofreendor_locatize_data();
                 $dokan->load_form_validate_script();
                 $dokan->load_gmap_script();
 
@@ -386,6 +387,8 @@ final class Woofreendor{
                 wp_enqueue_script( 'dokan-form-validate' );
                 wp_enqueue_script( 'dokan-script' );
                 wp_enqueue_script( 'dokan-select2-js' );
+                wp_enqueue_script( 'woofreendor-script' );
+                wp_localize_script( 'dokan-script', 'woofreendor', $woofreendor_loc );
             }
         }
         //Load in Single product pages only

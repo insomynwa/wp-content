@@ -38,6 +38,7 @@ class Woofreendor_Template_Products {
         add_action( 'dokan_product_content_inside_area_after', array( $this, 'product_content_inside_area_after' ) );
         add_filter( 'dokan_product_types', array( $this, 'set_default_product_types' ) );
 
+        add_action( 'dokan_product_updated', array( $this, 'update_child_product' ) );
     }
 
     /**
@@ -136,6 +137,29 @@ class Woofreendor_Template_Products {
         // var_dump($paramProductData['product_parent']);
         if ( isset( $paramProductData['product_parent'] ) ) {
             update_post_meta( $paramProductId, 'product_parent', $paramProductData['product_parent'] );
+        }
+    }
+
+    function update_child_product($paramParentProductId){
+        if(woofreendor_is_user_tenant(get_current_user_id())){
+            $parent_product = get_post($paramParentProductId);
+
+            $product_image = get_post_thumbnail_id($paramParentProductId);//var_dump($product_image);
+            $term = wp_get_post_terms( $paramParentProductId, 'product_cat', array() )[0];//var_dump($term);die;
+
+            $child_ids = woofreendor_get_child_product_ids($paramParentProductId);
+            foreach ($child_ids as $cpi ) {
+                $new_cp_data = array(
+                    'ID'            => $cpi,
+                    'post_title'    => $parent_product->post_title,
+                    'post_content'  => $parent_product->post_content,
+                    'post_excerpt'  => $parent_product->post_excerpt
+                );
+                // var_dump($new_cp_data);die;
+                wp_update_post($new_cp_data);
+                set_post_thumbnail( $cpi, $product_image );
+                wp_set_object_terms( $cpi, (int) $term->term_id, 'product_cat' );
+            }
         }
     }
 

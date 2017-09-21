@@ -33,8 +33,10 @@ class Woofreendor_Ajax{
         add_action( 'wp_ajax_woofreendor_create_new_outlet', array( $this, 'create_outlet' ) );
         add_action( 'wp_ajax_woofreendor_update_outlet', array( $this, 'update_outlet' ) );
         add_action( 'wp_ajax_woofreendor_delete_outlet', array( $this, 'delete_outlet' ) );
-
+        
         add_action( 'wp_ajax_woofreendor_get_product_data', array( $this, 'product_data' ) );
+        add_action( 'wp_ajax_woofreendor_get_product_detail', array( $this, 'product_detail' ) );
+        add_action( 'wp_ajax_nopriv_woofreendor_get_product_detail', array( $this, 'product_detail' ) );
     }
 
     public function create_batch() { 
@@ -249,6 +251,15 @@ class Woofreendor_Ajax{
 
         $response = woofreendor_get_product_data($product_id);
         //var_dump($response);
+        wp_send_json_success( $response );
+    }
+
+    public function product_detail(){
+        check_ajax_referer( 'detail-product', 'security' );
+        $product_id = intval( $_GET['product'] );
+
+        $response = woofreendor_get_product_detail($product_id);
+
         wp_send_json_success( $response );
     }
 
