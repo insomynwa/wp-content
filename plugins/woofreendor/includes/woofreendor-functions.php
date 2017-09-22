@@ -110,9 +110,7 @@ function woofreendor_get_tenant_url( $user_id ) {
 
 function woofreendor_get_template_part( $slug, $name = '', $args = array() ) {
     $woofreendor = Woofreendor::init();
-// var_dump($slug);
-// var_dump($name);
-// var_dump($args);
+
     $defaults = array(
         'pro' => false
     );
@@ -127,7 +125,7 @@ function woofreendor_get_template_part( $slug, $name = '', $args = array() ) {
 
     // Look in yourtheme/dokan/slug-name.php and yourtheme/dokan/slug.php
     $template = locate_template( array( $woofreendor->template_path() . "{$slug}-{$name}.php", $woofreendor->template_path() . "{$slug}.php" ) );
-// var_dump($template);
+
     /**
      * Change template directory path filter
      *
@@ -143,11 +141,11 @@ function woofreendor_get_template_part( $slug, $name = '', $args = array() ) {
     if ( ! $template && !$name && file_exists( $template_path . "/{$slug}.php" ) ) {
         $template = $template_path . "/{$slug}.php";
     }
-// var_dump($template);
+
     // Allow 3rd party plugin filter template file from their plugin
     $template = apply_filters( 'woofreendor_get_template_part', $template, $slug, $name );
 
-// var_dump($template);
+
     if ( $template ) {
         include( $template );
     }
@@ -435,32 +433,32 @@ function woofreendor_tenant_address_fields( $verified = false, $required = false
  */
 function woofreendor_get_avatar( $avatar, $id_or_email, $size, $default, $alt ) {
     
-if ( is_numeric( $id_or_email ) ) {
-    $user = get_user_by( 'id', $id_or_email );
-} elseif ( is_object( $id_or_email ) ) {
-    if ( $id_or_email->user_id != '0' ) {
-        $user = get_user_by( 'id', $id_or_email->user_id );
+    if ( is_numeric( $id_or_email ) ) {
+        $user = get_user_by( 'id', $id_or_email );
+    } elseif ( is_object( $id_or_email ) ) {
+        if ( $id_or_email->user_id != '0' ) {
+            $user = get_user_by( 'id', $id_or_email->user_id );
+        } else {
+            return $avatar;
+        }
     } else {
+        $user = get_user_by( 'email', $id_or_email );
+    }
+
+    if ( !$user ) {
         return $avatar;
     }
-} else {
-    $user = get_user_by( 'email', $id_or_email );
-}
 
-if ( !$user ) {
-    return $avatar;
-}
+    // see if there is a user_avatar meta field
+    $user_avatar = get_user_meta( $user->ID, 'woofreendor_profile_settings', true );
+    $gravatar_id = isset( $user_avatar['gravatar'] ) ? $user_avatar['gravatar'] : 0;
+    if ( empty( $gravatar_id ) ) {
+        return $avatar;
+    }
 
-// see if there is a user_avatar meta field
-$user_avatar = get_user_meta( $user->ID, 'woofreendor_profile_settings', true );
-$gravatar_id = isset( $user_avatar['gravatar'] ) ? $user_avatar['gravatar'] : 0;
-if ( empty( $gravatar_id ) ) {
-    return $avatar;
-}
+    $avater_url = wp_get_attachment_thumb_url( $gravatar_id );
 
-$avater_url = wp_get_attachment_thumb_url( $gravatar_id );
-
-return sprintf( '<img src="%1$s" alt="%2$s" width="%3$s" height="%3$s" class="avatar photo">', esc_url( $avater_url ), $alt, $size );
+    return sprintf( '<img src="%1$s" alt="%2$s" width="%3$s" height="%3$s" class="avatar photo">', esc_url( $avater_url ), $alt, $size );
 }
 
 add_filter( 'get_avatar', 'woofreendor_get_avatar', 100, 5 );

@@ -148,7 +148,6 @@ final class Woofreendor{
         }
 
         require_once WOOFREENDOR_INC . 'woofreendor-functions.php';
-        require_once WOOFREENDOR_INC . 'woofreendor-template-utility.php';
         require_once WOOFREENDOR_INC . 'admin/woofreendor-setup-wizard.php';
         require_once WOOFREENDOR_INC . 'widgets/tenant-contact.php';
         require_once WOOFREENDOR_INC . 'widgets/tenant-location.php';
@@ -158,11 +157,7 @@ final class Woofreendor{
         if ( is_admin() ) {
             new Woofreendor_Admin_User_Profile();
         }
-        // new Woofreendor_Pageviews();
         new Woofreendor_Rewrites();
-        // new Dokan_Tracker();
-        // Dokan_Email::init();
-        //Woofreendor_Ajax::init()->init_ajax();
 
         if ( is_user_logged_in() ) {
             Woofreendor_Template_Main::init();
@@ -173,10 +168,10 @@ final class Woofreendor{
             Woofreendor_Outlets::init();
             Woofreendor_Template_Settings::init();
             Woofreendor_Woocommerce::init();
-            //Dokan_Template_Withdraw::init();
             Woofreendor_Template_Shortcodes::init();
-            //Dokan_Template_Settings::init();
         }
+
+        new Woofreendor_VC_Shortcodes();
     }
 
     function load_actions(){

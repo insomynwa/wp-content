@@ -39,7 +39,7 @@ function woofreendor_get_tenant_products( $paramTenantId ){
         'order'             => 'ASC',
         'author'            => $paramTenantId,
         'post_type'         => 'product',
-        'post_status'       => 'pending'
+        'post_status'       => 'publish'
     );
 
     $products = get_posts($args);

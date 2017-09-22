@@ -63,7 +63,7 @@ class Woofreendor_Template_Shortcodes {
             dokan_get_template_part( 'withdraw/withdraw' );
             return ob_get_clean();
         }
-// var_dump($wp->query_vars);
+
         if ( woofreendor_is_user_tenant( get_current_user_id() ) && isset( $wp->query_vars['settings'] )) {
             //var_dump("FFFFFFFFFFFF");
             woofreendor_get_template_part('settings/tenant');

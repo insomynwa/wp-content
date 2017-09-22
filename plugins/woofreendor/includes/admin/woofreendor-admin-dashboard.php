@@ -254,7 +254,7 @@ class Woofreendor_Admin_Dashboard{
 		//require_once plugin_dir_path( __DIR__ ) . 'includes/product/dbsnet-woocp-class-product.php';
 
 		$outlets = DBSnet_Woocp_Tenant::GetOutlets($user->ID);
-//var_dump($outlets);
+
 		if($outlets){
 			$arr_outlet = array();
 			foreach ($outlets as $outlet) {
