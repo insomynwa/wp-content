@@ -31,14 +31,14 @@ get_header( 'shop' );
                     );
 
                     if ( class_exists( 'Dokan_Store_Location' ) ) {
-                        the_widget( 'Dokan_Store_Category_Menu', array( 'title' => __( 'Store Category', 'dokan-lite' ) ), $args );
+                        the_widget( 'Dokan_Store_Category_Menu', array( 'title' => __( 'Store Category', 'woofreendor' ) ), $args );
 
                         if ( dokan_get_option( 'store_map', 'dokan_general', 'on' ) == 'on'  && !empty( $map_location ) ) {
-                            the_widget( 'Dokan_Store_Location', array( 'title' => __( 'Store Location', 'dokan-lite' ) ), $args );
+                            the_widget( 'Dokan_Store_Location', array( 'title' => __( 'Store Location', 'woofreendor' ) ), $args );
                         }
 
                         if ( dokan_get_option( 'contact_seller', 'dokan_general', 'on' ) == 'on' ) {
-                            the_widget( 'Dokan_Store_Contact_Form', array( 'title' => __( 'Contact Vendor', 'dokan-lite' ) ), $args );
+                            the_widget( 'Dokan_Store_Contact_Form', array( 'title' => __( 'Contact Vendor', 'woofreendor' ) ), $args );
                         }
                     }
 
@@ -81,7 +81,7 @@ get_header( 'shop' );
 
             <?php } else { ?>
 
-                <p class="dokan-info"><?php _e( 'No products were found of this vendor!', 'dokan-lite' ); ?></p>
+                <p class="dokan-info"><?php _e( 'No products were found of this vendor!', 'woofreendor' ); ?></p>
 
             <?php } ?>
         </div>

@@ -145,6 +145,7 @@ class Woofreendor_Template_Products {
             $parent_product = get_post($paramParentProductId);
 
             $product_image = get_post_thumbnail_id($paramParentProductId);//var_dump($product_image);
+            $product_gallery = get_post_meta( $paramParentProductId, '_product_image_gallery', true );
             $term = wp_get_post_terms( $paramParentProductId, 'product_cat', array() )[0];//var_dump($term);die;
 
             $child_ids = woofreendor_get_child_product_ids($paramParentProductId);
@@ -158,6 +159,10 @@ class Woofreendor_Template_Products {
                 // var_dump($new_cp_data);die;
                 wp_update_post($new_cp_data);
                 set_post_thumbnail( $cpi, $product_image );
+                if(!empty($product_gallery)){
+                    $attachment_ids = array_filter( explode( ',', $product_gallery ) );
+                    update_post_meta( $cpi, '_product_image_gallery', implode( ',', $attachment_ids ) );
+                }
                 wp_set_object_terms( $cpi, (int) $term->term_id, 'product_cat' );
             }
         }

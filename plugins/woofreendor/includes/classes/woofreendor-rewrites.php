@@ -27,6 +27,9 @@ class Woofreendor_Rewrites {
 
         add_filter( 'query_vars', array( $this, 'register_query_var' ) );
         add_filter( 'pre_get_posts', array( $this, 'tenant_query_filter' ) );
+        
+        remove_filter( 'woocommerce_get_breadcrumb', array( Dokan_Rewrites::init(), 'store_page_breadcrumb'), 10 ,1  );
+        add_filter( 'woocommerce_get_breadcrumb', array( $this, 'store_page_breadcrumb'), 10 ,1  );
         add_filter( 'woocommerce_get_breadcrumb', array( $this, 'tenant_page_breadcrumb'), 10 ,1  );
     }
 
@@ -81,6 +84,24 @@ class Woofreendor_Rewrites {
         }
 
         return $template;
+    }
+
+    public function store_page_breadcrumb( $crumbs ){
+        // var_dump(get_query_vars)
+        if (  dokan_is_store_page() ) {
+            $author      = get_query_var( Dokan_Rewrites::init()->custom_store_url );
+            $outlet_info = get_user_by( 'slug', $author );
+            $tenant_id = get_user_meta( $outlet_info->data->ID, 'tenant_id', true );
+            $tenant_info = get_userdata( $tenant_id );
+            // var_dump(dokan_get_store_url( $outlet_info->data->ID ));
+            // $crumbs[1]   = array( ucwords($this->custom_tenant_url) , site_url().'/'.$this->custom_tenant_url );
+            $crumbs[1]   = array( __( 'Tenants', 'woofreendor') , site_url().'/tenant-listing' );
+            $crumbs[2]   = array( $tenant_info->display_name , woofreendor_get_tenant_url( $tenant_info->ID ) );
+            // $crumbs[2]   = array( $author, woofreendor_get_tenant_url( $seller_info->data->ID ) );
+            $crumbs[3]   = array( $outlet_info->data->display_name, dokan_get_store_url( $outlet_info->data->ID ) );
+        }
+
+        return $crumbs;
     }
 
     /**

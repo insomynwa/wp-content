@@ -287,7 +287,6 @@ if ( ! $from_shortcode ) {
                                                     <a href="#" class="add-product-images"><i class="fa fa-plus" aria-hidden="true"></i></a>
                                                 </li>
                                             </ul>
-
                                             <input type="hidden" id="product_image_gallery" name="product_image_gallery" value="<?php echo esc_attr( $product_images ); ?>">
                                         </div>
                                     </div>
