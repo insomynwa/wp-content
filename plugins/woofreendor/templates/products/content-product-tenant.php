@@ -82,7 +82,7 @@ $classes[] = ' item-col col-xs-6 col-sm-'.$colwidth ;?>
 	<div class="product-wrapper">
 		<div class="list-col4">
 			<div class="product-image">
-				<a class="<?php echo esc_attr($class_img); ?>" href="#" title="<?php echo esc_attr( $product->get_title() ); ?>" >
+				<a class="<?php echo esc_attr($class_img); ?>" href="<?php echo esc_url( get_permalink( $product->get_id() ) ); ?>" title="<?php echo esc_attr( $product->get_title() ); ?>" >
 					<?php 
 					echo $product->get_image('shop_catalog', array('class'=>'primary_image'));
 					if(isset($gon_options['second_image'])){
@@ -101,11 +101,30 @@ $classes[] = ' item-col col-xs-6 col-sm-'.$colwidth ;?>
 			<div class="gridview">
 				<div class="text-block">
 					<h3 class="product-name">
-						<a href="#"><?php the_title(); ?></a>
+						<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
 					</h3>
-					<a class="button product_type_simple woofreendor_detail_product" data-product_id="<?php the_ID(); ?>" href="#">View Detail</a>
-					<!-- <div class="ratings"><?php //echo wc_get_rating_html( $product->get_average_rating() ); ?></div> -->
-					<!-- <div class="price-box"><?php //echo $product->get_price_html(); ?></div> -->
+					<div class="ratings"><?php echo wc_get_rating_html( $product->get_average_rating() ); ?></div>
+					<div class="price-box"><?php echo $product->get_price_html(); ?></div>
+					<div class="add-to-cart">
+						<p class="product woocommerce add_to_cart_inline ">
+							<a class="button product_type_simple add_to_cart_button woofreendor_detail_product" data-product_id="<?php the_ID(); ?>" href="#">View Detail</a>
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="listview">
+				<div class="text-block">
+					<h3 class="product-name">
+						<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+					</h3>
+					<div class="price-box"><?php echo $product->get_price_html(); ?></div>
+					<div class="product-desc"><?php the_excerpt(); ?></div>
+					<div class="btn-group">
+						<button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<?php _e('Beli Sekarang Di:','woofreendor'); ?>  <span class="caret"></span>
+						</button>
+						<ul id="wf_product_det_outlet" class="dropdown-menu"></ul>
+					</div>
 				</div>
 			</div>
 		</div>

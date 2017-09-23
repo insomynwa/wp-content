@@ -365,6 +365,7 @@ final class Woofreendor{
 
         if ( woofreendor_is_tenant_page() ) {
             $dokan = WeDevs_Dokan::init();
+            wp_enqueue_style( 'woofreendor-style', WOOFREENDOR_PLUGIN_ASSEST . '/css/style.css', false, time(), 'all' );
             if ( DOKAN_LOAD_STYLE ) {
                 wp_enqueue_style( 'dokan-select2-css' );
             }

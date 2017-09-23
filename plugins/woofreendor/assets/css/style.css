@@ -46,6 +46,10 @@
 .dropdown-menu>li>a:hover { background: #f1f9fd } /* $search-blue */
 .dropdown-header { background: #ccc; font-size: 14px; font-weight: 700; padding-top: 5px; padding-bottom: 5px; margin-top: 10px; margin-bottom: 5px }
 
+body > div.wrapper > div.main-container.page-shop > div.breadcrumb-blog:before{
+  opacity:.5;
+}
+
 .batch-container-footer ,.batch-container-delete-footer{
   padding: 10px 20px;
   border-top: 1px solid #eee;

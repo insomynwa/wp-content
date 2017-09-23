@@ -273,11 +273,11 @@ class Woofreendor_Rewrites {
             $seller_info  = get_user_by( 'slug', $author );
             $tenant_info   = woofreendor_get_tenant_info( $seller_info->data->ID );
             $post_per_page = isset( $tenant_info['tenant_opp'] ) && !empty( $tenant_info['tenant_opp'] ) ? $tenant_info['tenant_opp'] : 12;
-            set_query_var( 'posts_per_page', $post_per_page );
+            set_query_var( 'posts_per_page', 2);//$post_per_page );
             $query->set( 'post_type', 'product' );
             $query->set( 'author_name', $author );
             $query->query['term_section'] = isset( $query->query['term_section'] ) ? $query->query['term_section'] : array();
-
+            
             if ( $query->query['term_section'] ) {
                 $query->set( 'tax_query',
                     array(
