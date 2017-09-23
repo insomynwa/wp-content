@@ -46,6 +46,29 @@ function woofreendor_get_tenant_products( $paramTenantId ){
     return array( 'products' => $products, 'count' => count($products) );
 }
 
+function woofreendor_get_tenant_product_ids( $paramTenantId = 0){
+    $args = array(
+        'fields'            => 'ids',
+        'post_per_page'     => -1,
+        'orderby'           => 'title',
+        'order'             => 'ASC',
+        // 'author'            => $paramTenantId,
+        'post_type'         => 'product',
+        'post_status'       => 'publish'
+    );
+
+    if( $paramTenantId != 0) {
+        $args['author'] = $paramTenantId;
+    }else{
+        $tenant_ids = woofreendor_get_tenant_ids();
+        $args['author__in'] = $tenant_ids;
+    }
+
+    $products = get_posts($args);
+    return $products;
+    // return array( 'products' => $products, 'count' => count($products) );
+}
+
 function woofreendor_get_product_data( $paramProductId ){
     $product = get_post($paramProductId);
 
@@ -138,3 +161,14 @@ function woofreendor_get_best_selling_products($limit){
 
     // return $counts;
 }
+
+function woofreendor_custom_product_list($query){
+    if ( ! is_admin() && $query->is_main_query() && is_shop() ) {
+        $arr_tenant_products = woofreendor_get_tenant_product_ids();
+        $query->set( 'post__in', $arr_tenant_products );
+        // echo '<pre>';var_dump($arr_tenant_products);echo '</pre>';
+        return;
+    }
+}
+
+add_filter( 'pre_get_posts', 'woofreendor_custom_product_list' );

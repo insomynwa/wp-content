@@ -18,6 +18,17 @@ function woofreendor_get_tenants( $args = array() ) {
     return array( 'users' => $sellers, 'count' => $user_query->total_users );
 }
 
+function woofreendor_get_tenant_ids(){
+    $outlet_args = array(
+        'fields'    => 'ids',
+        'role'      => 'woofreendor_tenant_role',
+        'orderby'   => 'ID',
+        'order'     => 'ASC'
+        );
+
+    return get_users($outlet_args);
+}
+
 function woofreendor_tenant_get_active_outlet( $paramTenantId ){
     $args = array(
             'role'       => 'seller',

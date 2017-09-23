@@ -12,6 +12,7 @@
 if (! defined('ABSPATH')) exit; // Exit if accessed directly
 
 global $product, $woocommerce_loop, $post;
+
 $gon_options  = gon_get_global_variables();
 $gon_showcountdown 	= gon_get_global_variables('gon_showcountdown');
 $gon_productrows 	= gon_get_global_variables('gon_productrows');
@@ -94,7 +95,6 @@ $classes[] = ' item-col col-xs-6 col-sm-'.$colwidth ;?>
 					}
 					?>
 				</a>
-				
 			</div>
 		</div>
 		<div class="list-col8">
@@ -105,6 +105,19 @@ $classes[] = ' item-col col-xs-6 col-sm-'.$colwidth ;?>
 					</h3>
 					<div class="ratings"><?php echo wc_get_rating_html( $product->get_average_rating() ); ?></div>
 					<div class="price-box"><?php echo $product->get_price_html(); ?></div>
+					<div class="add-to-cart">
+						<?php echo do_shortcode('[add_to_cart id="'.$product->get_id().'" show_price="false"]') ?>
+					</div>
+				</div>
+			</div>
+			<div class="listview">
+				<div class="text-block">
+					<h3 class="product-name">
+						<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+					</h3>
+					<div class="ratings"><?php echo wc_get_rating_html( $product->get_average_rating() ); ?> <span class="total-rate">( <?php echo $product->get_review_count(). esc_html__(" reviews", "gon-cakeshop"); ?> )</span></div>
+					<div class="price-box"><?php echo $product->get_price_html(); ?></div>
+					<div class="product-desc"><?php the_excerpt(); ?></div>
 					<div class="add-to-cart">
 						<?php echo do_shortcode('[add_to_cart id="'.$product->get_id().'" show_price="false"]') ?>
 					</div>

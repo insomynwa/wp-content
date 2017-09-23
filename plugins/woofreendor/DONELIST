@@ -9,3 +9,9 @@ back to tenant in outlet page
 remove old files
 
 structuring tenant-products,tenant-outlets
+
+filter tenant-products category
+store page
+shop page show tenant products only
+shop page show tenant product categories only
+tenant detail product loading modal

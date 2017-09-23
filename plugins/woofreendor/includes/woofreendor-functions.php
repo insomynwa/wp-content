@@ -510,3 +510,33 @@ function woofreendor_get_tenant_outlet_url( $tenant_id ) {
     $userstore = woofreendor_get_tenant_url( $tenant_id );
     return apply_filters( 'dokan_get_toc_url', $userstore ."outlets" );
 }
+
+function woofreendor_custom_categories_widget_args( $paramCatArgs ){
+
+    $paramCatArgs['hide_empty'] = 1;
+    
+    if( woofreendor_is_tenant_page() || dokan_is_store_page() ){
+        $user   = get_userdata( get_query_var( 'author' ) );
+
+        $product_ids = woofreendor_get_tenant_product_ids($user->ID);
+    }
+    if( is_shop() ){
+        $product_ids = woofreendor_get_tenant_product_ids();
+    }
+
+    $arr_include = array();
+    // echo '<pre>';var_dump($product_ids);echo '</pre>';
+    foreach( $product_ids as $pid ){
+        $term = wp_get_post_terms( $pid, 'product_cat', array('fields'=>'ids') )[0];
+        //echo '<pre>';var_dump($pid);echo '</pre>';
+        // echo '<pre>';var_dump(wp_get_post_terms(  $pid, 'product_cat', array('fields'=>'ids') ));echo '</pre>';
+        $arr_include[] = $term;
+    }
+    $arr_include = array_unique( $arr_include );
+    // echo '<pre>';var_dump($arr_exclude);echo '</pre>';
+    $paramCatArgs['include'] = $arr_include;
+
+    return $paramCatArgs;
+}
+
+add_filter( 'woocommerce_product_categories_widget_args', 'woofreendor_custom_categories_widget_args', 10, 1);
